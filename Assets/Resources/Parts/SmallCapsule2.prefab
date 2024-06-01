@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PartName: Small Capsule 2
-  Category: Command and Control
+  Category: C&C
   PartDescription: A small rocket capsule. You could maybe fit a gerbil in it, if
     it doesn't mind tight spaces.
 --- !u!1 &7769714219245779333

@@ -30,8 +30,14 @@ public class VabController : MonoBehaviour
             var tab = CategoryTabs[part.GetCategory()];
             
             var button = _partPickerPartTemplate.Instantiate().Q<Button>();
+            button.clicked += () => { OnPartClicked(part); };
             button.text = part.GetName();
             tab.Add(button);
         }
+    }
+
+    private void OnPartClicked(PartBase part)
+    {
+        GameObject.Instantiate(part);
     }
 }
