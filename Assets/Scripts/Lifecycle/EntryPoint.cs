@@ -6,10 +6,13 @@ namespace Arkship.PSC
 {
     public class EntryPoint : MonoBehaviour
     {
+        private const string CLASS_NAME = nameof(EntryPoint);
+        
         private const string SCENE_MAIN_MENU = "MainMenu";
-        private void Start()
+        
+        private void Awake()
         {
-            Debug.Log("Welcome to Plushy Space Cooperative!");
+            Debug.Log("Welcome to Open Kosmos!");
 
             LoadMods();
             TransitionToMainMenu();
@@ -17,12 +20,12 @@ namespace Arkship.PSC
         
         private void LoadMods()
         {
-            Debug.Log("Loading mods...");
+            Debug.Log($"[{CLASS_NAME}] Loading mods...");
         }
         
         private void TransitionToMainMenu()
         {
-            Debug.Log("Transitioning to main menu...");
+            Debug.Log($"[{CLASS_NAME}] Transitioning to main menu...");
             
             UnityEngine.SceneManagement.SceneManager.LoadScene(SCENE_MAIN_MENU, LoadSceneMode.Additive);
         }

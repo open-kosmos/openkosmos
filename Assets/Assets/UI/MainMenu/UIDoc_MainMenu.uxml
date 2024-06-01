@@ -1,11 +1,23 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement style="flex-grow: 1; width: 300px; align-content: auto; align-self: center; align-items: stretch; justify-content: center;">
-        <engine:Label text="Plushy Space Cooperative" style="align-self: auto; align-content: auto; -unity-font-style: bold; -unity-text-align: middle-center; color: rgb(255, 255, 255); bottom: 0; font-size: 21px;" />
-        <engine:VisualElement style="flex-grow: 0; padding-bottom: 39px;" />
-        <engine:Button text="New Game" name="btn_newgame" />
-        <engine:Button text="Load Game" name="btn_loadgame" />
-        <engine:Button text="Settings" name="btn_settings" />
-        <engine:Button text="Manage Mods" name="btn_managemods" />
-        <engine:Button text="Exit" name="btn_exit" />
+    <engine:VisualElement style="flex-grow: 1; flex-direction: row;">
+        <engine:VisualElement style="flex-grow: 1; width: 300px; align-content: auto; align-self: auto; align-items: stretch; justify-content: center; margin-left: 128px;">
+            <engine:Label text="Open Kosmos" style="align-self: auto; align-content: auto; -unity-font-style: bold; -unity-text-align: middle-center; color: rgb(255, 255, 255); bottom: 0; font-size: 21px;" />
+            <engine:VisualElement style="flex-grow: 0; padding-bottom: 39px;" />
+            <engine:Button text="New Game" name="btn_newgame" />
+            <engine:Button text="Load Game" name="btn_loadgame" />
+            <engine:Button text="Settings" name="btn_settings" />
+            <engine:Button text="Manage Mods" name="btn_managemods" />
+            <engine:Button text="Exit" name="btn_exit" />
+        </engine:VisualElement>
+        <engine:VisualElement style="flex-grow: 1; padding-top: 100px; padding-right: 100px; padding-bottom: 100px; padding-left: 100px;" />
+        <engine:VisualElement style="flex-grow: 1; width: 300px; align-content: auto; align-self: auto; align-items: stretch; justify-content: center; margin-left: 0; margin-right: 128px;">
+            <engine:Label text="Prototypes" style="align-self: auto; align-content: auto; -unity-font-style: bold; -unity-text-align: middle-center; color: rgb(255, 255, 255); bottom: 0; font-size: 21px;" />
+            <engine:VisualElement style="flex-grow: 0; padding-bottom: 39px;" />
+            <engine:Button text="Planetary LOD Tech" name="btn_proto_planetary_lod" />
+            <engine:Button text="Vessel Assembly" name="btn_proto_vessel_assembly" />
+            <engine:Button text="Floating IRF System" name="btn_proto_floating_frame" />
+            <engine:Button text="Separate Physics Contexts" name="btn_proto_physics_contexts" />
+            <engine:Button text="Orbital Physics" name="btn_proto_orbital_physics" />
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

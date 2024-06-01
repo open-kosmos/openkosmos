@@ -128,9 +128,8 @@ GameObject:
   m_Component:
   - component: {fileID: 22574439}
   - component: {fileID: 22574438}
-  - component: {fileID: 22574440}
   m_Layer: 5
-  m_Name: uidoc_MainMenu
+  m_Name: uidoc_Loading
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PanelSettings: {fileID: 11400000, guid: a8e94ee57aee94646bc4a6d43b620a96, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 4a8d1234eb5c19c438faea89cda09576,
+  sourceAsset: {fileID: 9197481963319205126, guid: 52fba129c9d142a4bb1e46dc6d643416,
     type: 3}
   m_SortingOrder: 0
   m_WorldSpaceSizeMode: 1
@@ -171,30 +170,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &22574440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 22574437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63afbeadaf5a4c23942d4a476be8ed1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mainMenuUiDoc: {fileID: 22574438}
-  _prototypeScenes:
-  - ButtonId: btn_proto_planetary_lod
-    SceneAsset: {fileID: 102900000, guid: 71a264a32f4c7b540b27fe9aa32b9481, type: 3}
-  - ButtonId: btn_proto_vessel_assembly
-    SceneAsset: {fileID: 102900000, guid: b1e60c3154231c340b7c298f33f959bf, type: 3}
-  - ButtonId: btn_proto_floating_frame
-    SceneAsset: {fileID: 102900000, guid: 598d3562927939649a2f80ce3a82ae55, type: 3}
-  - ButtonId: btn_proto_physics_contexts
-    SceneAsset: {fileID: 102900000, guid: bbb0fb45e9b84af4aaf99df7c646b98a, type: 3}
-  - ButtonId: btn_proto_orbital_physics
-    SceneAsset: {fileID: 102900000, guid: 1dcc7d64c304dfe4aa6eb6910ecdd844, type: 3}
 --- !u!1 &361639437
 GameObject:
   m_ObjectHideFlags: 0
