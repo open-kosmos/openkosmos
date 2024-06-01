@@ -6,12 +6,9 @@ namespace Arkship.Parts
 {
     public static class PartDictionary
     {
-        //TODO - This implementation is placeholder. Needs a complete re-write
-        //Specifically it needs to be able to enumerate and get basic info (name, description etc.) of parts
-        //without actually loading them.
-        
         private static bool IsInitialised = false;
-        private static List<PartBase> AllParts;
+        private static List<PartDefinition> AllPartDefs;
+        private static Dictionary<PartDefinition, PartBase> PartPrefabDict;
         
         public static void Initialise()
         {
@@ -20,18 +17,39 @@ namespace Arkship.Parts
                 return;
             }
 
-            AllParts = Resources.LoadAll<PartBase>("Parts").ToList();
-            
-            Debug.Log("Found parts:");
-            foreach (var part in AllParts)
+            PartPrefabDict = new();
+
+            AllPartDefs = new();
+            var allPartDefJson = Resources.LoadAll<TextAsset>("Parts").ToList();
+            foreach (var def in allPartDefJson)
             {
-                Debug.Log($"Found part: {part.GetName()}");
+                AllPartDefs.Add(JsonUtility.FromJson<PartDefinition>(def.text));
             }
         }
 
-        public static IReadOnlyList<PartBase> GetParts()
+        public static IReadOnlyList<PartDefinition> GetParts()
         {
-            return AllParts;
+            return AllPartDefs;
+        }
+
+        public static PartBase SpawnPart(PartDefinition def)
+        {
+            if (!PartPrefabDict.ContainsKey(def))
+            {
+                var part = Resources.Load<PartBase>(def.Path);
+                Debug.Assert(part != null, $"Part {def.Name} couldn't be loaded");
+                PartPrefabDict[def] = part;
+            }
+
+            PartBase prefab = null;
+            PartPrefabDict.TryGetValue(def, out prefab);
+
+            if (prefab != null)
+            {
+                return GameObject.Instantiate(prefab);
+            }
+
+            return null;
         }
     }
 }

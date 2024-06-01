@@ -19,25 +19,26 @@ public class VabController : MonoBehaviour
         
         foreach (var part in PartDictionary.GetParts())
         {
-            if (!CategoryTabs.ContainsKey(part.GetCategory()))
+            if (!CategoryTabs.ContainsKey(part.Category))
             {
                 var categoryTab = _categoryTabTemplate.Instantiate().Q<Tab>();
-                categoryTab.Q<Label>("unity-tab__header-label").text = part.GetCategory();
+                categoryTab.Q<Label>("unity-tab__header-label").text = part.Category;
                 categoriesTabView.Add(categoryTab);
-                CategoryTabs.Add(part.GetCategory(), categoryTab);
+                CategoryTabs.Add(part.Category, categoryTab);
             }
             
-            var tab = CategoryTabs[part.GetCategory()];
+            var tab = CategoryTabs[part.Category];
             
             var button = _partPickerPartTemplate.Instantiate().Q<Button>();
             button.clicked += () => { OnPartClicked(part); };
-            button.text = part.GetName();
+            button.text = part.Name;
+            button.tooltip = part.Description;
             tab.Add(button);
         }
     }
 
-    private void OnPartClicked(PartBase part)
+    private void OnPartClicked(PartDefinition part)
     {
-        GameObject.Instantiate(part);
+        PartDictionary.SpawnPart(part);
     }
 }
