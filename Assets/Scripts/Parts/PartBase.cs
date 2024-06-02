@@ -7,27 +7,16 @@ namespace Arkship.Parts
         //TODO:
         //COM etc.
         
-        [SerializeField]
-        private string PartName;
-
-        [SerializeField] private string Category;
+        private PartDefinition CreatedFromDef;
         
-        [SerializeField]
-        public string PartDescription;
-
-        public string GetName()
+        public void SetCreatedFromDefinition(PartDefinition def)
         {
-            return PartName;
-        }
-        
-        public string GetCategory()
-        {
-            return Category;
+            CreatedFromDef = def;
         }
 
-        public string GetDescription()
+        public PartDefinition GetDefinition()
         {
-            return PartDescription;
+            return CreatedFromDef;
         }
         
         public virtual float GetMass()

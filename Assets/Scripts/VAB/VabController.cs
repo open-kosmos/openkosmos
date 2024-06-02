@@ -12,6 +12,7 @@ namespace Arkship.Vab
     {
         [Header("UI")]
         [SerializeField] private PartPickerPanel _partPickerPanel;
+        [SerializeField] private PartInfoPanel _partInfoPanel;
         [SerializeField] private Camera _mainCam;
         
         [Header("Gizmos")]
@@ -158,10 +159,12 @@ namespace Arkship.Vab
             {
                 CurrentGizmo.gameObject.SetActive(true);
                 CurrentGizmo.AttachToPart(SelectedPart);
+                _partInfoPanel.SetPart(SelectedPart);
             }
             else
             {
                 _moveGizmo.gameObject.SetActive(false);
+                _partInfoPanel.SetPart(null);
             }
         }
     }

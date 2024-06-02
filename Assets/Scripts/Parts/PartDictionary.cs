@@ -46,7 +46,9 @@ namespace Arkship.Parts
 
             if (prefab != null)
             {
-                return GameObject.Instantiate(prefab);
+                PartBase newPart = GameObject.Instantiate(prefab);
+                newPart.SetCreatedFromDefinition(def);
+                return newPart;
             }
 
             return null;
