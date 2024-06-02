@@ -10,8 +10,8 @@ namespace Arkship.Parts
         [SerializeField] public float MaxFuel;
         [SerializeField] public float MaxThrust;
 
-        //Some sort of attribure here for "Tweakable"
-        private float CurrentFuel;
+        [Tweakable]
+        private float CurrentFuel = 1.0f;
 
         public override float GetMass()
         {

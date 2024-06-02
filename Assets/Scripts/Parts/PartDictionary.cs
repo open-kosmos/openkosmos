@@ -1,14 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 namespace Arkship.Parts
 {
+    public class PartTypeReflectionEntry
+    {
+        public List<FieldInfo> TweakableFields;
+    }
+    
     public static class PartDictionary
     {
         private static bool IsInitialised = false;
         private static List<PartDefinition> AllPartDefs;
         private static Dictionary<PartDefinition, PartBase> PartPrefabDict;
+        private static Dictionary<System.Type, PartTypeReflectionEntry> PartTypeReflectionDict;
         
         public static void Initialise()
         {
@@ -18,6 +25,7 @@ namespace Arkship.Parts
             }
 
             PartPrefabDict = new();
+            PartTypeReflectionDict = new();
 
             AllPartDefs = new();
             var allPartDefJson = Resources.LoadAll<TextAsset>("Parts").ToList();
@@ -52,6 +60,28 @@ namespace Arkship.Parts
             }
 
             return null;
+        }
+
+        public static IReadOnlyList<FieldInfo> GetPartTweakableFields(PartBase part)
+        {
+            var type = part.GetType();
+            if (!PartTypeReflectionDict.ContainsKey(type))
+            {
+                PartTypeReflectionEntry entry = new();
+                entry.TweakableFields = new();
+                
+                var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                foreach (var field in fields)
+                {
+                    if (field.GetCustomAttribute<TweakableAttribute>() != null)
+                    {
+                        entry.TweakableFields.Add(field);
+                    }
+                }
+                PartTypeReflectionDict.Add(type, entry);
+            }
+
+            return PartTypeReflectionDict[type].TweakableFields;
         }
     }
 }

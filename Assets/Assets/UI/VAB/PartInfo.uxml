@@ -4,5 +4,6 @@
         <engine:Label text="Label" name="PartName" />
         <engine:Label text="Description" name="PartDescriptionTitle" class="PartInfoTitle" style="-unity-font-style: bold; font-size: 16px;" />
         <engine:Label text="Label" name="PartDescription" style="white-space: normal;" />
+        <engine:Foldout text="Tweakables" name="Tweakables" />
     </engine:VisualElement>
 </engine:UXML>

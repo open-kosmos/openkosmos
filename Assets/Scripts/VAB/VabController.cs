@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Arkship.Parts;
 using UnityEngine;
 using UnityEngine.Events;
@@ -119,11 +120,12 @@ namespace Arkship.Vab
 
         public void DeleteClicked(InputAction.CallbackContext context)
         {
-            if (SelectedPart != null)
-            {
-                GameObject.Destroy(SelectedPart.gameObject);
-                SelectPart(null);
-            }
+            TestSerialise();
+            // if (SelectedPart != null)
+            // {
+            //     GameObject.Destroy(SelectedPart.gameObject);
+            //     SelectPart(null);
+            // }
         }
         
         public void Update()
@@ -166,6 +168,33 @@ namespace Arkship.Vab
                 _moveGizmo.gameObject.SetActive(false);
                 _partInfoPanel.SetPart(null);
             }
+        }
+
+        private void TestSerialise()
+        {
+            Parts.VehicleSpec vehicleSpec = new();
+            vehicleSpec.Parts = new();
+
+            foreach (var part in VehicleRoot.GetComponentsInChildren<PartBase>())
+            {
+                Parts.PartSpec partSpec = new();
+                partSpec.PartDefName = part.GetDefinition().Name;
+                partSpec.LocalPosition = part.transform.localPosition;
+                partSpec.LocalRotation = part.transform.localRotation;
+                
+                //Get tweakables
+                partSpec.Tweakables = new();
+                foreach (var tweakableField in PartDictionary.GetPartTweakableFields(part))
+                {
+                    partSpec.Tweakables.Add(
+                        new TweakableValue(tweakableField.Name, 
+                        tweakableField.GetValue(part).ToString()));
+                }
+
+                vehicleSpec.Parts.Add(partSpec);
+            }
+            
+            vehicleSpec.Serialise();
         }
     }
 }
