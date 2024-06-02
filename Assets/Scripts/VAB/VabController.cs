@@ -3,42 +3,25 @@ using Arkship.Parts;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class VabController : MonoBehaviour
+namespace ArkShip.Vab
 {
-    [SerializeField] private UIDocument _partPickerDoc;
-    [SerializeField] private VisualTreeAsset _categoryTabTemplate;
-    [SerializeField] private VisualTreeAsset _partPickerPartTemplate;
-    
-    void Start()
+    public class VabController : MonoBehaviour
     {
-        PartDictionary.Initialise();
-
-        Dictionary<string, Tab> CategoryTabs = new Dictionary<string, Tab>();
-
-        var categoriesTabView = _partPickerDoc.rootVisualElement.Q<TabView>("Categories");
+        [SerializeField] private PartPickerPanel _partPickerPanel;
         
-        foreach (var part in PartDictionary.GetParts())
-        {
-            if (!CategoryTabs.ContainsKey(part.Category))
-            {
-                var categoryTab = _categoryTabTemplate.Instantiate().Q<Tab>();
-                categoryTab.Q<Label>("unity-tab__header-label").text = part.Category;
-                categoriesTabView.Add(categoryTab);
-                CategoryTabs.Add(part.Category, categoryTab);
-            }
-            
-            var tab = CategoryTabs[part.Category];
-            
-            var button = _partPickerPartTemplate.Instantiate().Q<Button>();
-            button.clicked += () => { OnPartClicked(part); };
-            button.text = part.Name;
-            button.tooltip = part.Description;
-            tab.Add(button);
-        }
-    }
+        private GameObject Vehicleroot;
 
-    private void OnPartClicked(PartDefinition part)
-    {
-        PartDictionary.SpawnPart(part);
+        void Start()
+        {
+            _partPickerPanel.OnPartPicked += OnPartPickerClicked;
+
+            Vehicleroot = new GameObject("VehicleRoot");
+        }
+
+        private void OnPartPickerClicked(PartDefinition part)
+        {
+            var newPart = PartDictionary.SpawnPart(part);
+            newPart.transform.SetParent(Vehicleroot.transform);
+        }
     }
 }

@@ -265,6 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1844579643}
   - component: {fileID: 1844579642}
+  - component: {fileID: 1844579644}
   m_Layer: 5
   m_Name: PartPicker
   m_TagString: Untagged
@@ -307,6 +308,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1844579644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844579641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf21e67f754067c4ca4bbe59398041e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _partPickerDoc: {fileID: 1844579642}
+  _categoryTabTemplate: {fileID: 9197481963319205126, guid: 7ee91f6346cfaad45a114f20f693429d,
+    type: 3}
+  _partPickerPartTemplate: {fileID: 9197481963319205126, guid: e5163aaf1e0b54c4a814ae818ef2cbeb,
+    type: 3}
 --- !u!1 &2011182123
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,11 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d24a66413ea24344aacc512e7f23da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _partPickerDoc: {fileID: 1844579642}
-  _categoryTabTemplate: {fileID: 9197481963319205126, guid: 7ee91f6346cfaad45a114f20f693429d,
-    type: 3}
-  _partPickerPartTemplate: {fileID: 9197481963319205126, guid: e5163aaf1e0b54c4a814ae818ef2cbeb,
-    type: 3}
+  _partPickerPanel: {fileID: 1844579644}
 --- !u!4 &2011182125
 Transform:
   m_ObjectHideFlags: 0
