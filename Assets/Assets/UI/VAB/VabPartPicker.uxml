@@ -1,3 +1,3 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:TabView name="Categories" style="width: 30%; height: auto; position: absolute; top: 0; left: 0; bottom: 0; flex-grow: 1; justify-content: center; align-content: auto; background-color: rgb(226, 226, 226);" />
+    <engine:TabView name="Categories" style="width: auto; height: auto; position: absolute; top: 0; left: 0; bottom: 0; flex-grow: 1; justify-content: center; align-content: auto; background-color: rgb(226, 226, 226);" />
 </engine:UXML>
