@@ -3,12 +3,13 @@ using UnityEngine;
 
 namespace Arkship.Parts
 {
+    //Struct for serialising the current value of tweakables
     [System.Serializable]
     public struct TweakableValue
     {
         public string Name;
         public string Value;
-
+        
         public TweakableValue(string name, string value)
         {
             Name = name;
@@ -29,6 +30,8 @@ namespace Arkship.Parts
     public class VehicleSpec
     {
         public List<PartSpec> Parts;
+        
+        //TODO - Connection info. Probably a separate blob of data referncing the part list by indices
 
         public void Serialise()
         {

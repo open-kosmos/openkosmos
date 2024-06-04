@@ -7,16 +7,16 @@ namespace Arkship.Parts
         //TODO:
         //COM etc.
         
-        private PartDefinition CreatedFromDef;
+        private PartDefinition _createdFromDef;
         
         public void SetCreatedFromDefinition(PartDefinition def)
         {
-            CreatedFromDef = def;
+            _createdFromDef = def;
         }
 
         public PartDefinition GetDefinition()
         {
-            return CreatedFromDef;
+            return _createdFromDef;
         }
         
         public virtual float GetMass()

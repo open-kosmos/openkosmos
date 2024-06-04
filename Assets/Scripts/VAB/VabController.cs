@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 using Arkship.Parts;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 namespace Arkship.Vab
 {
@@ -28,8 +23,8 @@ namespace Arkship.Vab
         [SerializeField] private float _cameraMoveSpeed = 0.5f;
         [SerializeField] private float _cameraRotateSpeed = 10.0f;
         
-        private GameObject VehicleRoot;
-        private PartBase SelectedPart;
+        private GameObject _vehicleRoot;
+        private PartBase _selectedPart;
 
         private enum EControlState
         {
@@ -38,16 +33,16 @@ namespace Arkship.Vab
             MovingCamera,
         }
 
-        private EControlState ControlState = EControlState.None;
-        private GizmoBase CurrentGizmo; 
+        private EControlState _controlState = EControlState.None;
+        private GizmoBase _currentGizmo; 
 
         void Start()
         {
             _partPickerPanel.OnPartPicked += OnPartPickerClicked;
             
-            CurrentGizmo = _moveGizmo;
+            _currentGizmo = _moveGizmo;
 
-            VehicleRoot = new GameObject("VehicleRoot");
+            _vehicleRoot = new GameObject("VehicleRoot");
             SelectPart(null);
 
         }
@@ -55,14 +50,14 @@ namespace Arkship.Vab
         private void OnPartPickerClicked(PartDefinition part)
         {
             var newPart = PartDictionary.SpawnPart(part);
-            newPart.transform.SetParent(VehicleRoot.transform);
+            newPart.transform.SetParent(_vehicleRoot.transform);
             SelectPart(newPart);
         }
 
         public void OnScreenClick(InputAction.CallbackContext context)
         {
             //Part selection
-            if (context.phase == InputActionPhase.Performed && ControlState == EControlState.None)
+            if (context.phase == InputActionPhase.Performed && _controlState == EControlState.None)
             {
                 Vector2 mousePos = _mousePosition.action.ReadValue<Vector2>();
                 var ray = _mainCam.ScreenPointToRay(mousePos);
@@ -85,17 +80,17 @@ namespace Arkship.Vab
         public void OnScreenDrag(InputAction.CallbackContext context)
         {
             //Gizmo handling
-            if (context.phase == InputActionPhase.Started && ControlState == EControlState.None)
+            if (context.phase == InputActionPhase.Started && _controlState == EControlState.None)
             {
-                if (CurrentGizmo.TestClick(_mousePosition.action.ReadValue<Vector2>(), _mainCam))
+                if (_currentGizmo.TestClick(_mousePosition.action.ReadValue<Vector2>(), _mainCam))
                 {
-                    ControlState = EControlState.DraggingGizmo;
+                    _controlState = EControlState.DraggingGizmo;
                 }
             }
-            else if (context.phase == InputActionPhase.Canceled && ControlState == EControlState.DraggingGizmo)
+            else if (context.phase == InputActionPhase.Canceled && _controlState == EControlState.DraggingGizmo)
             {
-                CurrentGizmo.EndDrag(_mousePosition.action.ReadValue<Vector2>(), _mainCam);
-                ControlState = EControlState.None;
+                _currentGizmo.EndDrag(_mousePosition.action.ReadValue<Vector2>(), _mainCam);
+                _controlState = EControlState.None;
             }
         }
         
@@ -104,15 +99,15 @@ namespace Arkship.Vab
             switch (context.phase)
             {
                 case InputActionPhase.Started:
-                    if (ControlState == EControlState.None)
+                    if (_controlState == EControlState.None)
                     {
-                        ControlState = EControlState.MovingCamera;
+                        _controlState = EControlState.MovingCamera;
                     }
                     break;
                 case InputActionPhase.Canceled:
-                    if (ControlState == EControlState.MovingCamera)
+                    if (_controlState == EControlState.MovingCamera)
                     {
-                        ControlState = EControlState.None;
+                        _controlState = EControlState.None;
                     }
                     break;
             }
@@ -130,18 +125,18 @@ namespace Arkship.Vab
         
         public void Update()
         {
-            switch (ControlState)
+            switch (_controlState)
             {
                 case EControlState.None:
                     //Manual moving with cursor keys
-                    if (SelectedPart != null)
+                    if (_selectedPart != null)
                     {
                         Vector3 move = _moveAction.action.ReadValue<Vector3>();
-                        SelectedPart.transform.localPosition += move * Time.deltaTime;
+                        _selectedPart.transform.localPosition += move * Time.deltaTime;
                     }
                     break;
                 case EControlState.DraggingGizmo:
-                    CurrentGizmo.UpdateDrag(_mousePosition.action.ReadValue<Vector2>(), _mouseDelta.action.ReadValue<Vector2>(), _mainCam);
+                    _currentGizmo.UpdateDrag(_mousePosition.action.ReadValue<Vector2>(), _mouseDelta.action.ReadValue<Vector2>(), _mainCam);
                     break;
                 case EControlState.MovingCamera:
                     Vector2 delta = _mouseDelta.action.ReadValue<Vector2>();
@@ -155,13 +150,13 @@ namespace Arkship.Vab
         
         private void SelectPart(PartBase part)
         {
-            SelectedPart = part;
+            _selectedPart = part;
 
-            if (SelectedPart != null)
+            if (_selectedPart != null)
             {
-                CurrentGizmo.gameObject.SetActive(true);
-                CurrentGizmo.AttachToPart(SelectedPart);
-                _partInfoPanel.SetPart(SelectedPart);
+                _currentGizmo.gameObject.SetActive(true);
+                _currentGizmo.AttachToPart(_selectedPart);
+                _partInfoPanel.SetPart(_selectedPart);
             }
             else
             {
@@ -172,12 +167,12 @@ namespace Arkship.Vab
 
         private void TestSerialise()
         {
-            Parts.VehicleSpec vehicleSpec = new();
+            VehicleSpec vehicleSpec = new();
             vehicleSpec.Parts = new();
 
-            foreach (var part in VehicleRoot.GetComponentsInChildren<PartBase>())
+            foreach (var part in _vehicleRoot.GetComponentsInChildren<PartBase>())
             {
-                Parts.PartSpec partSpec = new();
+                PartSpec partSpec = new();
                 partSpec.PartDefName = part.GetDefinition().Name;
                 partSpec.LocalPosition = part.transform.localPosition;
                 partSpec.LocalRotation = part.transform.localRotation;

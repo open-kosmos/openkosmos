@@ -5,11 +5,11 @@ namespace Arkship.Vab
 {
     public class GizmoBase : MonoBehaviour
     {
-        protected PartBase CurrentPart;
+        protected PartBase _currentPart;
         
         public void AttachToPart(PartBase part)
         {
-            CurrentPart = part;
+            _currentPart = part;
             transform.position = part.transform.position;
         }
         

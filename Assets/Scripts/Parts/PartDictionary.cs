@@ -12,45 +12,45 @@ namespace Arkship.Parts
     
     public static class PartDictionary
     {
-        private static bool IsInitialised = false;
-        private static List<PartDefinition> AllPartDefs;
-        private static Dictionary<PartDefinition, PartBase> PartPrefabDict;
-        private static Dictionary<System.Type, PartTypeReflectionEntry> PartTypeReflectionDict;
+        private static bool _isInitialised = false;
+        private static List<PartDefinition> _allPartDefs;
+        private static Dictionary<PartDefinition, PartBase> _partPrefabDict;
+        private static Dictionary<System.Type, PartTypeReflectionEntry> _partTypeReflectionDict;
         
         public static void Initialise()
         {
-            if (IsInitialised)
+            if (_isInitialised)
             {
                 return;
             }
 
-            PartPrefabDict = new();
-            PartTypeReflectionDict = new();
+            _partPrefabDict = new();
+            _partTypeReflectionDict = new();
 
-            AllPartDefs = new();
+            _allPartDefs = new();
             var allPartDefJson = Resources.LoadAll<TextAsset>("Parts").ToList();
             foreach (var def in allPartDefJson)
             {
-                AllPartDefs.Add(JsonUtility.FromJson<PartDefinition>(def.text));
+                _allPartDefs.Add(JsonUtility.FromJson<PartDefinition>(def.text));
             }
         }
 
         public static IReadOnlyList<PartDefinition> GetParts()
         {
-            return AllPartDefs;
+            return _allPartDefs;
         }
 
         public static PartBase SpawnPart(PartDefinition def)
         {
-            if (!PartPrefabDict.ContainsKey(def))
+            if (!_partPrefabDict.ContainsKey(def))
             {
                 var part = Resources.Load<PartBase>(def.Path);
                 Debug.Assert(part != null, $"Part {def.Name} couldn't be loaded");
-                PartPrefabDict[def] = part;
+                _partPrefabDict[def] = part;
             }
 
             PartBase prefab = null;
-            PartPrefabDict.TryGetValue(def, out prefab);
+            _partPrefabDict.TryGetValue(def, out prefab);
 
             if (prefab != null)
             {
@@ -65,7 +65,7 @@ namespace Arkship.Parts
         public static IReadOnlyList<FieldInfo> GetPartTweakableFields(PartBase part)
         {
             var type = part.GetType();
-            if (!PartTypeReflectionDict.ContainsKey(type))
+            if (!_partTypeReflectionDict.ContainsKey(type))
             {
                 PartTypeReflectionEntry entry = new();
                 entry.TweakableFields = new();
@@ -78,10 +78,10 @@ namespace Arkship.Parts
                         entry.TweakableFields.Add(field);
                     }
                 }
-                PartTypeReflectionDict.Add(type, entry);
+                _partTypeReflectionDict.Add(type, entry);
             }
 
-            return PartTypeReflectionDict[type].TweakableFields;
+            return _partTypeReflectionDict[type].TweakableFields;
         }
     }
 }

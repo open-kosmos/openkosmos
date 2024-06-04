@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Arkship.Parts
 {
@@ -7,15 +8,18 @@ namespace Arkship.Parts
         //TODO - this should come from somewhere else
         private const float FUEL_DENSITY = 1.0f;
         
-        [SerializeField] public float MaxFuel;
-        [SerializeField] public float MaxThrust;
+        [FormerlySerializedAs("MaxFuel")]
+        [SerializeField] private float _maxFuel;
+
+        [FormerlySerializedAs("MaxThrust")]
+        [SerializeField] private float _maxThrust;
 
         [Tweakable]
-        private float CurrentFuel = 1.0f;
+        private float _currentFuel = 1.0f;
 
         public override float GetMass()
         {
-            return CurrentFuel * FUEL_DENSITY;
+            return _currentFuel * _maxFuel * FUEL_DENSITY;
         }
     }
 }
