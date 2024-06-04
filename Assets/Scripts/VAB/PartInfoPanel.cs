@@ -41,6 +41,12 @@ namespace Arkship.Vab
                     if (field.FieldType == typeof(float))
                     {
                         Slider slider = new Slider(field.Name, 0.0f, 1.0f);
+                        slider.value = (float)field.GetValue(part);
+                        slider.RegisterValueChangedCallback((evt) =>
+                        {
+                            field.SetValue(part, evt.newValue);
+                        });
+                        
                         _tweakablesFoldout.Add(slider);
                     }
                     else
