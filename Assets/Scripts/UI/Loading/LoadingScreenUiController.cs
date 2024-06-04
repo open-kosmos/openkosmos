@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace UI.Loading
+namespace Kosmos.UI.Loading
 {
     public class LoadingScreenUiController : MonoBehaviour
     {
