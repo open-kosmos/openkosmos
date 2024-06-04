@@ -1,10 +1,10 @@
-﻿using UI.Loading;
+﻿using Kosmos.UI.Loading;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace Arkship.UI.MainMenu
+namespace Kosmos.UI.MainMenu
 {
     [System.Serializable]
     public struct PrototypeSceneEntry
