@@ -13,7 +13,7 @@ namespace Kosmos.Prototype.Staging.Systems
                 .ForEach((ref Entity entity, ref Engine engine) =>
                 {
                     
-                    Debug.Log("Engine ignited!");
+                    Debug.Log("Engine ignited! Outputting thrust!");
                     
                     EntityManager.RemoveComponent<ShouldStageTag>(entity);
                     
