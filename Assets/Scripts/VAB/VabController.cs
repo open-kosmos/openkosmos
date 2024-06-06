@@ -1,6 +1,8 @@
+using System.IO;
 using Arkship.Parts;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 namespace Arkship.Vab
 {
@@ -23,7 +25,7 @@ namespace Arkship.Vab
         [SerializeField] private float _cameraMoveSpeed = 0.5f;
         [SerializeField] private float _cameraRotateSpeed = 10.0f;
         
-        private GameObject _vehicleRoot;
+        private PartCollection _vehicleRoot;
         private PartBase _selectedPart;
 
         private enum EControlState
@@ -42,15 +44,14 @@ namespace Arkship.Vab
             
             _currentGizmo = _moveGizmo;
 
-            _vehicleRoot = new GameObject("VehicleRoot");
+            _vehicleRoot = new GameObject("VehicleRoot").AddComponent<PartCollection>();
             SelectPart(null);
 
         }
 
         private void OnPartPickerClicked(PartDefinition part)
         {
-            var newPart = PartDictionary.SpawnPart(part);
-            newPart.transform.SetParent(_vehicleRoot.transform);
+            var newPart = _vehicleRoot.AddPart(part);
             SelectPart(newPart);
         }
 
@@ -115,12 +116,11 @@ namespace Arkship.Vab
 
         public void DeleteClicked(InputAction.CallbackContext context)
         {
-            TestSerialise();
-            // if (SelectedPart != null)
-            // {
-            //     GameObject.Destroy(SelectedPart.gameObject);
-            //     SelectPart(null);
-            // }
+            if (_selectedPart != null)
+            {
+                GameObject.Destroy(_selectedPart.gameObject);
+                SelectPart(null);
+            }
         }
         
         public void Update()
@@ -165,31 +165,30 @@ namespace Arkship.Vab
             }
         }
 
-        private void TestSerialise()
+        public void SavePressed(InputAction.CallbackContext context)
         {
-            VehicleSpec vehicleSpec = new();
-            vehicleSpec.Parts = new();
-
-            foreach (var part in _vehicleRoot.GetComponentsInChildren<PartBase>())
+            if (context.phase != InputActionPhase.Performed)
             {
-                PartSpec partSpec = new();
-                partSpec.PartDefName = part.GetDefinition().Name;
-                partSpec.LocalPosition = part.transform.localPosition;
-                partSpec.LocalRotation = part.transform.localRotation;
-                
-                //Get tweakables
-                partSpec.Tweakables = new();
-                foreach (var tweakableField in PartDictionary.GetPartTweakableFields(part))
-                {
-                    partSpec.Tweakables.Add(
-                        new TweakableValue(tweakableField.Name, 
-                        tweakableField.GetValue(part).ToString()));
-                }
-
-                vehicleSpec.Parts.Add(partSpec);
+                return;
             }
             
-            vehicleSpec.Serialise();
+            string fileName = context.control.displayName;
+            string path = Path.Combine(Application.persistentDataPath, $"{fileName}.veh");
+            _vehicleRoot.Serialise(path);
+        }
+
+        public void LoadPressed(InputAction.CallbackContext context)
+        {
+            if (context.phase != InputActionPhase.Performed)
+            {
+                return;
+            }
+            
+            SelectPart(null);
+            string fileName = context.control.displayName;
+            string path = Path.Combine(Application.persistentDataPath, $"{fileName}.veh");
+            Debug.Log($"Loading from {path}");
+            _vehicleRoot.Deserialise(path);
         }
     }
 }

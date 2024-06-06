@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace Arkship.Parts
@@ -33,10 +34,16 @@ namespace Arkship.Parts
         
         //TODO - Connection info. Probably a separate blob of data referncing the part list by indices
 
-        public void Serialise()
+        public void Serialise(string path)
         {
-            Debug.Log(JsonUtility.ToJson(this));
+            File.WriteAllText(path, JsonUtility.ToJson(this));
+            Debug.Log($"Saved to {path}");
+        }
+
+        public static VehicleSpec Deserialise(string path)
+        {
+            string specJson = File.ReadAllText(path);
+            return JsonUtility.FromJson<VehicleSpec>(specJson);
         }
     }
-    
 }
