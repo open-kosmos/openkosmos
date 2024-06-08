@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 0f59efbd25f2d3048adaed49a38cc6fd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -176,10 +176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 893738139346bc747addb9253e28826d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PartName: Small Capsule 2
-  Category: C&C
-  PartDescription: A small rocket capsule. You could maybe fit a gerbil in it, if
-    it doesn't mind tight spaces.
 --- !u!1 &7769714219245779333
 GameObject:
   m_ObjectHideFlags: 0

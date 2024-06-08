@@ -28,11 +28,19 @@ namespace Arkship.Parts
     }
     
     [System.Serializable]
+    public class ConnectionSpec
+    {
+        public int ParentPartIndex;
+        public int ParentSocketIndex;
+        public int ChildPartIndex;
+        public int ChildSockedIndex;
+    }
+    
+    [System.Serializable]
     public class VehicleSpec
     {
         public List<PartSpec> Parts;
-        
-        //TODO - Connection info. Probably a separate blob of data referncing the part list by indices
+        public List<ConnectionSpec> Connections;
 
         public void Serialise(string path)
         {

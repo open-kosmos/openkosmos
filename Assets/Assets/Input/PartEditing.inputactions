@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SnappingMode",
+                    "type": "Button",
+                    "id": "4bae3f83-91ab-4e92-bbcf-4d35b4612ed2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -406,6 +415,17 @@
                     "action": "Load",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "9c2a317c-3711-439c-846b-cca58248b020",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SnappingMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

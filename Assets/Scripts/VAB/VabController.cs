@@ -17,7 +17,6 @@ namespace Arkship.Vab
         [SerializeField] private GizmoBase _moveGizmo;
         
         [Header("Input")]
-        [SerializeField] private InputActionReference _moveAction;
         [SerializeField] private InputActionReference _mousePosition;
         [SerializeField] private InputActionReference _mouseDelta;
         
@@ -60,16 +59,11 @@ namespace Arkship.Vab
             //Part selection
             if (context.phase == InputActionPhase.Performed && _controlState == EControlState.None)
             {
-                Vector2 mousePos = _mousePosition.action.ReadValue<Vector2>();
-                var ray = _mainCam.ScreenPointToRay(mousePos);
-
-                if (Physics.Raycast(ray, out RaycastHit hit))
+                var part = GetPartUnderCursor();
+                
+                if (part != null)
                 {
-                    var part = hit.collider.GetComponentInParent<PartBase>();
-                    if (part != null)
-                    {
                         SelectPart(part);
-                    }
                 }
                 else
                 {
@@ -78,19 +72,38 @@ namespace Arkship.Vab
             }
         }
 
+        public PartBase GetPartUnderCursor()
+        {
+            Vector2 mousePos = _mousePosition.action.ReadValue<Vector2>();
+            var ray = _mainCam.ScreenPointToRay(mousePos);
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                var part = hit.collider.GetComponentInParent<PartBase>();
+                if (part != null)
+                {
+                    return part;
+                }
+            }
+
+            return null;
+        }
+
         public void OnScreenDrag(InputAction.CallbackContext context)
         {
             //Gizmo handling
+            var mousePos = _mousePosition.action.ReadValue<Vector2>();
             if (context.phase == InputActionPhase.Started && _controlState == EControlState.None)
             {
-                if (_currentGizmo.TestClick(_mousePosition.action.ReadValue<Vector2>(), _mainCam))
+                if (_currentGizmo.TestClick(mousePos, _mainCam))
                 {
                     _controlState = EControlState.DraggingGizmo;
+                    _currentGizmo.StartDrag(mousePos, _mainCam);
                 }
             }
             else if (context.phase == InputActionPhase.Canceled && _controlState == EControlState.DraggingGizmo)
             {
-                _currentGizmo.EndDrag(_mousePosition.action.ReadValue<Vector2>(), _mainCam);
+                _currentGizmo.EndDrag(mousePos, _mainCam);
                 _controlState = EControlState.None;
             }
         }
@@ -118,7 +131,7 @@ namespace Arkship.Vab
         {
             if (_selectedPart != null)
             {
-                GameObject.Destroy(_selectedPart.gameObject);
+                _vehicleRoot.RemovePart(_selectedPart);
                 SelectPart(null);
             }
         }
@@ -128,12 +141,6 @@ namespace Arkship.Vab
             switch (_controlState)
             {
                 case EControlState.None:
-                    //Manual moving with cursor keys
-                    if (_selectedPart != null)
-                    {
-                        Vector3 move = _moveAction.action.ReadValue<Vector3>();
-                        _selectedPart.transform.localPosition += move * Time.deltaTime;
-                    }
                     break;
                 case EControlState.DraggingGizmo:
                     _currentGizmo.UpdateDrag(_mousePosition.action.ReadValue<Vector2>(), _mouseDelta.action.ReadValue<Vector2>(), _mainCam);
@@ -155,7 +162,7 @@ namespace Arkship.Vab
             if (_selectedPart != null)
             {
                 _currentGizmo.gameObject.SetActive(true);
-                _currentGizmo.AttachToPart(_selectedPart);
+                _currentGizmo.AttachToPart(_selectedPart, _vehicleRoot);
                 _partInfoPanel.SetPart(_selectedPart);
             }
             else
