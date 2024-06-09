@@ -21,7 +21,7 @@ namespace Arkship.Parts
     [System.Serializable]
     public class PartSpec
     {
-        public string PartDefName;
+        public string PartDefGuid;
         public Vector3 LocalPosition;
         public Quaternion LocalRotation;
         public List<TweakableValue> Tweakables;
@@ -44,7 +44,7 @@ namespace Arkship.Parts
 
         public void Serialise(string path)
         {
-            File.WriteAllText(path, JsonUtility.ToJson(this));
+            File.WriteAllText(path, JsonUtility.ToJson(this, true));
             Debug.Log($"Saved to {path}");
         }
 

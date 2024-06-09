@@ -186,7 +186,7 @@ namespace Arkship.Parts
             foreach (var part in _allParts)
             {
                 PartSpec partSpec = new();
-                partSpec.PartDefName = part.GetDefinition().Name;
+                partSpec.PartDefGuid = part.GetDefinition().Guid.ToString();
                 partSpec.LocalPosition = part.transform.localPosition;
                 partSpec.LocalRotation = part.transform.localRotation;
                 
@@ -235,7 +235,7 @@ namespace Arkship.Parts
             for (var partIndex = 0; partIndex < spec.Parts.Count; partIndex++)
             {
                 var partSpec = spec.Parts[partIndex];
-                var partDef = PartDictionary.GetParts().FirstOrDefault(x => x.Name == partSpec.PartDefName);
+                var partDef = PartDictionary.GetPart(System.Guid.Parse(partSpec.PartDefGuid));
                 if (partDef != null)
                 {
                     var part = AddPart(partDef);

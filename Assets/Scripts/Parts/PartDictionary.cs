@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -13,8 +14,17 @@ namespace Arkship.Parts
     public static class PartDictionary
     {
         private static bool _isInitialised = false;
+        
+        //Flat list of all defs
         private static List<PartDefinition> _allPartDefs;
+        
+        //Guid->PartDef
+        private static Dictionary<System.Guid, PartDefinition> _partDefDict;
+        
+        //PartDef->Loaded part
         private static Dictionary<PartDefinition, PartBase> _partPrefabDict;
+        
+        //PartBase type -> reflection info
         private static Dictionary<System.Type, PartTypeReflectionEntry> _partTypeReflectionDict;
         
         public static void Initialise()
@@ -26,18 +36,41 @@ namespace Arkship.Parts
 
             _partPrefabDict = new();
             _partTypeReflectionDict = new();
+            _partDefDict = new();
 
             _allPartDefs = new();
             var allPartDefJson = Resources.LoadAll<TextAsset>("Parts").ToList();
-            foreach (var def in allPartDefJson)
+            foreach (var defText in allPartDefJson)
             {
-                _allPartDefs.Add(JsonUtility.FromJson<PartDefinition>(def.text));
+                var def = JsonUtility.FromJson<PartDefinition>(defText.text);
+                
+                if (string.IsNullOrEmpty(def.Guid))
+                {
+                    Debug.LogError($"Part definition {def.Name} has no Guid");
+                    continue;
+                }
+                
+                System.Guid guid = Guid.Parse(def.Guid);
+                if (!_partDefDict.TryAdd(guid, def))
+                {
+                    Debug.LogError($"Duplicate part Guid found for {def.Name} and {_partDefDict[guid].Name}");
+                    continue;
+                }
+
+                _allPartDefs.Add(def);
             }
         }
 
         public static IReadOnlyList<PartDefinition> GetParts()
         {
             return _allPartDefs;
+        }
+        
+        public static PartDefinition GetPart(System.Guid guid)
+        {
+            PartDefinition def = null;
+            _partDefDict.TryGetValue(guid, out def);
+            return def;
         }
 
         public static PartBase SpawnPart(PartDefinition def)
