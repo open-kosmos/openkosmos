@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Arkship.PSC
+namespace Kosmos
 {
     public class EntryPoint : MonoBehaviour
     {
