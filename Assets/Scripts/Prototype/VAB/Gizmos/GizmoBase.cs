@@ -1,7 +1,7 @@
-using Arkship.Parts;
+using Kosmos.Prototype.Parts;
 using UnityEngine;
 
-namespace Arkship.Vab
+namespace Kosmos.Prototype.Vab
 {
     public class GizmoBase : MonoBehaviour
     {

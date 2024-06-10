@@ -1,8 +1,8 @@
-using Arkship.Parts;
+using Kosmos.Prototype.Parts;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Arkship.Vab
+namespace Kosmos.Prototype.Vab
 {
     public class PartInfoPanel : MonoBehaviour
     {

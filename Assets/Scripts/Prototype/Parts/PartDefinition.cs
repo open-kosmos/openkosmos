@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Windows;
 
-namespace Arkship.Parts
+namespace Kosmos.Prototype.Parts
 {
 	[System.Serializable]
 	public class PartDefinition

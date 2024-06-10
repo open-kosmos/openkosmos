@@ -1,8 +1,8 @@
-using Arkship.Vab;
+using Kosmos.Prototype.Vab;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Arkship.Vab
+namespace Kosmos.Prototype.Vab
 {
     public class MoveGizmo : GizmoBase
     {

@@ -1,10 +1,10 @@
 using System.IO;
-using Arkship.Parts;
+using Kosmos.Prototype.Parts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-namespace Arkship.Vab
+namespace Kosmos.Prototype.Vab
 {
     public class VabController : MonoBehaviour
     {
@@ -171,6 +171,15 @@ namespace Arkship.Vab
                 _partInfoPanel.SetPart(null);
             }
         }
+        
+        private string GetSaveFolder()
+        {
+#if UNITY_EDITOR
+            return Path.Combine(Application.streamingAssetsPath, "Vehicles");
+#else
+            return Path.Combine(Application.persistentDataPath, "Vehicles");
+#endif
+        }
 
         public void SavePressed(InputAction.CallbackContext context)
         {
@@ -180,7 +189,13 @@ namespace Arkship.Vab
             }
             
             string fileName = context.control.displayName;
-            string path = Path.Combine(Application.persistentDataPath, $"{fileName}.veh");
+            string folder = GetSaveFolder();
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+            
+            string path = Path.Combine(GetSaveFolder(), $"{fileName}.veh");
             _vehicleRoot.Serialise(path);
         }
 
@@ -193,7 +208,12 @@ namespace Arkship.Vab
             
             SelectPart(null);
             string fileName = context.control.displayName;
-            string path = Path.Combine(Application.persistentDataPath, $"{fileName}.veh");
+            string path = Path.Combine(GetSaveFolder(), $"{fileName}.veh");
+            if (!File.Exists(path))
+            {
+                Debug.Log($"Can't load {path} - file doesn't exist");
+                return;
+            }
             Debug.Log($"Loading from {path}");
             _vehicleRoot.Deserialise(path);
         }

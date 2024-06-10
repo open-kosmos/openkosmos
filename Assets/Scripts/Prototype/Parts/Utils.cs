@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Arkship.Parts
+namespace Kosmos.Prototype.Parts
 {
     public static class Utils
     {

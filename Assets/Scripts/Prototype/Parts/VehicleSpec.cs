@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace Arkship.Parts
+namespace Kosmos.Prototype.Parts
 {
     //Struct for serialising the current value of tweakables
     [System.Serializable]

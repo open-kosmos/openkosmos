@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
-using Codice.CM.Client.Differences;
 using UnityEngine;
 
-namespace Arkship.Parts
+namespace Kosmos.Prototype.Parts
 {
     public class PartCollection : MonoBehaviour
     {
@@ -175,7 +173,7 @@ namespace Arkship.Parts
 
             return closestDist <= pixelRange;
         }
-        
+
         public void Serialise(string path)
         {
             VehicleSpec vehicleSpec = new();

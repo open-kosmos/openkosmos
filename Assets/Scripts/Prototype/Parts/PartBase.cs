@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Arkship.Parts
+namespace Kosmos.Prototype.Parts
 {
     public class PartBase : MonoBehaviour
     {
