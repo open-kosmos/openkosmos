@@ -1,0 +1,9 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:VisualElement style="flex-grow: 1; right: 0; bottom: 0; position: absolute; background-color: rgba(63, 63, 63, 0.65);">
+        <engine:Label text="Part" name="PartNameTitle" class="PartInfoTitle" style="-unity-font-style: bold; font-size: 16px;" />
+        <engine:Label text="Label" name="PartName" />
+        <engine:Label text="Description" name="PartDescriptionTitle" class="PartInfoTitle" style="-unity-font-style: bold; font-size: 16px;" />
+        <engine:Label text="Label" name="PartDescription" style="white-space: normal;" />
+        <engine:Foldout text="Tweakables" name="Tweakables" />
+    </engine:VisualElement>
+</engine:UXML>

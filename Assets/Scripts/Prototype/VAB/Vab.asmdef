@@ -1,0 +1,17 @@
+{
+    "name": "Vab",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6c8b90b75b7158b4bb213c018b44613b",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
