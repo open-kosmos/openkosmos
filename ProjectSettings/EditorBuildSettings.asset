@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prototypes/Prototype_VesselAssembly.unity
     guid: b1e60c3154231c340b7c298f33f959bf
+  - enabled: 1
+    path: Assets/Scenes/Prototypes/Prototype_FlightControl.unity
+    guid: 8a019c0dedab4e34592079c3f52fa2d9
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: cd29ee19e57952c449027c48e503e702,
       type: 2}
