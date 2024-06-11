@@ -2,6 +2,7 @@
   "dependencies": {
     "com.unity.addressables": "2.1.0",
     "com.unity.ai.navigation": "2.0.0",
+    "com.unity.cloud.gltfast": "6.6.0",
     "com.unity.collab-proxy": "2.3.1",
     "com.unity.entities": "1.2.1",
     "com.unity.entities.graphics": "1.2.1",

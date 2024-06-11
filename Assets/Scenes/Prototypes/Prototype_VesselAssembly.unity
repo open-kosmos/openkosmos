@@ -400,7 +400,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1033335155}
@@ -432,7 +432,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1544161395}
@@ -569,7 +569,7 @@ Transform:
   m_GameObject: {fileID: 739548586}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -8}
+  m_LocalPosition: {x: 0, y: 0, z: -40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -601,7 +601,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 583155741}
@@ -985,7 +985,7 @@ MonoBehaviour:
     type: 3}
   _mouseDelta: {fileID: -1748312099123678079, guid: ba4344177a7ee244596b06affba5f292,
     type: 3}
-  _cameraMoveSpeed: 0.3
+  _cameraMoveSpeed: 10
   _cameraRotateSpeed: 20
 --- !u!4 &2011182125
 Transform:
@@ -1136,6 +1136,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 996efca7-134d-4375-a7ef-8531d5eca1ed
     m_ActionName: 'PartEditing/Load[/Keyboard/shift,/Keyboard/f1,/Keyboard/f2,/Keyboard/f3,/Keyboard/f4]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4bae3f83-91ab-4e92-bbcf-4d35b4612ed2
+    m_ActionName: 'PartEditing/SnappingMode[/Keyboard/c]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PartEditing

@@ -21,7 +21,7 @@ namespace Kosmos.Prototype.Vab
         [SerializeField] private InputActionReference _mouseDelta;
         
         [Header("Camera Control")]
-        [SerializeField] private float _cameraMoveSpeed = 0.5f;
+        [SerializeField] private float _cameraMoveSpeed = 10.0f;
         [SerializeField] private float _cameraRotateSpeed = 10.0f;
         
         private PartCollection _vehicleRoot;
