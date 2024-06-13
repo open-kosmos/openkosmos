@@ -63,5 +63,8 @@ public class SetupRocketOnLoad : MonoBehaviour
         var cameraTarget = new CameraTarget();
         cameraTarget.TrackingTarget = _rocket.transform;
         camera.Target = cameraTarget;
+
+        var composer = this.gameObject.GetComponent<CinemachineOrbitalFollow>();
+        composer.TargetOffset = new Vector3(60, 0);
     }
 }
