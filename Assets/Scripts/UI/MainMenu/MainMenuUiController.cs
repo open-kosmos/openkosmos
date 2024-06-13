@@ -49,7 +49,7 @@ namespace Kosmos.UI.MainMenu
             if (asyncPrototypeScene == null || 
                 asyncMenuUnload == null)
             {
-                Debug.LogError("[MainMenuUiController] Failed to load prototype scene or unload main menu scene!");
+                UnityEngine.Debug.LogError("[MainMenuUiController] Failed to load prototype scene or unload main menu scene!");
                 return;
             }
             
