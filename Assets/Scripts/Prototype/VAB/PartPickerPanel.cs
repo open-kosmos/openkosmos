@@ -27,18 +27,11 @@ namespace Kosmos.Prototype.Vab
                 Tab tab;
                 if (!categoryTabs.ContainsKey(part.Category))
                 {
-
-                    var launchButton = _partPickerPartTemplate.Instantiate().Q<Button>();
-                    launchButton.clicked += () => { OnLaunchButtonClicked(); };
-                    launchButton.text = "Launch";
-                    launchButton.tooltip = "Launch ship into control prototype scene.";
-
                     var categoryTab = _categoryTabTemplate.Instantiate().Q<Tab>();
                     categoryTab.Q<Label>("unity-tab__header-label").text = part.Category;
                     categoriesTabView.Add(categoryTab);
                     categoryTabs.Add(part.Category, categoryTab);
                     tab = categoryTab;
-                    tab.Add(launchButton);
                 }
                 else
                 {
@@ -51,6 +44,12 @@ namespace Kosmos.Prototype.Vab
                 button.tooltip = part.Description;
                 tab.Add(button);
             }
+            
+            var launchButton = _partPickerPartTemplate.Instantiate().Q<Button>();
+            launchButton.clicked += () => { OnLaunchButtonClicked(); };
+            launchButton.text = "Launch";
+            launchButton.tooltip = "Launch ship into control prototype scene.";
+            categoriesTabView.Add(launchButton);
 
         }
 
