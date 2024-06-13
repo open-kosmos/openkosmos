@@ -12,7 +12,7 @@ namespace Kosmos.Prototype.Vab
         [Header("UI")]
         [SerializeField] private PartPickerPanel _partPickerPanel;
         [SerializeField] private PartInfoPanel _partInfoPanel;
-        [SerializeField] private Camera _mainCam;
+        [SerializeField] private CameraController _camController;
         
         [Header("Gizmos")]
         [SerializeField] private GizmoBase _moveGizmo;
@@ -21,18 +21,14 @@ namespace Kosmos.Prototype.Vab
         [SerializeField] private InputActionReference _mousePosition;
         [SerializeField] private InputActionReference _mouseDelta;
         
-        [Header("Camera Control")]
-        [SerializeField] private float _cameraMoveSpeed = 10.0f;
-        [SerializeField] private float _cameraRotateSpeed = 10.0f;
-        
         private PartCollection _vehicleRoot;
         private PartBase _selectedPart;
+        private Camera _mainCam;
 
         private enum EControlState
         {
             None,
             DraggingGizmo,
-            MovingCamera,
         }
 
         private EControlState _controlState = EControlState.None;
@@ -46,6 +42,7 @@ namespace Kosmos.Prototype.Vab
             _currentGizmo = _moveGizmo;
 
             _vehicleRoot = new GameObject("VehicleRoot").AddComponent<PartCollection>();
+            _mainCam = _camController.GetComponent<Camera>();
             SelectPart(null);
 
         }
@@ -121,25 +118,6 @@ namespace Kosmos.Prototype.Vab
             }
         }
         
-        public void OnMoveCamera(InputAction.CallbackContext context)
-        {
-            switch (context.phase)
-            {
-                case InputActionPhase.Started:
-                    if (_controlState == EControlState.None)
-                    {
-                        _controlState = EControlState.MovingCamera;
-                    }
-                    break;
-                case InputActionPhase.Canceled:
-                    if (_controlState == EControlState.MovingCamera)
-                    {
-                        _controlState = EControlState.None;
-                    }
-                    break;
-            }
-        }
-
         public void DeleteClicked(InputAction.CallbackContext context)
         {
             if (_selectedPart != null)
@@ -157,13 +135,6 @@ namespace Kosmos.Prototype.Vab
                     break;
                 case EControlState.DraggingGizmo:
                     _currentGizmo.UpdateDrag(_mousePosition.action.ReadValue<Vector2>(), _mouseDelta.action.ReadValue<Vector2>(), _mainCam);
-                    break;
-                case EControlState.MovingCamera:
-                    Vector2 delta = _mouseDelta.action.ReadValue<Vector2>();
-                    float verticalMove = -delta.y * _cameraMoveSpeed;
-                    float rotate = delta.x * _cameraRotateSpeed;
-                    _mainCam.transform.position += new Vector3(0, verticalMove * Time.deltaTime, 0.0f);
-                    _mainCam.transform.RotateAround(Vector3.zero, Vector3.up, rotate * Time.deltaTime);
                     break;
             }
         }

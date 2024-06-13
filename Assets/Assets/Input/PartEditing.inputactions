@@ -33,9 +33,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "MoveCamera",
+                    "name": "Cam_RotateY_MoveY",
                     "type": "Button",
                     "id": "cf7f92b4-d42e-466c-9823-bdd10bf088d0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cam_RotateY_RotateX",
+                    "type": "Button",
+                    "id": "7361f5c3-2888-4993-8ee6-3d3c89c2b818",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -94,6 +103,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Zoom",
+                    "type": "Value",
+                    "id": "bb34884c-8691-4ea3-b068-0ca04240d103",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -203,7 +221,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveCamera",
+                    "action": "Cam_RotateY_MoveY",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8e06a025-1381-4ab1-b799-fc3f4b8f2904",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cam_RotateY_RotateX",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -426,6 +455,39 @@
                     "action": "SnappingMode",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "25880822-37a9-47da-9369-a6ec5d6794ad",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "b7765e38-da8d-4c9c-b916-98c8fdcd4bbb",
+                    "path": "<Mouse>/scroll/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "7bda12d9-6b00-4a4c-a376-5de97e532d43",
+                    "path": "<Mouse>/scroll/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
