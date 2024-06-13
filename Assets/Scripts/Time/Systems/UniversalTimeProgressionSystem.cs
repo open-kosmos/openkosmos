@@ -12,16 +12,16 @@ namespace Kosmos.Time
                     in UniversalTimeModifier currentModifier,
                     in UniversalTimePaused currentPaused,
                     in IsCurrentPlayerTimelineTag currentPlayerTimelineTag
-                    ) =>
-            {
-                if (currentPaused.Value)
+                ) =>
                 {
-                    return;
-                }
-                
-                universalTime.Value += currentModifier.Value * SystemAPI.Time.DeltaTime;
-            })
-            .Run();
+                    if (currentPaused.Value)
+                    {
+                        return;
+                    }
+
+                    universalTime.Value += currentModifier.Value * SystemAPI.Time.DeltaTime;
+                })
+                .Run();
         }
     }
 }
