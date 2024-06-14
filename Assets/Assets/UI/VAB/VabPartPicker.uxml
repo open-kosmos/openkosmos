@@ -1,6 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement style="flex-grow: 1;">
-        <engine:TabView name="Categories" style="width: auto; height: auto; position: absolute; top: 100px; left: 0; bottom: 0; flex-grow: 1; justify-content: center; align-content: auto; background-color: rgb(226, 226, 226);" />
+    <engine:VisualElement style="flex-grow: 1; max-width: none;">
+        <engine:TabView name="Categories" style="width: auto; height: auto; position: absolute; top: 100px; left: 0; bottom: 0; flex-grow: 1; justify-content: center; align-content: auto; background-color: rgb(226, 226, 226); max-width: 20%;" />
         <engine:Label text="Save: F1-4&#10;Load: Shift + F1-4&#10;Hold C while moving for free movement&#10;Del to delete part" />
     </engine:VisualElement>
 </engine:UXML>

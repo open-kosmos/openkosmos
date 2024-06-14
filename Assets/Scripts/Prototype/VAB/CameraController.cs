@@ -54,7 +54,7 @@ namespace Kosmos.Prototype.Vab
             //Rotate y
             _yRot += rotateY * _cameraRotateSpeed;;
 
-            _xRot += rotateX * _cameraRotateSpeed;
+            _xRot += (-rotateX) * _cameraRotateSpeed;
             _xRot = Mathf.Clamp(_xRot, -89.0f, 89.0f);
 
             //TODO - take the camera distance into account. Probably convert the 
