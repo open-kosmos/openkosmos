@@ -1,15 +1,17 @@
 ﻿using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Kosmos.Camera
 {
-    public class PannableCameraData : IComponentData
+    public class OrbitingCameraData : IComponentData
     {
         public UnityEngine.Camera Camera;
         public float CameraPanSpeed;
+        public float CameraOrbitSpeed;
         public float CurrentPitchAngle;
         public float CurrentYawAngle;
-        public float CurrentDistance;
+        public float3 CurrentOffset;
         public float CameraZoomSpeed;
     }
 }

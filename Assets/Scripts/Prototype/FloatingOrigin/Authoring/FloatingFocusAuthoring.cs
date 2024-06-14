@@ -15,7 +15,7 @@ namespace Prototype.FloatingOrigin.Components
                 AddComponent(entity, focusData);
 
                 var floatingPositionData = new FloatingPositionData();
-                AddComponent(entity, floatingPositionData);
+                //AddComponent(entity, floatingPositionData);
             }
         }
     }

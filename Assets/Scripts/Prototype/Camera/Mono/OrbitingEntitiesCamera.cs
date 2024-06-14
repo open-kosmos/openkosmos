@@ -1,16 +1,18 @@
 ﻿using System;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Kosmos.Camera
 {
     [RequireComponent(typeof(UnityEngine.Camera))]
-    public class PannableEntitiesCamera : MonoBehaviour
+    public class OrbitingEntitiesCamera : MonoBehaviour
     {
         [SerializeField] private float _panSpeed = 1f;
         [SerializeField] private float _currentYawAngle = 0f;
         [SerializeField] private float _currentPitchAngle = 0f;
         [SerializeField] private float _currentZoomSpeed = 10f;
+        [SerializeField] private float _currentOrbitSpeed = 10f;
 
         private UnityEngine.Camera _cam;
         private EntityManager _entityManager;
@@ -23,19 +25,19 @@ namespace Kosmos.Camera
             _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             
             _cameraPositionUpdateSystem = World.DefaultGameObjectInjectionWorld
-                .GetExistingSystem<CameraPositionUpdateSystem>();
+                .GetExistingSystem<CameraOrbitUpdateSystem>();
             
-            var currentOffset = _cam.transform.position;
-            var distance = currentOffset.magnitude;
+            var currentOffset = (float3)_cam.transform.position;
 
-            _entityManager.AddComponentData(_cameraPositionUpdateSystem, new PannableCameraData()
+            _entityManager.AddComponentData(_cameraPositionUpdateSystem, new OrbitingCameraData()
             {
                 Camera = _cam,
                 CameraPanSpeed = _panSpeed,
-                CurrentDistance = distance,
+                CurrentOffset = currentOffset,
                 CurrentPitchAngle = _currentPitchAngle,
                 CurrentYawAngle = _currentYawAngle,
-                CameraZoomSpeed = _currentZoomSpeed
+                CameraZoomSpeed = _currentZoomSpeed,
+                CameraOrbitSpeed = _currentOrbitSpeed
             });
         }
 
@@ -46,17 +48,17 @@ namespace Kosmos.Camera
                 return;
             }
             
-            var currentOffset = _cam.transform.position;
-            var distance = currentOffset.magnitude;
+            var currentOffset = (float3)_cam.transform.position;
             
-            _entityManager.SetComponentData(_cameraPositionUpdateSystem, new PannableCameraData()
+            _entityManager.SetComponentData(_cameraPositionUpdateSystem, new OrbitingCameraData()
             {
                 Camera = _cam,
                 CameraPanSpeed = _panSpeed,
-                CurrentDistance = distance,
+                CurrentOffset = currentOffset,
                 CurrentPitchAngle = _currentPitchAngle,
                 CurrentYawAngle = _currentYawAngle,
-                CameraZoomSpeed = _currentZoomSpeed
+                CameraZoomSpeed = _currentZoomSpeed,
+                CameraOrbitSpeed = _currentOrbitSpeed
             });    
         }
     }
