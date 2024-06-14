@@ -23,7 +23,7 @@ namespace Kosmos.Prototype.Vab
         [SerializeField] private float _minDistance = 1.0f;
 
         private Camera _cam;
-        private Vector3 _camFocus;
+        private Vector3 _camFocus;  //Maybe should be Transform + offset at some point to track moving objects?
         private float _camDistance;
         private float _xRot;
         private float _yRot;
@@ -70,6 +70,14 @@ namespace Kosmos.Prototype.Vab
             
             transform.RotateAround(_camFocus, Vector3.up, _yRot);
             transform.RotateAround(_camFocus, transform.right, _xRot);
+        }
+
+        public void SetCameraTarget(Vector3 target)
+        {
+            _camFocus = target;
+            
+            //TODO - Calculate distance and rotations from current position
+            // so the camera doesn't move when switching target
         }
     }
 }

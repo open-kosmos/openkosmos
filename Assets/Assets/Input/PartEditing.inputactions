@@ -112,6 +112,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "SetCamFocus",
+                    "type": "Button",
+                    "id": "3288f5b2-0833-46eb-9d76-d68bc2101227",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -488,6 +497,17 @@
                     "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "7f68bdb3-1b2d-4968-a3fe-ecf56a16eb23",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SetCamFocus",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

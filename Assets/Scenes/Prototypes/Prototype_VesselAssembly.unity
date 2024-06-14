@@ -1014,6 +1014,8 @@ MonoBehaviour:
     type: 3}
   _mouseDelta: {fileID: -1748312099123678079, guid: ba4344177a7ee244596b06affba5f292,
     type: 3}
+  _camFocus: {fileID: 2527634066630889199, guid: ba4344177a7ee244596b06affba5f292,
+    type: 3}
 --- !u!4 &2011182125
 Transform:
   m_ObjectHideFlags: 0
@@ -1163,6 +1165,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 7361f5c3-2888-4993-8ee6-3d3c89c2b818
     m_ActionName: 'PartEditing/Cam_RotateY_RotateX[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3288f5b2-0833-46eb-9d76-d68bc2101227
+    m_ActionName: 'PartEditing/SetCamFocus[/Mouse/middleButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PartEditing

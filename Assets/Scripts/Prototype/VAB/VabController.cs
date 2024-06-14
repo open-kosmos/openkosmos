@@ -20,6 +20,7 @@ namespace Kosmos.Prototype.Vab
         [Header("Input")]
         [SerializeField] private InputActionReference _mousePosition;
         [SerializeField] private InputActionReference _mouseDelta;
+        [SerializeField] private InputActionReference _camFocus;
         
         private PartCollection _vehicleRoot;
         private PartBase _selectedPart;
@@ -39,12 +40,24 @@ namespace Kosmos.Prototype.Vab
             _partPickerPanel.OnPartPicked += OnPartPickerClicked;
             _partPickerPanel.OnLaunchButtonClicked += async () => await OnLaunchButtonClicked();
 
+            _camFocus.action.performed += OnCamFocusClick;
+
             _currentGizmo = _moveGizmo;
 
             _vehicleRoot = new GameObject("VehicleRoot").AddComponent<PartCollection>();
             _mainCam = _camController.GetComponent<Camera>();
             SelectPart(null);
+            
+        }
 
+        private void OnCamFocusClick(InputAction.CallbackContext context)
+        {
+            var clicked = GetPartUnderCursor();
+
+            if (clicked != null)
+            {
+                _camController.SetCameraTarget(clicked.transform.position);
+            }
         }
 
         private async Awaitable OnLaunchButtonClicked()
