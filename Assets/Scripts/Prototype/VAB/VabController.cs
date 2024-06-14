@@ -21,14 +21,18 @@ namespace Kosmos.Prototype.Vab
         [SerializeField] private InputActionReference _mousePosition;
         [SerializeField] private InputActionReference _mouseDelta;
         [SerializeField] private InputActionReference _camFocus;
+        [SerializeField] private InputActionReference _click;
         
+        private const float SNAP_DIST = 0.02f;
         private PartCollection _vehicleRoot;
-        private PartBase _selectedPart;
+        private PartBase _movingPart;
+        private float _movingPartInitialDist;
         private Camera _mainCam;
 
         private enum EControlState
         {
             None,
+            MovingPart,
             DraggingGizmo,
         }
 
@@ -41,12 +45,14 @@ namespace Kosmos.Prototype.Vab
             _partPickerPanel.OnLaunchButtonClicked += async () => await OnLaunchButtonClicked();
 
             _camFocus.action.performed += OnCamFocusClick;
+            _click.action.performed += OnScreenClick;
 
-            _currentGizmo = _moveGizmo;
+            //Temp disable gizmos
+            //_currentGizmo = _moveGizmo;
+            _moveGizmo.gameObject.SetActive(false);
 
             _vehicleRoot = new GameObject("VehicleRoot").AddComponent<PartCollection>();
             _mainCam = _camController.GetComponent<Camera>();
-            SelectPart(null);
             
         }
 
@@ -74,23 +80,44 @@ namespace Kosmos.Prototype.Vab
         private void OnPartPickerClicked(PartDefinition part)
         {
             var newPart = _vehicleRoot.AddPart(part);
-            SelectPart(newPart);
+            _movingPart = newPart;
+            _controlState = EControlState.MovingPart;
+
+            Vector3 mousePos = _mousePosition.action.ReadValue<Vector2>();
+            mousePos.z = _camController.GetCamDistance();
+            _movingPartInitialDist = mousePos.z;
+            
+            newPart.transform.position = _mainCam.ScreenToWorldPoint(mousePos);
         }
 
         public void OnScreenClick(InputAction.CallbackContext context)
         {
             //Part selection
-            if (context.phase == InputActionPhase.Performed && _controlState == EControlState.None)
+            if (_controlState == EControlState.MovingPart)
+            {
+                Debug.Assert(_movingPart != null);
+                
+                //Stop dragging
+                //See if we should snap to something
+                if (_vehicleRoot.GetClosestPotentialConnection(_movingPart, out var partLink, _mainCam, _mainCam.pixelWidth * SNAP_DIST))
+                {
+                    _vehicleRoot.LinkParts(partLink._parentPart, partLink._parentSocket, _movingPart, partLink._childSocket);
+                }
+
+                _movingPart = null;
+                _controlState = EControlState.None;
+            }
+            else if (_controlState == EControlState.None)
             {
                 var part = GetPartUnderCursor();
-                
+
                 if (part != null)
                 {
-                        SelectPart(part);
-                }
-                else
-                {
-                    SelectPart(null);
+                    _controlState = EControlState.MovingPart;
+                    _movingPart = part;
+                    _movingPartInitialDist =
+                        Vector3.Distance(_mainCam.transform.position, _movingPart.transform.position); 
+                    _vehicleRoot.DisconnectFromParents(_movingPart);
                 }
             }
         }
@@ -115,28 +142,28 @@ namespace Kosmos.Prototype.Vab
         public void OnScreenDrag(InputAction.CallbackContext context)
         {
             //Gizmo handling
-            var mousePos = _mousePosition.action.ReadValue<Vector2>();
-            if (context.phase == InputActionPhase.Started && _controlState == EControlState.None)
-            {
-                if (_currentGizmo.TestClick(mousePos, _mainCam))
-                {
-                    _controlState = EControlState.DraggingGizmo;
-                    _currentGizmo.StartDrag(mousePos, _mainCam);
-                }
-            }
-            else if (context.phase == InputActionPhase.Canceled && _controlState == EControlState.DraggingGizmo)
-            {
-                _currentGizmo.EndDrag(mousePos, _mainCam);
-                _controlState = EControlState.None;
-            }
+            // var mousePos = _mousePosition.action.ReadValue<Vector2>();
+            // if (context.phase == InputActionPhase.Started && _controlState == EControlState.None)
+            // {
+            //     if (_currentGizmo.TestClick(mousePos, _mainCam))
+            //     {
+            //         _controlState = EControlState.DraggingGizmo;
+            //         _currentGizmo.StartDrag(mousePos, _mainCam);
+            //     }
+            // }
+            // else if (context.phase == InputActionPhase.Canceled && _controlState == EControlState.DraggingGizmo)
+            // {
+            //     _currentGizmo.EndDrag(mousePos, _mainCam);
+            //     _controlState = EControlState.None;
+            // }
         }
         
         public void DeleteClicked(InputAction.CallbackContext context)
         {
-            if (_selectedPart != null)
+            if (_movingPart != null)
             {
-                _vehicleRoot.RemovePart(_selectedPart);
-                SelectPart(null);
+                _vehicleRoot.RemovePart(_movingPart);
+                _controlState = EControlState.None;
             }
         }
         
@@ -146,28 +173,51 @@ namespace Kosmos.Prototype.Vab
             {
                 case EControlState.None:
                     break;
-                case EControlState.DraggingGizmo:
-                    _currentGizmo.UpdateDrag(_mousePosition.action.ReadValue<Vector2>(), _mouseDelta.action.ReadValue<Vector2>(), _mainCam);
+                // case EControlState.DraggingGizmo:
+                //     _currentGizmo.UpdateDrag(_mousePosition.action.ReadValue<Vector2>(), _mouseDelta.action.ReadValue<Vector2>(), _mainCam);
+                //     break;
+                case EControlState.MovingPart:
+                    UpdateMovingPart();
                     break;
             }
         }
-        
-        private void SelectPart(PartBase part)
-        {
-            _selectedPart = part;
 
-            if (_selectedPart != null)
+        private void UpdateMovingPart()
+        {
+            var mousePos = _mousePosition.action.ReadValue<Vector2>();
+                
+            Vector3 newPos = _mainCam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, _movingPartInitialDist));
+            
+            Vector3 mouseMoveWorld = newPos - _movingPart.transform.position;
+                
+            _vehicleRoot.MovePart(_movingPart, mouseMoveWorld);
+
+            //This is a bit clumsy. Rewrite it at some point
+            
+            if (_vehicleRoot.GetClosestPotentialConnection(_movingPart, out var partLink, _mainCam,
+                    _mainCam.pixelWidth * SNAP_DIST))
             {
-                _currentGizmo.gameObject.SetActive(true);
-                _currentGizmo.AttachToPart(_selectedPart, _vehicleRoot);
-                _partInfoPanel.SetPart(_selectedPart);
-            }
-            else
-            {
-                _moveGizmo.gameObject.SetActive(false);
-                _partInfoPanel.SetPart(null);
+                Vector3 offset = partLink._parentSocket.transform.position - partLink._childSocket.transform.position;
+                _vehicleRoot.MovePart(_movingPart, offset);
             }
         }
+
+        // private void SelectPart(PartBase part)
+        // {
+        //     _selectedPart = part;
+        //
+        //     if (_selectedPart != null)
+        //     {
+        //         // _currentGizmo.gameObject.SetActive(true);
+        //         // _currentGizmo.AttachToPart(_selectedPart, _vehicleRoot);
+        //         _partInfoPanel.SetPart(_selectedPart);
+        //     }
+        //     else
+        //     {
+        //         // _moveGizmo.gameObject.SetActive(false);
+        //         _partInfoPanel.SetPart(null);
+        //     }
+        // }
         
         private string GetSaveFolder()
         {
@@ -203,7 +253,6 @@ namespace Kosmos.Prototype.Vab
                 return;
             }
             
-            SelectPart(null);
             string fileName = context.control.displayName;
             string path = Path.Combine(GetSaveFolder(), $"{fileName}.veh");
             if (!File.Exists(path))
@@ -213,6 +262,9 @@ namespace Kosmos.Prototype.Vab
             }
             Debug.Log($"Loading from {path}");
             _vehicleRoot.Deserialise(path);
+
+            _movingPart = null;
+            _controlState = EControlState.None;
         }
     }
 }

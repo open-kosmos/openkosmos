@@ -79,5 +79,10 @@ namespace Kosmos.Prototype.Vab
             //TODO - Calculate distance and rotations from current position
             // so the camera doesn't move when switching target
         }
+
+        public float GetCamDistance()
+        {
+            return _camDistance;
+        }
     }
 }

@@ -1016,6 +1016,7 @@ MonoBehaviour:
     type: 3}
   _camFocus: {fileID: 2527634066630889199, guid: ba4344177a7ee244596b06affba5f292,
     type: 3}
+  _click: {fileID: -4116643614480398128, guid: ba4344177a7ee244596b06affba5f292, type: 3}
 --- !u!4 &2011182125
 Transform:
   m_ObjectHideFlags: 0
@@ -1058,19 +1059,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2011182124}
-        m_TargetAssemblyTypeName: ArkShip.Vab.VabController, Vab
-        m_MethodName: OnScreenClick
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 5652c09c-2f3c-4c65-b2d8-7acad0e7d8b5
     m_ActionName: 'PartEditing/Click[/Mouse/leftButton]'
   - m_PersistentCalls:
