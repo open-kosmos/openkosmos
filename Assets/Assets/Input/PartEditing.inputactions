@@ -11,7 +11,7 @@
                     "id": "5652c09c-2f3c-4c65-b2d8-7acad0e7d8b5",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap",
                     "initialStateCheck": false
                 },
                 {
@@ -20,7 +20,7 @@
                     "id": "ba3e6854-256b-4f4d-a187-b942eb9d48a4",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap",
                     "initialStateCheck": false
                 },
                 {
@@ -33,9 +33,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "MoveCamera",
+                    "name": "Cam_RotateY_MoveY",
                     "type": "Button",
                     "id": "cf7f92b4-d42e-466c-9823-bdd10bf088d0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cam_RotateY_RotateX",
+                    "type": "Button",
+                    "id": "7361f5c3-2888-4993-8ee6-3d3c89c2b818",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -74,7 +83,7 @@
                     "id": "13b7bc78-0ef9-492d-9524-d415402f18dc",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap",
                     "initialStateCheck": false
                 },
                 {
@@ -83,16 +92,34 @@
                     "id": "996efca7-134d-4375-a7ef-8531d5eca1ed",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SnappingMode",
-                    "type": "Button",
-                    "id": "4bae3f83-91ab-4e92-bbcf-4d35b4612ed2",
-                    "expectedControlType": "",
+                    "name": "Zoom",
+                    "type": "Value",
+                    "id": "bb34884c-8691-4ea3-b068-0ca04240d103",
+                    "expectedControlType": "Analog",
                     "processors": "",
                     "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SetCamFocus",
+                    "type": "Button",
+                    "id": "3288f5b2-0833-46eb-9d76-d68bc2101227",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SetInfoFocus",
+                    "type": "Button",
+                    "id": "557a98b5-94ed-446d-ae20-592975b13259",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Tap",
                     "initialStateCheck": false
                 }
             ],
@@ -203,7 +230,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveCamera",
+                    "action": "Cam_RotateY_MoveY",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8e06a025-1381-4ab1-b799-fc3f4b8f2904",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cam_RotateY_RotateX",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -417,13 +455,57 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "9c2a317c-3711-439c-846b-cca58248b020",
-                    "path": "<Keyboard>/c",
+                    "name": "1D Axis",
+                    "id": "25880822-37a9-47da-9369-a6ec5d6794ad",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SnappingMode",
+                    "action": "Zoom",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "b7765e38-da8d-4c9c-b916-98c8fdcd4bbb",
+                    "path": "<Mouse>/scroll/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "7bda12d9-6b00-4a4c-a376-5de97e532d43",
+                    "path": "<Mouse>/scroll/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "7f68bdb3-1b2d-4968-a3fe-ecf56a16eb23",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SetCamFocus",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d61f68df-44c5-4901-a015-7564020481ee",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SetInfoFocus",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
