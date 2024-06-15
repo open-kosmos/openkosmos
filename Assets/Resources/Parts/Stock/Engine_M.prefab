@@ -171,6 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf52dad4ba4c6b24490734c28ecc3eb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PartId: Engine_M
+  StageIndex: 0
   _maxThrust: 0
 --- !u!65 &6450221668973533584
 BoxCollider:
