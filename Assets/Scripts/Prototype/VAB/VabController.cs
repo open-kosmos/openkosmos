@@ -22,6 +22,10 @@ namespace Kosmos.Prototype.Vab
         [SerializeField] private InputActionReference _mouseDelta;
         [SerializeField] private InputActionReference _camFocus;
         [SerializeField] private InputActionReference _click;
+        [SerializeField] private InputActionReference _partInfoFocus;
+        [SerializeField] private InputActionReference _deletePress;
+        [SerializeField] private InputActionReference _savePress;
+        [SerializeField] private InputActionReference _loadPress;
         
         private const float SNAP_DIST = 0.02f;
         private PartCollection _vehicleRoot;
@@ -46,6 +50,10 @@ namespace Kosmos.Prototype.Vab
 
             _camFocus.action.performed += OnCamFocusClick;
             _click.action.performed += OnScreenClick;
+            _partInfoFocus.action.performed += OnPartInfoFocusClick;
+            _deletePress.action.performed += OnDelete;
+            _loadPress.action.performed += OnLoadPressed;
+            _savePress.action.performed += OnSavePressed;
 
             //Temp disable gizmos
             //_currentGizmo = _moveGizmo;
@@ -90,7 +98,16 @@ namespace Kosmos.Prototype.Vab
             newPart.transform.position = _mainCam.ScreenToWorldPoint(mousePos);
         }
 
-        public void OnScreenClick(InputAction.CallbackContext context)
+        private void OnPartInfoFocusClick(InputAction.CallbackContext context)
+        {
+            var part = GetPartUnderCursor();
+            if (part != null)
+            {
+                _partInfoPanel.SetPart(part);
+            }
+        }
+
+        private void OnScreenClick(InputAction.CallbackContext context)
         {
             //Part selection
             if (_controlState == EControlState.MovingPart)
@@ -158,7 +175,7 @@ namespace Kosmos.Prototype.Vab
             // }
         }
         
-        public void DeleteClicked(InputAction.CallbackContext context)
+        private void OnDelete(InputAction.CallbackContext context)
         {
             if (_movingPart != null)
             {
@@ -201,23 +218,6 @@ namespace Kosmos.Prototype.Vab
                 _vehicleRoot.MovePart(_movingPart, offset);
             }
         }
-
-        // private void SelectPart(PartBase part)
-        // {
-        //     _selectedPart = part;
-        //
-        //     if (_selectedPart != null)
-        //     {
-        //         // _currentGizmo.gameObject.SetActive(true);
-        //         // _currentGizmo.AttachToPart(_selectedPart, _vehicleRoot);
-        //         _partInfoPanel.SetPart(_selectedPart);
-        //     }
-        //     else
-        //     {
-        //         // _moveGizmo.gameObject.SetActive(false);
-        //         _partInfoPanel.SetPart(null);
-        //     }
-        // }
         
         private string GetSaveFolder()
         {
@@ -228,7 +228,7 @@ namespace Kosmos.Prototype.Vab
 #endif
         }
 
-        public void SavePressed(InputAction.CallbackContext context)
+        private void OnSavePressed(InputAction.CallbackContext context)
         {
             if (context.phase != InputActionPhase.Performed)
             {
@@ -246,7 +246,7 @@ namespace Kosmos.Prototype.Vab
             _vehicleRoot.Serialise(path);
         }
 
-        public void LoadPressed(InputAction.CallbackContext context)
+        private void OnLoadPressed(InputAction.CallbackContext context)
         {
             if (context.phase != InputActionPhase.Performed)
             {

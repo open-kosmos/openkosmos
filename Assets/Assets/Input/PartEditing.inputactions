@@ -20,7 +20,7 @@
                     "id": "ba3e6854-256b-4f4d-a187-b942eb9d48a4",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap",
                     "initialStateCheck": false
                 },
                 {
@@ -83,7 +83,7 @@
                     "id": "13b7bc78-0ef9-492d-9524-d415402f18dc",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap",
                     "initialStateCheck": false
                 },
                 {
@@ -92,16 +92,7 @@
                     "id": "996efca7-134d-4375-a7ef-8531d5eca1ed",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SnappingMode",
-                    "type": "Button",
-                    "id": "4bae3f83-91ab-4e92-bbcf-4d35b4612ed2",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap",
                     "initialStateCheck": false
                 },
                 {
@@ -117,6 +108,15 @@
                     "name": "SetCamFocus",
                     "type": "Button",
                     "id": "3288f5b2-0833-46eb-9d76-d68bc2101227",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SetInfoFocus",
+                    "type": "Button",
+                    "id": "557a98b5-94ed-446d-ae20-592975b13259",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Tap",
@@ -455,17 +455,6 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "9c2a317c-3711-439c-846b-cca58248b020",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SnappingMode",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "1D Axis",
                     "id": "25880822-37a9-47da-9369-a6ec5d6794ad",
                     "path": "1DAxis",
@@ -506,6 +495,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SetCamFocus",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d61f68df-44c5-4901-a015-7564020481ee",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SetInfoFocus",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

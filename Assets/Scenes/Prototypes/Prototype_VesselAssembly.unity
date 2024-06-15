@@ -1017,6 +1017,14 @@ MonoBehaviour:
   _camFocus: {fileID: 2527634066630889199, guid: ba4344177a7ee244596b06affba5f292,
     type: 3}
   _click: {fileID: -4116643614480398128, guid: ba4344177a7ee244596b06affba5f292, type: 3}
+  _partInfoFocus: {fileID: -1240590605303234492, guid: ba4344177a7ee244596b06affba5f292,
+    type: 3}
+  _deletePress: {fileID: 1435166771257477221, guid: ba4344177a7ee244596b06affba5f292,
+    type: 3}
+  _savePress: {fileID: -1880296320568378896, guid: ba4344177a7ee244596b06affba5f292,
+    type: 3}
+  _loadPress: {fileID: 2110158388034325300, guid: ba4344177a7ee244596b06affba5f292,
+    type: 3}
 --- !u!4 &2011182125
 Transform:
   m_ObjectHideFlags: 0
@@ -1114,7 +1122,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2011182124}
         m_TargetAssemblyTypeName: Arkship.Vab.VabController, Vab
-        m_MethodName: SavePressed
+        m_MethodName: OnSavePressed
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1130,7 +1138,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2011182124}
         m_TargetAssemblyTypeName: Arkship.Vab.VabController, Vab
-        m_MethodName: LoadPressed
+        m_MethodName: OnLoadPressed
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1144,10 +1152,6 @@ MonoBehaviour:
     m_ActionName: 'PartEditing/Load[/Keyboard/shift,/Keyboard/f1,/Keyboard/f2,/Keyboard/f3,/Keyboard/f4]'
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 4bae3f83-91ab-4e92-bbcf-4d35b4612ed2
-    m_ActionName: 'PartEditing/SnappingMode[/Keyboard/c]'
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: bb34884c-8691-4ea3-b068-0ca04240d103
     m_ActionName: 'PartEditing/Zoom[/Mouse/scroll/down,/Mouse/scroll/up]'
   - m_PersistentCalls:
@@ -1158,6 +1162,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 3288f5b2-0833-46eb-9d76-d68bc2101227
     m_ActionName: 'PartEditing/SetCamFocus[/Mouse/middleButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 557a98b5-94ed-446d-ae20-592975b13259
+    m_ActionName: 'PartEditing/SetInfoFocus[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PartEditing

@@ -144,7 +144,8 @@ namespace Kosmos.Prototype.Parts
             }
             
             //Test the available sockets on the part against all others
-            float closestDist = float.MaxValue;
+            float closestDistSq = float.MaxValue;
+            float pixRangeSq = pixelRange * pixelRange;
             foreach (var other in _unconnectedSockets)
             {
                 if (part.GetSockets().Contains(other))
@@ -156,10 +157,18 @@ namespace Kosmos.Prototype.Parts
                 
                 foreach (var (socket, screenPos) in testSockets)
                 {
-                    float dist = Vector2.Distance(screenPos, otherScreenPos);
-                    if (dist < closestDist && dist < pixelRange)
+                    //Check orientation
+                    float dot = Vector3.Dot(socket.transform.up, other.transform.up);
+                    if (dot > 0.0f)
                     {
-                        closestDist = dist;
+                        continue;
+                    }
+                    
+                    //Check distance
+                    float distSq = Vector2.SqrMagnitude(screenPos - otherScreenPos);
+                    if (distSq < closestDistSq && distSq < pixRangeSq)
+                    {
+                        closestDistSq = distSq;
                         partLink = new PartLink
                         {
                             _childPart = part,
@@ -171,7 +180,7 @@ namespace Kosmos.Prototype.Parts
                 }
             }
 
-            return closestDist <= pixelRange;
+            return closestDistSq <= pixRangeSq;
         }
 
         public void Serialise(string path)
