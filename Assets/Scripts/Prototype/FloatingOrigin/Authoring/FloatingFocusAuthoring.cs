@@ -11,11 +11,8 @@ namespace Prototype.FloatingOrigin.Components
             public override void Bake(FloatingFocusAuthoring authoring)
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
-                var focusData = new FloatingFocusData();
+                var focusData = new FloatingFocusTag();
                 AddComponent(entity, focusData);
-
-                var floatingPositionData = new FloatingPositionData();
-                //AddComponent(entity, floatingPositionData);
             }
         }
     }

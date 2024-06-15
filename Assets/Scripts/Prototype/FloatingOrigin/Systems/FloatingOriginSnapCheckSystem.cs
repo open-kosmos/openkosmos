@@ -1,40 +1,36 @@
-﻿using Unity.Entities;
+﻿using Kosmos.Prototype.Character;
+using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Transforms;
+using UnityEngine;
 
 namespace Kosmos.FloatingOrigin
 {
+    [UpdateAfter(typeof(PlayableCharacterMovementSystem))]
     [UpdateBefore(typeof(FloatingPositionToWorldPositionUpdateSystem))]
     public partial class FloatingOriginSnapCheckSystem : SystemBase
     {
         protected override void OnCreate()
         {
             RequireForUpdate<FloatingOriginData>();
-            RequireForUpdate<FloatingFocusData>();
+            RequireForUpdate<FloatingFocusTag>();
         }
 
         protected override void OnUpdate()
         {
-            var focusEntity = SystemAPI.GetSingletonEntity<FloatingFocusData>();
-            var floatingOrigin = SystemAPI.GetSingleton<FloatingOriginData>();
+            var focusEntity = SystemAPI.GetSingletonEntity<FloatingFocusTag>();
 
-            var focusEntityPosition =
-                EntityManager.GetComponentData<FloatingPositionData>(focusEntity);
+            var focusEntityTransform =
+                EntityManager.GetComponentData<LocalTransform>(focusEntity);
+            
+            var focusPosition = focusEntityTransform.Position;
 
-            var focusPosition = FloatingOriginMath.VectorFromFloatingOrigin(
-                floatingOrigin, focusEntityPosition);
-
-            var scaledPosition = focusPosition / floatingOrigin.Scale;
-
-            if (math.length(scaledPosition) > 10f)
+            if (math.length(focusPosition) > 1000f)
             {
                 var floatingOriginData = SystemAPI.GetSingleton<FloatingOriginData>();
-
-                // TODO: Account for global grid
-                floatingOriginData.LocalX += focusPosition.x;
-                floatingOriginData.LocalY += focusPosition.y;
-                floatingOriginData.LocalZ += focusPosition.z;
-
-                SystemAPI.SetSingleton<FloatingOriginData>(floatingOriginData);
+                
+                floatingOriginData.ShouldSnap = true;
+                SystemAPI.SetSingleton(floatingOriginData);
             }
         }
     }

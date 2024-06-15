@@ -1,5 +1,6 @@
 ﻿using Kosmos.FloatingOrigin;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Prototype.FloatingOrigin.Components
@@ -11,14 +12,11 @@ namespace Prototype.FloatingOrigin.Components
             public override void Bake(FloatingPositionAuthoring authoring)
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
-                var floatingOrigin = new FloatingOriginData()
-                {
-                    Scale = 1f
-                };
-                var floatingPosition = FloatingOriginMath.PositionDataFromCurrentWorldSpace(
-                    floatingOrigin,
-                    authoring.transform.position,
+                
+                var floatingPosition = FloatingOriginMath.InitializeLocal(
+                    new double3(authoring.transform.position),
                     authoring.transform.localScale.x);
+                
                 AddComponent(entity, floatingPosition);
             }
         }

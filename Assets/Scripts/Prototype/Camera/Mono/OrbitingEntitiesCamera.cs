@@ -33,7 +33,7 @@ namespace Kosmos.Camera
             {
                 Camera = _cam,
                 CameraPanSpeed = _panSpeed,
-                CurrentOffset = currentOffset,
+                BaseOffset = currentOffset,
                 CurrentPitchAngle = _currentPitchAngle,
                 CurrentYawAngle = _currentYawAngle,
                 CameraZoomSpeed = _currentZoomSpeed,
@@ -54,7 +54,7 @@ namespace Kosmos.Camera
             {
                 Camera = _cam,
                 CameraPanSpeed = _panSpeed,
-                CurrentOffset = currentOffset,
+                BaseOffset = currentOffset,
                 CurrentPitchAngle = _currentPitchAngle,
                 CurrentYawAngle = _currentYawAngle,
                 CameraZoomSpeed = _currentZoomSpeed,

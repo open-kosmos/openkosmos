@@ -1,4 +1,5 @@
 ﻿using Kosmos.Camera;
+using Kosmos.FloatingOrigin;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -27,9 +28,13 @@ namespace Kosmos.Prototype.Character
             var input = SystemAPI.GetSingleton<PlayerInput>();
             
             Entities
-                .ForEach((ref LocalTransform transform, in PlayableCharacterData characterData) =>
+                .ForEach((ref LocalTransform transform, 
+                    ref TargetRotation targetRotation, 
+                    ref PlayableCharacterData characterData) =>
                 {
                     var playerPosition = transform.Position;
+
+                    characterData.MoveSpeed += input.ZoomInputValue.y * 10f;
                     
                     // Forward input moves the player in the directionaway from the camera
                     var forward = math.normalize(playerPosition - cameraPosition);
@@ -38,7 +43,10 @@ namespace Kosmos.Prototype.Character
                     var translation = input.TranslationValue.y * forward - input.TranslationValue.x * right;
                     
                     transform.Position += translation * characterData.MoveSpeed * SystemAPI.Time.DeltaTime;
-                    transform.Rotation = quaternion.LookRotation(forward, new float3(0, 1, 0));
+                    
+                    targetRotation.Value = quaternion.LookRotation(forward, new float3(0, 1, 0));
+                    
+                    transform.Rotation = math.slerp(transform.Rotation, targetRotation.Value, characterData.RotationSpeed * SystemAPI.Time.DeltaTime);
                 })
                 .Schedule();
         }
