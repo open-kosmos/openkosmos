@@ -14,6 +14,5 @@ namespace Kosmos.Camera
         public float3 BaseOffset;
         public float CameraZoomSpeed;
         public float3 CurrentOffset;
-        public quaternion CurrentRotation;
     }
 }
