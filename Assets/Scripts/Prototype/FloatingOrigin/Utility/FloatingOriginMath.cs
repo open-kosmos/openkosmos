@@ -3,6 +3,9 @@ using Unity.Mathematics;
 
 namespace Kosmos.FloatingOrigin
 {
+    /// <summary>
+    /// Static math functions for floating origin calculations.
+    /// </summary>
     public static class FloatingOriginMath
     {
         public static readonly double CELL_SIZE = 5000000.0;
@@ -58,45 +61,22 @@ namespace Kosmos.FloatingOrigin
         
         public static FloatingPositionData Add(FloatingPositionData a, double3 b)
         {
-            var local = a.Local + b;
+            var newLocal = a.Local + b;
+            var local = new double3();
             
             // Bounds check
             var globalX = a.GlobalX;
             var globalY = a.GlobalY;
             var globalZ = a.GlobalZ;
             
-            if (local.x >= CELL_SIZE)
-            {
-                local.x -= CELL_SIZE;
-                globalX++;
-            }
-            else if (local.x < 0)
-            {
-                local.x += CELL_SIZE;
-                globalX--;
-            }
+            local.x = newLocal.x % CELL_SIZE;
+            globalX += (long) (newLocal.x / CELL_SIZE);
             
-            if (local.y >= CELL_SIZE)
-            {
-                local.y -= CELL_SIZE;
-                globalY++;
-            }
-            else if (local.y < 0)
-            {
-                local.y += CELL_SIZE;
-                globalY--;
-            }
+            local.y = newLocal.y % CELL_SIZE;
+            globalY += (long) (newLocal.y / CELL_SIZE);
             
-            if (local.z >= CELL_SIZE)
-            {
-                local.z -= CELL_SIZE;
-                globalZ++;
-            }
-            else if (local.z < 0)
-            {
-                local.z += CELL_SIZE;
-                globalZ--;
-            }
+            local.z = newLocal.z % CELL_SIZE;
+            globalZ += (long) (newLocal.z / CELL_SIZE);
             
             return new FloatingPositionData()
             {

@@ -6,6 +6,10 @@ using Unity.Physics;
 
 namespace Kosmos.FloatingOrigin
 {
+    /// <summary>
+    /// System responsible for checking how distant each physics object is from
+    /// the current origin, and toggling physics activity based on that distance.
+    /// </summary>
     public partial struct DistanceBasedPhysicsActivitySystem : ISystem
     {
         [BurstCompile]

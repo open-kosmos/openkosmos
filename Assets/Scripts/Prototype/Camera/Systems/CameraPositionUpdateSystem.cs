@@ -5,6 +5,10 @@ using Unity.Transforms;
 
 namespace Kosmos.Camera
 {
+    /// <summary>
+    /// System responsible for updating the camera's position based on the focus entity's
+    /// position and current orbit values.
+    /// </summary>
     [UpdateAfter(typeof(FloatingPositionToWorldPositionUpdateSystem))]
     public partial class CameraPositionUpdateSystem : SystemBase
     {

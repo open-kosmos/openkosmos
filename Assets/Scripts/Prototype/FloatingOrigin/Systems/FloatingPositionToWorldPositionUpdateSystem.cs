@@ -5,7 +5,10 @@ using Unity.Transforms;
 
 namespace Kosmos.FloatingOrigin
 {
-    //[DisableAutoCreation]
+    /// <summary>
+    /// System responsible for resetting the floating origin and updating all
+    /// world positions to their current floating positions.
+    /// </summary>
     [UpdateBefore(typeof(TransformSystemGroup))]
     public partial struct FloatingPositionToWorldPositionUpdateSystem : ISystem
     {
@@ -81,7 +84,6 @@ namespace Kosmos.FloatingOrigin
             
             // Add this vector to the floating position
             floatingPositionData = FloatingOriginMath.Add(floatingPositionData, relativePos);
-            //floatingPositionData.Local += relativePos;
         }
     }
     

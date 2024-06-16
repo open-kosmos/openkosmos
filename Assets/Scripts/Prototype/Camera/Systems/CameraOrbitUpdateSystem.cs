@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Kosmos.Camera
 {
+    /// <summary>
+    /// System responsible for updating the camera's orbit values based on player input.
+    /// </summary>
     [UpdateBefore(typeof(FloatingOriginSnapCheckSystem))]
     public partial class CameraOrbitUpdateSystem : SystemBase
     {

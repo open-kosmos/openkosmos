@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Kosmos.Camera
 {
+    /// <summary>
+    /// System responsible for getting player input and writing it to a singleton component.
+    /// </summary>
     [UpdateBefore(typeof(CameraOrbitUpdateSystem))]
     [UpdateBefore(typeof(PlayableCharacterMovementSystem))]
     public partial class GetPlayerInputSystem : SystemBase

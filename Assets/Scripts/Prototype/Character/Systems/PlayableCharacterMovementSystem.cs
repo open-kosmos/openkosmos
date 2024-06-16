@@ -7,6 +7,9 @@ using Unity.Transforms;
 
 namespace Kosmos.Prototype.Character
 {
+    /// <summary>
+    /// System responsible for moving a player character based on input.
+    /// </summary>
     [UpdateAfter(typeof(CameraOrbitUpdateSystem))]
     public partial class PlayableCharacterMovementSystem : SystemBase
     {

@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace Kosmos.FloatingOrigin
 {
+    /// <summary>
+    /// System responsible for checking if the floating origin currently exceeds the snap threshold
+    /// and should be snapped to the focus entity's position.
+    /// </summary>
     [UpdateAfter(typeof(PlayableCharacterMovementSystem))]
     [UpdateBefore(typeof(FloatingPositionToWorldPositionUpdateSystem))]
     public partial class FloatingOriginSnapCheckSystem : SystemBase
