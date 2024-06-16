@@ -14,42 +14,50 @@ namespace Kosmos.Prototype.Character
     public partial class PlayableCharacterMovementSystem : SystemBase
     {
         private SystemHandle _cameraOrbitUpdateSystem;
+
         protected override void OnCreate()
         {
             RequireForUpdate<PlayableCharacterData>();
             RequireForUpdate<PlayerInput>();
             RequireForUpdate<OrbitingCameraData>();
-            
+
             _cameraOrbitUpdateSystem = World.GetExistingSystem<CameraOrbitUpdateSystem>();
         }
 
         protected override void OnUpdate()
         {
             var cameraData = EntityManager.GetComponentData<OrbitingCameraData>(_cameraOrbitUpdateSystem);
-            var cameraPosition = (float3) cameraData.Camera.transform.position;
+            var cameraPosition = (float3)cameraData.Camera.transform.position;
 
             var input = SystemAPI.GetSingleton<PlayerInput>();
-            
+
             Entities
-                .ForEach((ref LocalTransform transform, 
-                    ref TargetRotation targetRotation, 
+                .ForEach((ref LocalTransform transform,
+                    ref TargetRotation targetRotation,
                     ref PlayableCharacterData characterData) =>
                 {
                     var playerPosition = transform.Position;
 
-                    characterData.MoveSpeed += input.ZoomInputValue.y * 10f;
+                    if (!input.ScaleZoomActive)
+                    {
+                        characterData.MoveSpeed = (float)math.clamp(
+                            characterData.MoveSpeed + input.ZoomInputValue.y * 10.0,
+                            0.0, double.MaxValue
+                        );
+                    }
                     
-                    // Forward input moves the player in the directionaway from the camera
+                    // Forward input moves the player in the direction away from the camera
                     var forward = math.normalize(playerPosition - cameraPosition);
                     var right = math.cross(forward, new float3(0, 1, 0));
-                    
+
                     var translation = input.TranslationValue.y * forward - input.TranslationValue.x * right;
-                    
+
                     transform.Position += translation * characterData.MoveSpeed * SystemAPI.Time.DeltaTime;
-                    
+
                     targetRotation.Value = quaternion.LookRotation(forward, new float3(0, 1, 0));
-                    
-                    transform.Rotation = math.slerp(transform.Rotation, targetRotation.Value, characterData.RotationSpeed * SystemAPI.Time.DeltaTime);
+
+                    transform.Rotation = math.slerp(transform.Rotation, targetRotation.Value,
+                        characterData.RotationSpeed * SystemAPI.Time.DeltaTime);
                 })
                 .Schedule();
         }

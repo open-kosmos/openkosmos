@@ -18,6 +18,15 @@ namespace Kosmos.FloatingOrigin
 
             return new double3(x, y, z);
         }
+        
+        public static double3 VectorFromFloatingOrigin(FloatingOriginData a, ParentFloatingPositionData b)
+        {
+            var x = (b.GlobalX - a.GlobalX) * CELL_SIZE + b.Local.x - a.Local.x;
+            var y = (b.GlobalY - a.GlobalY) * CELL_SIZE + b.Local.y - a.Local.y;
+            var z = (b.GlobalZ - a.GlobalZ) * CELL_SIZE + b.Local.z - a.Local.z;
+
+            return new double3(x, y, z);
+        }
             
         public static double3 VectorFromPosition(FloatingPositionData from, FloatingPositionData to)
         {
@@ -31,7 +40,7 @@ namespace Kosmos.FloatingOrigin
         /// <summary>
         /// Calculates the floating position of a given world space position relative to a NON-FLOATING origin.
         /// </summary>
-        public static FloatingPositionData InitializeLocal(double3 originalLocal, float scale)
+        public static FloatingPositionData InitializeLocal(double3 originalLocal)
         {
             long globalX = 0;
             long globalY = 0;
@@ -54,8 +63,7 @@ namespace Kosmos.FloatingOrigin
                 Local = local,
                 GlobalX = globalX,
                 GlobalY = globalY,
-                GlobalZ = globalZ,
-                Scale = scale
+                GlobalZ = globalZ
             };
         }
         
@@ -83,52 +91,28 @@ namespace Kosmos.FloatingOrigin
                 Local = local,
                 GlobalX = globalX,
                 GlobalY = globalY,
-                GlobalZ = globalZ,
-                Scale = a.Scale
+                GlobalZ = globalZ
             };
         }
         
         public static FloatingOriginData Add(FloatingOriginData a, double3 b)
         {
-            var local = a.Local + b;
-            
+            var newLocal = a.Local + b;
+            var local = new double3();
+
             // Bounds check
             var globalX = a.GlobalX;
             var globalY = a.GlobalY;
             var globalZ = a.GlobalZ;
             
-            if (local.x >= CELL_SIZE)
-            {
-                local.x -= CELL_SIZE;
-                globalX++;
-            }
-            else if (local.x < 0)
-            {
-                local.x += CELL_SIZE;
-                globalX--;
-            }
+            local.x = newLocal.x % CELL_SIZE;
+            globalX += (long) (newLocal.x / CELL_SIZE);
             
-            if (local.y >= CELL_SIZE)
-            {
-                local.y -= CELL_SIZE;
-                globalY++;
-            }
-            else if (local.y < 0)
-            {
-                local.y += CELL_SIZE;
-                globalY--;
-            }
+            local.y = newLocal.y % CELL_SIZE;
+            globalY += (long) (newLocal.y / CELL_SIZE);
             
-            if (local.z >= CELL_SIZE)
-            {
-                local.z -= CELL_SIZE;
-                globalZ++;
-            }
-            else if (local.z < 0)
-            {
-                local.z += CELL_SIZE;
-                globalZ--;
-            }
+            local.z = newLocal.z % CELL_SIZE;
+            globalZ += (long) (newLocal.z / CELL_SIZE);
             
             return new FloatingOriginData()
             {
@@ -137,6 +121,34 @@ namespace Kosmos.FloatingOrigin
                 GlobalY = globalY,
                 GlobalZ = globalZ,
                 Scale = a.Scale
+            };
+        }
+
+        public static FloatingPositionData Add(ParentFloatingPositionData a, double3 b)
+        {
+            var newLocal = a.Local + b;
+            var local = new double3();
+
+            // Bounds check
+            var globalX = a.GlobalX;
+            var globalY = a.GlobalY;
+            var globalZ = a.GlobalZ;
+            
+            local.x = newLocal.x % CELL_SIZE;
+            globalX += (long) (newLocal.x / CELL_SIZE);
+            
+            local.y = newLocal.y % CELL_SIZE;
+            globalY += (long) (newLocal.y / CELL_SIZE);
+            
+            local.z = newLocal.z % CELL_SIZE;
+            globalZ += (long) (newLocal.z / CELL_SIZE);
+            
+            return new FloatingPositionData()
+            {
+                Local = local,
+                GlobalX = globalX,
+                GlobalY = globalY,
+                GlobalZ = globalZ
             };
         }
 
@@ -153,8 +165,7 @@ namespace Kosmos.FloatingOrigin
 
             return new FloatingPositionData()
             {
-                Local = pos,
-                Scale = scale
+                Local = pos
             };
         }
     }

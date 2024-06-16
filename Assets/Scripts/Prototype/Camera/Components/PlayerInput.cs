@@ -9,5 +9,6 @@ namespace Kosmos.Camera
         public Vector2 OrbitInputValue;
         public bool OrbitActive;
         public Vector2 ZoomInputValue;
+        public bool ScaleZoomActive;
     }
 }

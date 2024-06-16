@@ -30,6 +30,7 @@ namespace Kosmos.Camera
             var currentCameraOrbit = playerInputControls.PlanetaryMap.CameraOrbit.ReadValue<Vector2>();
             var cameraOrbitActive = playerInputControls.PlanetaryMap.CameraOrbitActivation.IsPressed();
             var currentZoomInput = playerInputControls.PlanetaryMap.CameraZoom.ReadValue<Vector2>();
+            var scaleZoomActive = playerInputControls.PlanetaryMap.ScaleZoomModifier.IsPressed();
             
             // Write to pan input component
             SystemAPI.SetSingleton(new PlayerInput()
@@ -37,7 +38,8 @@ namespace Kosmos.Camera
                 TranslationValue = translationInput,
                 OrbitInputValue = currentCameraOrbit,
                 OrbitActive = cameraOrbitActive,
-                ZoomInputValue = currentZoomInput
+                ZoomInputValue = currentZoomInput,
+                ScaleZoomActive = scaleZoomActive
             });
         }
 

@@ -135,6 +135,15 @@ public partial class @PannableCameraControls: IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ScaleZoomModifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""9589de4a-5094-444d-a1c6-51a92f4962ba"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -368,6 +377,17 @@ public partial class @PannableCameraControls: IInputActionCollection2, IDisposab
                     ""action"": ""CameraZoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c167ab0-d695-4b34-bd62-2889947c67a2"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScaleZoomModifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -405,6 +425,7 @@ public partial class @PannableCameraControls: IInputActionCollection2, IDisposab
         m_PlanetaryMap_CameraOrbit = m_PlanetaryMap.FindAction("CameraOrbit", throwIfNotFound: true);
         m_PlanetaryMap_CameraOrbitActivation = m_PlanetaryMap.FindAction("CameraOrbitActivation", throwIfNotFound: true);
         m_PlanetaryMap_CameraZoom = m_PlanetaryMap.FindAction("CameraZoom", throwIfNotFound: true);
+        m_PlanetaryMap_ScaleZoomModifier = m_PlanetaryMap.FindAction("ScaleZoomModifier", throwIfNotFound: true);
     }
 
     ~@PannableCameraControls()
@@ -483,6 +504,7 @@ public partial class @PannableCameraControls: IInputActionCollection2, IDisposab
     private readonly InputAction m_PlanetaryMap_CameraOrbit;
     private readonly InputAction m_PlanetaryMap_CameraOrbitActivation;
     private readonly InputAction m_PlanetaryMap_CameraZoom;
+    private readonly InputAction m_PlanetaryMap_ScaleZoomModifier;
     public struct PlanetaryMapActions
     {
         private @PannableCameraControls m_Wrapper;
@@ -499,6 +521,7 @@ public partial class @PannableCameraControls: IInputActionCollection2, IDisposab
         public InputAction @CameraOrbit => m_Wrapper.m_PlanetaryMap_CameraOrbit;
         public InputAction @CameraOrbitActivation => m_Wrapper.m_PlanetaryMap_CameraOrbitActivation;
         public InputAction @CameraZoom => m_Wrapper.m_PlanetaryMap_CameraZoom;
+        public InputAction @ScaleZoomModifier => m_Wrapper.m_PlanetaryMap_ScaleZoomModifier;
         public InputActionMap Get() { return m_Wrapper.m_PlanetaryMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -544,6 +567,9 @@ public partial class @PannableCameraControls: IInputActionCollection2, IDisposab
             @CameraZoom.started += instance.OnCameraZoom;
             @CameraZoom.performed += instance.OnCameraZoom;
             @CameraZoom.canceled += instance.OnCameraZoom;
+            @ScaleZoomModifier.started += instance.OnScaleZoomModifier;
+            @ScaleZoomModifier.performed += instance.OnScaleZoomModifier;
+            @ScaleZoomModifier.canceled += instance.OnScaleZoomModifier;
         }
 
         private void UnregisterCallbacks(IPlanetaryMapActions instance)
@@ -584,6 +610,9 @@ public partial class @PannableCameraControls: IInputActionCollection2, IDisposab
             @CameraZoom.started -= instance.OnCameraZoom;
             @CameraZoom.performed -= instance.OnCameraZoom;
             @CameraZoom.canceled -= instance.OnCameraZoom;
+            @ScaleZoomModifier.started -= instance.OnScaleZoomModifier;
+            @ScaleZoomModifier.performed -= instance.OnScaleZoomModifier;
+            @ScaleZoomModifier.canceled -= instance.OnScaleZoomModifier;
         }
 
         public void RemoveCallbacks(IPlanetaryMapActions instance)
@@ -624,5 +653,6 @@ public partial class @PannableCameraControls: IInputActionCollection2, IDisposab
         void OnCameraOrbit(InputAction.CallbackContext context);
         void OnCameraOrbitActivation(InputAction.CallbackContext context);
         void OnCameraZoom(InputAction.CallbackContext context);
+        void OnScaleZoomModifier(InputAction.CallbackContext context);
     }
 }

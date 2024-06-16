@@ -1,0 +1,4 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:Label text="Speed: 0.0" name="text_speed" style="color: rgb(255, 255, 255); font-size: 8px; margin-top: 29px;" />
+    <engine:Label text="Scale: 0.0" name="text_scale" style="color: rgb(255, 255, 255); font-size: 8px; margin-top: -8px;" />
+</engine:UXML>
