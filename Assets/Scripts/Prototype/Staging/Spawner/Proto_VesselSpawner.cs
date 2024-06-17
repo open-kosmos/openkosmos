@@ -1,4 +1,5 @@
 ﻿using System;
+using Kosmos.Prototype.Parts.Components;
 using Kosmos.Prototype.Staging.Components;
 using Unity.Collections;
 using Unity.Entities;
@@ -23,7 +24,7 @@ namespace Prototype.Staging.Spawner
             var controlPod = entityManager.CreateEntity();
             entityManager.AddComponentData(controlPod, new ControlPod()
             {
-                StageIndex = 0
+                CurrentStageIndex = 0
             });
             entityManager.AddComponentData(controlPod, new PlayerControlledTag());
             

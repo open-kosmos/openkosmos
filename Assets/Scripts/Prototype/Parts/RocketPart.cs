@@ -7,5 +7,7 @@ namespace Kosmos.Prototype.Parts
         [SerializeField] private float _maxThrust;
 
         [Tweakable] private float _currentThrust;
+
+        public float GetMaxThrust() { return _maxThrust; }
     }
 }

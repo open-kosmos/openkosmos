@@ -1,0 +1,78 @@
+{
+    "Parts": [
+        {
+            "PartDefGuid": "8851512b67af4bb6b709c82e16f32b5d",
+            "LocalPosition": {
+                "x": 5.71591329574585,
+                "y": 6.847590923309326,
+                "z": 0.0
+            },
+            "LocalRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "Tweakables": [
+                {
+                    "Name": "_currentFuel",
+                    "Value": "1"
+                }
+            ]
+        },
+        {
+            "PartDefGuid": "8851512b67af4bb6b709c82e16f32b5d",
+            "LocalPosition": {
+                "x": 5.71591329574585,
+                "y": -9.152408599853516,
+                "z": 0.0
+            },
+            "LocalRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "Tweakables": [
+                {
+                    "Name": "_currentFuel",
+                    "Value": "1"
+                }
+            ]
+        },
+        {
+            "PartDefGuid": "8851512b67af4bb6b709c82e16f32b5d",
+            "LocalPosition": {
+                "x": 5.71591329574585,
+                "y": -25.152408599853517,
+                "z": 0.0
+            },
+            "LocalRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "Tweakables": [
+                {
+                    "Name": "_currentFuel",
+                    "Value": "1"
+                }
+            ]
+        }
+    ],
+    "Connections": [
+        {
+            "ParentPartIndex": 0,
+            "ParentSocketIndex": 1,
+            "ChildPartIndex": 1,
+            "ChildSockedIndex": 0
+        },
+        {
+            "ParentPartIndex": 1,
+            "ParentSocketIndex": 1,
+            "ChildPartIndex": 2,
+            "ChildSockedIndex": 0
+        }
+    ]
+}

@@ -9,16 +9,9 @@ namespace Kosmos.Prototype.Parts
         [SerializeField]
         protected int StageIndex;
 
-        private class StageablePartBaker : Baker<StageablePart>
+        public int GetStageIndex()
         {
-            public override void Bake(StageablePart authoring)
-            {
-                var entity = GetEntity(TransformUsageFlags.Dynamic);
-                AddComponent(entity, new StageablePartData()
-                {
-                    StageIndex = authoring.StageIndex
-                });
-            }
+            return StageIndex;
         }
     }
 }
