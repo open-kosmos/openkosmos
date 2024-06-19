@@ -177,6 +177,11 @@ namespace Kosmos.Prototype.OrbitalPhysics
             {
                 EquatorialRadiusMeters = body.BodyData.EquatorialRadiusM
             });
+
+            entityManager.AddComponentData(entity, new BodyId()
+            {
+                Value = body.Id
+            });
             
             OrbitalBodyEntityUtilities.AddUpdateOrderTagToEntity(entityManager, entity, body.UpdateOrder);
         }

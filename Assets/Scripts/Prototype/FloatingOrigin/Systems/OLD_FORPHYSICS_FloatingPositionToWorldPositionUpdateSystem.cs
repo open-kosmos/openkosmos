@@ -12,7 +12,8 @@ namespace Kosmos.FloatingOrigin
     /// </summary>
     [UpdateAfter(typeof(OrbitToFloatingPositionUpdateSystem))]
     [UpdateBefore(typeof(TransformSystemGroup))]
-    public partial struct FloatingPositionToWorldPositionUpdateSystem : ISystem
+    [DisableAutoCreation]
+    public partial struct OLD_FORPHYSICS_FloatingPositionToWorldPositionUpdateSystem : ISystem
     {
         [BurstCompile]
         public void OnCreate(ref SystemState state)
@@ -31,22 +32,37 @@ namespace Kosmos.FloatingOrigin
                 floatingOrigin.ShouldSnap = false;
 
                 var focusEntity = SystemAPI.GetSingletonEntity<FloatingFocusTag>();
-                var focusEntityFloatingPosition = state.EntityManager.GetComponentData<FloatingPositionData>(focusEntity);
-                
+                var focusEntityTransform = state.EntityManager.GetComponentData<LocalTransform>(focusEntity);
+
+                // Get focus entity's current world space position
+                // TODO: USE FLOATING POSITION RATHER THAN FLOAT WORLD POSITION
+                var focusPosition = focusEntityTransform.Position;
+
+                // Reset focus entity's position to origin
+                focusEntityTransform.Position -= focusPosition;
+                state.EntityManager.SetComponentData(focusEntity, focusEntityTransform);
+
+                // Set all floating positions to current world positions
+                new WorldPositionToFloatingPositionUpdateJob()
+                {
+                    FloatingOrigin = floatingOrigin
+                }.ScheduleParallel();
+
                 // Adjust floating origin
-                floatingOrigin = FloatingOriginMath.ConvertPositionToOrigin(
-                    focusEntityFloatingPosition, floatingOrigin.Scale);
+                var scaledFocusPosition = focusPosition * (float)floatingOrigin.Scale;
+                floatingOrigin = FloatingOriginMath.Add(floatingOrigin, scaledFocusPosition);
+
+                // Set all world positions to floating positions relative to new origin
+                new FloatingPositionToWorldPositionUpdateJob()
+                {
+                    FloatingOrigin = floatingOrigin
+                }.ScheduleParallel();
                 
                 SystemAPI.SetSingleton(floatingOrigin);
             }
 
-            // Set all world positions to floating positions relative to new origin
-            new FloatingPositionToWorldPositionUpdateJob()
-            {
-                FloatingOrigin = floatingOrigin
-            }.ScheduleParallel();
-            
             // Set all transform scales to floating scales relative to new origin
+            // NOTE: This currently happens every frame because the scale can currently change very frame
             new FloatingScaleToWorldScaleUpdateJob()
             {
                 FloatingOrigin = floatingOrigin
@@ -59,7 +75,7 @@ namespace Kosmos.FloatingOrigin
     }
 
     [BurstCompile]
-    public partial struct WorldPositionToFloatingPositionUpdateJob : IJobEntity
+    public partial struct OLD_WorldPositionToFloatingPositionUpdateJob : IJobEntity
     {
         public FloatingOriginData FloatingOrigin;
         
@@ -83,7 +99,7 @@ namespace Kosmos.FloatingOrigin
     }
     
     [BurstCompile]
-    public partial struct FloatingPositionToWorldPositionUpdateJob : IJobEntity
+    public partial struct OLD_FloatingPositionToWorldPositionUpdateJob : IJobEntity
     {
         public FloatingOriginData FloatingOrigin;
         
@@ -101,7 +117,7 @@ namespace Kosmos.FloatingOrigin
     }
 
     [BurstCompile]
-    public partial struct FloatingScaleToWorldScaleUpdateJob : IJobEntity
+    public partial struct OLD_FloatingScaleToWorldScaleUpdateJob : IJobEntity
     {
         public FloatingOriginData FloatingOrigin;
         

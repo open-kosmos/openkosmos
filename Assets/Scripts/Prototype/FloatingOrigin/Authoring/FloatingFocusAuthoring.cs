@@ -1,5 +1,6 @@
 ﻿using Kosmos.FloatingOrigin;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Prototype.FloatingOrigin.Components
@@ -13,6 +14,9 @@ namespace Prototype.FloatingOrigin.Components
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
                 var focusData = new FloatingFocusTag();
                 AddComponent(entity, focusData);
+                var floatingPosition = FloatingOriginMath.InitializeLocal(
+                    (float3)authoring.transform.position);
+                AddComponent(entity, floatingPosition);
             }
         }
     }

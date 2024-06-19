@@ -67,7 +67,7 @@ namespace Kosmos.Prototype.OrbitalPhysics
                     MeanAnomaly,
                     Mass,
                     BodyParentData,
-                    LocalTransform,
+                    FloatingPositionData,
                     ParentFloatingPositionData>()
                 .Build();
 
@@ -77,7 +77,7 @@ namespace Kosmos.Prototype.OrbitalPhysics
                     MeanAnomaly,
                     Mass,
                     BodyParentData,
-                    LocalTransform,
+                    FloatingPositionData,
                     ParentFloatingPositionData>()
                 .Build();
 
@@ -87,7 +87,7 @@ namespace Kosmos.Prototype.OrbitalPhysics
                     MeanAnomaly,
                     Mass,
                     BodyParentData,
-                    LocalTransform,
+                    FloatingPositionData,
                     ParentFloatingPositionData>()
                 .Build();
 
@@ -97,7 +97,7 @@ namespace Kosmos.Prototype.OrbitalPhysics
                     MeanAnomaly,
                     Mass,
                     BodyParentData,
-                    LocalTransform,
+                    FloatingPositionData,
                     ParentFloatingPositionData>()
                 .Build();
 
@@ -107,7 +107,7 @@ namespace Kosmos.Prototype.OrbitalPhysics
                     MeanAnomaly,
                     Mass,
                     BodyParentData,
-                    LocalTransform,
+                    FloatingPositionData,
                     ParentFloatingPositionData>()
                 .Build();
         }
@@ -119,27 +119,27 @@ namespace Kosmos.Prototype.OrbitalPhysics
             
             var floatingOrigin = SystemAPI.GetSingleton<FloatingOriginData>();
 
-            var firstOrderJob = new OrbitToWorldPositionUpdateJob()
+            var firstOrderJob = new OrbitToFloatingPositionUpdateJob()
             {
                 FloatingOrigin = floatingOrigin
             };
 
-            var secondOrderJob = new OrbitToWorldPositionUpdateJob()
+            var secondOrderJob = new OrbitToFloatingPositionUpdateJob()
             {
                 FloatingOrigin = floatingOrigin
             };
 
-            var thirdOrderJob = new OrbitToWorldPositionUpdateJob()
+            var thirdOrderJob = new OrbitToFloatingPositionUpdateJob()
             {
                 FloatingOrigin = floatingOrigin
             };
 
-            var fourthOrderJob = new OrbitToWorldPositionUpdateJob()
+            var fourthOrderJob = new OrbitToFloatingPositionUpdateJob()
             {
                 FloatingOrigin = floatingOrigin
             };
 
-            var fifthOrderJob = new OrbitToWorldPositionUpdateJob()
+            var fifthOrderJob = new OrbitToFloatingPositionUpdateJob()
             {
                 FloatingOrigin = floatingOrigin
             };
@@ -188,11 +188,11 @@ namespace Kosmos.Prototype.OrbitalPhysics
     }
     
     [BurstCompile]
-    public partial struct OrbitToWorldPositionUpdateJob : IJobEntity
+    public partial struct OrbitToFloatingPositionUpdateJob : IJobEntity
     {
         public FloatingOriginData FloatingOrigin;
         public void Execute(
-            ref LocalTransform localTransform,
+            ref FloatingPositionData floatingPosition,
             in KeplerElements keplerElements,
             in MeanAnomaly meanAnomaly,
             in BodyParentData parentData,
@@ -208,12 +208,14 @@ namespace Kosmos.Prototype.OrbitalPhysics
                 parentData.ParentMassKg,
                 out var velocity);
 
-            var parentWorldSpacePosition = FloatingOriginMath.VectorFromFloatingOrigin(
+            floatingPosition = FloatingOriginMath.Add(parentFloatingPositionData, positionInOrbit);
+            
+            /*var parentWorldSpacePosition = FloatingOriginMath.VectorFromFloatingOrigin(
                 FloatingOrigin, parentFloatingPositionData);
 
             var pos = (float3)((parentWorldSpacePosition + positionInOrbit) / FloatingOrigin.Scale);
             
-            localTransform.Position = pos;
+            localTransform.Position = pos;*/
         }
     }
     

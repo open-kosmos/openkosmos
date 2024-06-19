@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 8e6e0598c54dde8489d57cb4b885bc33, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -367,7 +367,7 @@ Camera:
   m_GameObject: {fileID: 739548586}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.06289297, g: 0.06289297, b: 0.06289297, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 1134764759}
   - component: {fileID: 1134764758}
   m_Layer: 5
-  m_Name: uidoc_speed
+  m_Name: uidoc_debug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -471,6 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca90b050855c414e8acb268cb4bb1137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 739548589}
   _uiDocument: {fileID: 1134764759}
 --- !u!114 &1134764759
 MonoBehaviour:

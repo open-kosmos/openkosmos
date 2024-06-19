@@ -31,7 +31,7 @@ namespace Kosmos.FloatingOrigin
         public static double3 VectorFromPosition(FloatingPositionData from, FloatingPositionData to)
         {
             var x = (to.GlobalX - from.GlobalX) * CELL_SIZE + to.Local.x - from.Local.x;
-            var y = (to.GlobalY - from.GlobalZ) * CELL_SIZE + to.Local.y - from.Local.y;
+            var y = (to.GlobalY - from.GlobalY) * CELL_SIZE + to.Local.y - from.Local.y;
             var z = (to.GlobalZ - from.GlobalZ) * CELL_SIZE + to.Local.z - from.Local.z;
 
             return new double3(x, y, z);
@@ -166,6 +166,18 @@ namespace Kosmos.FloatingOrigin
             return new FloatingPositionData()
             {
                 Local = pos
+            };
+        }
+
+        public static FloatingOriginData ConvertPositionToOrigin(FloatingPositionData floatingPositionData, double scale)
+        {
+            return new FloatingOriginData()
+            {
+                Local = floatingPositionData.Local,
+                GlobalX = floatingPositionData.GlobalX,
+                GlobalY = floatingPositionData.GlobalY,
+                GlobalZ = floatingPositionData.GlobalZ,
+                Scale = scale
             };
         }
     }

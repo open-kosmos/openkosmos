@@ -30,9 +30,11 @@ namespace Kosmos.Prototype.Character
             var cameraPosition = (float3)cameraData.Camera.transform.position;
 
             var input = SystemAPI.GetSingleton<PlayerInput>();
+            var floatingOrigin = SystemAPI.GetSingleton<FloatingOriginData>();
 
             Entities
-                .ForEach((ref LocalTransform transform,
+                .ForEach((ref FloatingPositionData floatingPosition,
+                    ref LocalTransform transform,
                     ref TargetRotation targetRotation,
                     ref PlayableCharacterData characterData) =>
                 {
@@ -42,7 +44,7 @@ namespace Kosmos.Prototype.Character
                     {
                         characterData.MoveSpeed = (float)math.clamp(
                             characterData.MoveSpeed + input.ZoomInputValue.y * 10.0,
-                            0.0, double.MaxValue
+                            10.0, double.MaxValue
                         );
                     }
                     
@@ -50,9 +52,13 @@ namespace Kosmos.Prototype.Character
                     var forward = math.normalize(playerPosition - cameraPosition);
                     var right = math.cross(forward, new float3(0, 1, 0));
 
-                    var translation = input.TranslationValue.y * forward - input.TranslationValue.x * right;
+                    var translation = (input.TranslationValue.y * forward - input.TranslationValue.x * right)
+                        * characterData.MoveSpeed 
+                        * (float)floatingOrigin.Scale
+                        * SystemAPI.Time.DeltaTime;
 
-                    transform.Position += translation * characterData.MoveSpeed * SystemAPI.Time.DeltaTime;
+                    //transform.Position += translation * characterData.MoveSpeed * SystemAPI.Time.DeltaTime;
+                    floatingPosition = FloatingOriginMath.Add(floatingPosition, translation);
 
                     targetRotation.Value = quaternion.LookRotation(forward, new float3(0, 1, 0));
 
