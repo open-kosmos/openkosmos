@@ -49,6 +49,25 @@ namespace Kosmos.Prototype.Vab
                         
                         _tweakablesFoldout.Add(slider);
                     }
+                    else if(field.FieldType == typeof(int))
+                    {
+                        TextField textField = new TextField(field.Name);
+                        textField.value = field.GetValue(part).ToString();
+                        textField.RegisterValueChangedCallback((evt) =>
+                        {
+                            if (int.TryParse(evt.newValue, out int intValue))
+                            {
+                                field.SetValue(part, intValue);
+                            }
+                            else
+                            {
+                                // Revert to the previous valid value if parsing fails
+                                textField.value = ((int)field.GetValue(part)).ToString();
+                            }
+                        });
+
+                        _tweakablesFoldout.Add(textField);
+                    }
                     else
                     {
                         _tweakablesFoldout.Add(new Label(field.Name + " (unsupported type)"));

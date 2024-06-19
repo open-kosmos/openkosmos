@@ -3,7 +3,14 @@
     "rootNamespace": "",
     "references": [
         "Parts",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "Unity.Scenes",
+        "Unity.Entities",
+        "Unity.Collections",
+        "glTFast",
+        "Unity.Entities.Graphics",
+        "Unity.Transforms",
+        "Unity.Mathematics"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

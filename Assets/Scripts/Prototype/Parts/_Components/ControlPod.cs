@@ -1,9 +1,9 @@
 ﻿using Unity.Entities;
 
-namespace Kosmos.Prototype.Staging.Components
+namespace Kosmos.Prototype.Parts.Components
 {
     public struct ControlPod : IComponentData
     {
-        public int StageIndex;
+        public int CurrentStageIndex;
     }
 }

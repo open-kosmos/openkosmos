@@ -1,4 +1,5 @@
-﻿using Kosmos.Prototype.Staging.Components;
+﻿using Kosmos.Prototype.Parts.Components;
+using Kosmos.Prototype.Staging.Components;
 using Unity.Entities;
 using UnityEngine;
 
