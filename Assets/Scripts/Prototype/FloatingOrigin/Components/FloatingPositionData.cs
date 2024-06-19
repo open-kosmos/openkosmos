@@ -9,6 +9,5 @@ namespace Kosmos.FloatingOrigin
         public long GlobalX;
         public long GlobalY;
         public long GlobalZ;
-        public float Scale;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Unity.Burst;
+﻿using Kosmos.Prototype.OrbitalPhysics;
+using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -9,6 +10,7 @@ namespace Kosmos.FloatingOrigin
     /// System responsible for resetting the floating origin and updating all
     /// world positions to their current floating positions.
     /// </summary>
+    [UpdateAfter(typeof(OrbitToFloatingPositionUpdateSystem))]
     [UpdateBefore(typeof(TransformSystemGroup))]
     public partial struct FloatingPositionToWorldPositionUpdateSystem : ISystem
     {
@@ -24,39 +26,32 @@ namespace Kosmos.FloatingOrigin
         {
             var floatingOrigin = SystemAPI.GetSingleton<FloatingOriginData>();
 
-            if (!floatingOrigin.ShouldSnap)
+            if (floatingOrigin.ShouldSnap)
             {
-                return;
+                floatingOrigin.ShouldSnap = false;
+
+                var focusEntity = SystemAPI.GetSingletonEntity<FloatingFocusTag>();
+                var focusEntityFloatingPosition = state.EntityManager.GetComponentData<FloatingPositionData>(focusEntity);
+                
+                // Adjust floating origin
+                floatingOrigin = FloatingOriginMath.ConvertPositionToOrigin(
+                    focusEntityFloatingPosition, floatingOrigin.Scale);
+                
+                SystemAPI.SetSingleton(floatingOrigin);
             }
-            
-            var focusEntity = SystemAPI.GetSingletonEntity<FloatingFocusTag>();
-            var focusEntityTransform = state.EntityManager.GetComponentData<LocalTransform>(focusEntity);
-            
-            // Get focus entity's current world space position
-            var focusPosition = focusEntityTransform.Position;
-            
-            // Reset focus entity's position to origin
-            focusEntityTransform.Position -= focusPosition;
-            state.EntityManager.SetComponentData(focusEntity, focusEntityTransform);
-            
-            // Set all floating positions to current world positions
-            new WorldPositionToFloatingPositionUpdateJob()
-            {
-                FloatingOrigin = floatingOrigin
-            }.ScheduleParallel();
-            
-            // Adjust floating origin
-            floatingOrigin = FloatingOriginMath.Add(floatingOrigin, focusPosition);
-            //floatingOrigin.Local += focusPosition;
-            
+
             // Set all world positions to floating positions relative to new origin
             new FloatingPositionToWorldPositionUpdateJob()
             {
                 FloatingOrigin = floatingOrigin
             }.ScheduleParallel();
             
-            floatingOrigin.ShouldSnap = false;
-            SystemAPI.SetSingleton(floatingOrigin);
+            // Set all transform scales to floating scales relative to new origin
+            new FloatingScaleToWorldScaleUpdateJob()
+            {
+                FloatingOrigin = floatingOrigin
+            }.ScheduleParallel();
+            
         }
 
         [BurstCompile]
@@ -74,13 +69,13 @@ namespace Kosmos.FloatingOrigin
         {
             // Get world space position currently pointed at by floating position
             var floatingPosWorldSpace = FloatingOriginMath.VectorFromFloatingOrigin(
-                FloatingOrigin, floatingPositionData);
+                FloatingOrigin, floatingPositionData) / FloatingOrigin.Scale;
             
             // Get actual world space position
             var worldSpacePos = localTransform.Position;
             
             // Get vector from floating WS pos to actual WS pos
-            var relativePos = worldSpacePos - floatingPosWorldSpace;
+            var relativePos = (worldSpacePos - floatingPosWorldSpace) * FloatingOrigin.Scale;
             
             // Add this vector to the floating position
             floatingPositionData = FloatingOriginMath.Add(floatingPositionData, relativePos);
@@ -96,13 +91,25 @@ namespace Kosmos.FloatingOrigin
             in FloatingPositionData floatingPositionData,
             ref LocalTransform localTransform)
         {
-            var vectorFromOrigin = FloatingOriginMath.VectorFromFloatingOrigin(
+            var vectorFromOrigin = (float3)FloatingOriginMath.VectorFromFloatingOrigin(
                 FloatingOrigin, floatingPositionData);
-            
-            localTransform.Position = new float3(
-                (float)(vectorFromOrigin.x),
-                (float)(vectorFromOrigin.y),
-                (float)(vectorFromOrigin.z));
+
+            var scale = (float)FloatingOrigin.Scale;
+
+            localTransform.Position = vectorFromOrigin / scale;
+        }
+    }
+
+    [BurstCompile]
+    public partial struct FloatingScaleToWorldScaleUpdateJob : IJobEntity
+    {
+        public FloatingOriginData FloatingOrigin;
+        
+        private void Execute(
+            in FloatingScaleData floatingScaleData,
+            ref LocalTransform localTransform)
+        {
+            localTransform.Scale = (float)(floatingScaleData.Value / FloatingOrigin.Scale);
         }
     }
 }
