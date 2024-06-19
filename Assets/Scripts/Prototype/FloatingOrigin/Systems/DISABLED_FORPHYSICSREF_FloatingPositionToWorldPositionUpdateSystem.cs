@@ -13,7 +13,7 @@ namespace Kosmos.FloatingOrigin
     [UpdateAfter(typeof(OrbitToFloatingPositionUpdateSystem))]
     [UpdateBefore(typeof(TransformSystemGroup))]
     [DisableAutoCreation]
-    public partial struct OLD_FORPHYSICS_FloatingPositionToWorldPositionUpdateSystem : ISystem
+    public partial struct DISABLED_FORPHYSICSREF_FloatingPositionToWorldPositionUpdateSystem : ISystem
     {
         [BurstCompile]
         public void OnCreate(ref SystemState state)

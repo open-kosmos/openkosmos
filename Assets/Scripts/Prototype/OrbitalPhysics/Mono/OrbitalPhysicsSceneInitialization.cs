@@ -24,10 +24,11 @@ namespace Kosmos.Prototype.OrbitalPhysics
         private Dictionary<string, StarSystemFileBodyEntry> _idMap = 
             new Dictionary<string, StarSystemFileBodyEntry>();
         
-        private void Start()
+        private async void Start()
         {
             CreateTime();
-            var starData = DeserializeStarFile();
+            
+            var starData = await DeserializeStarFile();
             
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
@@ -120,7 +121,7 @@ namespace Kosmos.Prototype.OrbitalPhysics
             }
         }
 
-        private StarSystemFile DeserializeStarFile()
+        private async Awaitable<StarSystemFile> DeserializeStarFile()
         {
             var dirPath = Path.Combine(
                 Application.streamingAssetsPath,
@@ -133,12 +134,12 @@ namespace Kosmos.Prototype.OrbitalPhysics
             );
             
             var starSystemDeserializer = new StarSystemFileDeserializer();
-            var starSystemFile = starSystemDeserializer.DeserializeStarSystemFile(starFilePath);
+            var starSystemFile = await starSystemDeserializer.DeserializeStarSystemFile(starFilePath);
 
             foreach (var body in starSystemFile.CelestialBodies)
             {
                 var bodyFilePath = Path.Combine(dirPath, body.BodyFile);
-                body.BodyData = starSystemDeserializer.DeserializeCelestialBodyData(bodyFilePath);
+                body.BodyData = await starSystemDeserializer.DeserializeCelestialBodyData(bodyFilePath);
             }
 
             return starSystemFile;
@@ -209,7 +210,7 @@ namespace Kosmos.Prototype.OrbitalPhysics
             
             var parentMass = parentData.BodyData.MassKg;
             
-            var orbitalPeriod = OrbitMath.ComputeOrbitalPeriodSeconds(
+            var orbitalPeriod = Kosmos.Math.OrbitMath.ComputeOrbitalPeriodSeconds(
                 body.Orbit.SemiMajorAxisM,
                 parentMass
             );

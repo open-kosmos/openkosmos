@@ -7,6 +7,8 @@ namespace Kosmos.FloatingOrigin
     /// <summary>
     /// System responsible for CACHING the offset between the parent entity and the floating focus entity
     /// AFTER movement input has been applied, but BEFORE the parent's orbital position is updated.
+    ///
+    /// The Floating Focus Parent is a parent entity to which the Floating Focus entity is spatially "affixed."
     /// </summary>
     [UpdateAfter(typeof(PlayableCharacterMovementSystem))]
     [UpdateBefore(typeof(OrbitToFloatingPositionUpdateSystem))]

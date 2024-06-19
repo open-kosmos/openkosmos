@@ -7,6 +7,10 @@ using Unity.Transforms;
 
 namespace Kosmos.Prototype.OrbitalPhysics
 {
+    /// <summary>
+    /// System responsible for updating the floating position of orbital bodies based on their orbital elements and
+    /// parent body. Bodies are updated from the parent body outwards according to their update order.
+    /// </summary>
     [UpdateBefore(typeof(TransformSystemGroup))]
     public partial struct OrbitToFloatingPositionUpdateSystem : ISystem
     {
@@ -198,7 +202,7 @@ namespace Kosmos.Prototype.OrbitalPhysics
             in BodyParentData parentData,
             in ParentFloatingPositionData parentFloatingPositionData)
         {
-            var positionInOrbit = OrbitMath.RelativePositionFromKeplerElements(
+            var positionInOrbit = Kosmos.ThirdParty.Math.OrbitMath.RelativePositionFromKeplerElements(
                 keplerElements.SemiMajorAxisMeters,
                 keplerElements.Eccentricity,
                 keplerElements.EclipticInclinationRadians,
@@ -209,13 +213,6 @@ namespace Kosmos.Prototype.OrbitalPhysics
                 out var velocity);
 
             floatingPosition = FloatingOriginMath.Add(parentFloatingPositionData, positionInOrbit);
-            
-            /*var parentWorldSpacePosition = FloatingOriginMath.VectorFromFloatingOrigin(
-                FloatingOrigin, parentFloatingPositionData);
-
-            var pos = (float3)((parentWorldSpacePosition + positionInOrbit) / FloatingOrigin.Scale);
-            
-            localTransform.Position = pos;*/
         }
     }
     

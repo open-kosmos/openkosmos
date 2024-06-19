@@ -2,6 +2,9 @@
 
 namespace Kosmos.Prototype.OrbitalPhysics
 {
+    /// <summary>
+    /// Static methods to assist with the creation and management of orbital body entities.
+    /// </summary>
     public static class OrbitalBodyEntityUtilities
     {
         public static void AddUpdateOrderTagToEntity(EntityManager entityManager, Entity entity, int order)

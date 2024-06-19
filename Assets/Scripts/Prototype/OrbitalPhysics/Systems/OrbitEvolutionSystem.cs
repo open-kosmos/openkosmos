@@ -4,6 +4,9 @@ using Unity.Entities;
 
 namespace Kosmos.Prototype.OrbitalPhysics
 {
+    /// <summary>
+    /// System responsible for updating the mean anomaly of all orbital bodies based on their orbital elements.
+    /// </summary>
     [UpdateBefore(typeof(OrbitToFloatingPositionUpdateSystem))]
     public partial struct OrbitEvolutionSystem : ISystem
     {
@@ -37,7 +40,7 @@ namespace Kosmos.Prototype.OrbitalPhysics
             ref MeanAnomaly meanAnomaly
         )
         {
-            meanAnomaly.MeanAnomalyRadians = OrbitMath.ComputeMeanAnomalyAtTime(
+            meanAnomaly.MeanAnomalyRadians = Kosmos.Math.OrbitMath.ComputeMeanAnomalyAtTime(
                 meanAnomaly.MeanAnomalyAtEpoch,
                 keplerElements.OrbitalPeriodInSeconds,
                 UniversalTime

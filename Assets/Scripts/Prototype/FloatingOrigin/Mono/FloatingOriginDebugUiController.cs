@@ -27,6 +27,8 @@ namespace Prototype.FloatingOrigin.Mono
         private NativeArray<Entity> _bodyEntities;
         private Label[] _namePlates;
         
+        private bool _initialized;
+        
         private void Start()
         {
             _speedLabel = _uiDocument.rootVisualElement.Q<Label>("text_speed");
@@ -40,8 +42,26 @@ namespace Prototype.FloatingOrigin.Mono
             _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             _entity = _entityManager.CreateEntity();
             _entityManager.AddComponentObject(_entity, this);
-            
+        }
+
+        private void OnDestroy()
+        {
+            _affixButton.clicked -= OnAffixClicked;
+            _unaffixButton.clicked -= OnUnaffixClicked;
+        }
+
+        private void Initialize()
+        {
             var bodyEntityQuery = _entityManager.CreateEntityQuery(typeof(BodyId));
+            var entityCount = bodyEntityQuery.CalculateEntityCount();
+            
+            if (entityCount == 0)
+            {
+                return;
+            }
+            
+            _initialized = true;
+            
             _bodyEntities = bodyEntityQuery.ToEntityArray(Allocator.Persistent);
             _namePlates = new Label[_bodyEntities.Length];
 
@@ -66,15 +86,15 @@ namespace Prototype.FloatingOrigin.Mono
                 _namePlates[i] = label;
             }
         }
-
-        private void OnDestroy()
-        {
-            _affixButton.clicked -= OnAffixClicked;
-            _unaffixButton.clicked -= OnUnaffixClicked;
-        }
-
+        
         private void Update()
         {
+            if (!_initialized)
+            {
+                Initialize();
+                return;
+            }
+            
             UpdateLabels();
             
             var query = _entityManager.CreateEntityQuery(typeof(PlayableCharacterData));
