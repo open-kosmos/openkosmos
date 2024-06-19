@@ -3,6 +3,8 @@ using UnityEngine.Windows;
 
 namespace Kosmos.Prototype.Parts
 {
+	//Defines the metadata for a part. The actual structure is stored separately
+	
 	[System.Serializable]
 	public class PartDefinition
 	{

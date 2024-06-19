@@ -146,11 +146,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -257052653070826924, guid: 801a4ff40c691b141a8cbf3ee5088682,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2162721875076074620}
+      addedObject: {fileID: 6450221668973533584}
     - targetCorrespondingSourceObject: {fileID: -257052653070826924, guid: 801a4ff40c691b141a8cbf3ee5088682,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6450221668973533584}
+      addedObject: {fileID: 5097502295356763710}
   m_SourcePrefab: {fileID: -4161369568681901532, guid: 801a4ff40c691b141a8cbf3ee5088682,
     type: 3}
 --- !u!1 &3577700845228554259 stripped
@@ -159,19 +159,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5604808968969009735}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2162721875076074620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3577700845228554259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf52dad4ba4c6b24490734c28ecc3eb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxThrust: 0
 --- !u!65 &6450221668973533584
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -193,6 +180,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6.0787525, y: 8.283948, z: 6.078745}
   m_Center: {x: 0.016449451, y: 4.1298537, z: 0.0054256916}
+--- !u!114 &5097502295356763710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3577700845228554259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07cef5ab1e3b4fc3827f94c3b455ed01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data:
+    MaxPower: 1000
+    TestVector: 0
 --- !u!4 &4186512660789777375 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -589633886370207336, guid: 801a4ff40c691b141a8cbf3ee5088682,

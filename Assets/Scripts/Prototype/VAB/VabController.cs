@@ -88,6 +88,10 @@ namespace Kosmos.Prototype.Vab
         private void OnPartPickerClicked(PartDefinition part)
         {
             var newPart = _vehicleRoot.AddPart(part);
+            
+            //TEMP
+            newPart.gameObject.AddComponent<BoxCollider>();
+            
             _movingPart = newPart;
             _controlState = EControlState.MovingPart;
 

@@ -4,27 +4,21 @@ using UnityEngine;
 
 namespace Kosmos.Prototype.Parts
 {
-    //Struct for serialising the current value of tweakables
+    //Data structure that defines the structure of a vehicle created in the VAB
     [System.Serializable]
-    public struct TweakableValue
+    public class TweakableData
     {
-        public string Name;
-        public string Value;
-        
-        public TweakableValue(string name, string value)
-        {
-            Name = name;
-            Value = value;
-        }
+        public string TypeName;
+        public string Data;
     }
-    
+  
     [System.Serializable]
     public class PartSpec
     {
         public string PartDefGuid;
         public Vector3 LocalPosition;
         public Quaternion LocalRotation;
-        public List<TweakableValue> Tweakables;
+        public List<TweakableData> TweakableData;
     }
     
     [System.Serializable]

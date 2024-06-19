@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Kosmos.Prototype.Parts.TraitComponents;
 using UnityEngine;
 
 namespace Kosmos.Prototype.Parts
@@ -196,14 +197,12 @@ namespace Kosmos.Prototype.Parts
                 partSpec.PartDefGuid = part.GetDefinition().Guid.ToString();
                 partSpec.LocalPosition = part.transform.localPosition;
                 partSpec.LocalRotation = part.transform.localRotation;
-                
-                //Get tweakables
-                partSpec.Tweakables = new();
-                foreach (var tweakableField in PartDictionary.GetPartTweakableFields(part))
+                partSpec.TweakableData = new();
+                foreach (var trait in part.GetComponents<TraitMonoBase>())
                 {
-                    partSpec.Tweakables.Add(
-                        new TweakableValue(tweakableField.Name, 
-                            tweakableField.GetValue(part).ToString()));
+                    TweakableData tweakData = new();
+                    tweakData.TypeName = trait.GetType().FullName;
+                    tweakData.Data = trait.SerializeTweakables();
                 }
 
                 partIndex[part] = vehicleSpec.Parts.Count;
@@ -252,19 +251,15 @@ namespace Kosmos.Prototype.Parts
 
                     partIndexDict[partIndex] = part;
 
-                    //Set tweakables
-                    foreach (var tweakableField in PartDictionary.GetPartTweakableFields(part))
+                    foreach (var trait in part.GetComponents<TraitMonoBase>())
                     {
-                        TweakableValue? field = partSpec.Tweakables.FirstOrDefault(x => x.Name == tweakableField.Name);
-                        if (field.HasValue)
+                        string type = trait.GetType().FullName;
+                        foreach (var data in partSpec.TweakableData)
                         {
-                            if (tweakableField.FieldType == typeof(float))
+                            if (type == data.TypeName)
                             {
-                                tweakableField.SetValue(part, float.Parse(field.Value.Value));
-                            }
-                            else
-                            {
-                                Debug.LogError($"Failed to deserialise type {tweakableField.FieldType}");
+                                trait.ApplyTweakables(data.Data);
+                                break;
                             }
                         }
                     }

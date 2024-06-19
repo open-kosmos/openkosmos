@@ -1,0 +1,1 @@
+{"Transforms":[{"Name":"Socket","LocalRotation":{"x":1.0,"y":0.0,"z":0.0,"w":0.0},"LocalPosition":{"x":0.0,"y":-0.11400000005960465,"z":0.0},"LocalScale":{"x":1.0,"y":1.0,"z":1.0},"ParentTransform":-1}],"Traits":[],"Sockets":[{"TransformIndex":0}],"Models":[{"ModelPath":"Models\\VehicleParts\\Stock\\Nosecone_S_1.glb","Instances":[{"MeshName":"Sphere.002","TransformIndex":-1}]}]}
