@@ -14,7 +14,7 @@ namespace Kosmos.ThirdParty.Math
         /// This method is licensed under the <a href="https://github.com/esa/pykep/blob/master/LICENSE.txt">GNU General Public License v3.0</a>.
         /// </license>
         /// <remarks>
-        /// Based heavily on work from the European Space Agency found <a href="https://github.com/esa/pykep/blob/403a7dfe8ed3ff19b43bcbd6e6856de7f820cf55/include/keplerian_toolbox/core_functions/par2ic.hpp">here</a>.
+        /// Derived from work by the European Space Agency found <a href="https://github.com/esa/pykep/blob/403a7dfe8ed3ff19b43bcbd6e6856de7f820cf55/include/keplerian_toolbox/core_functions/par2ic.hpp">here</a>.
         /// </remarks>
         public static double3 RelativePositionFromKeplerElements(
                 double semiMajorAxis,
