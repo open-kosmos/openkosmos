@@ -7,7 +7,8 @@ namespace Kosmos.Prototype.Parts
     {
         //TODO:
         //COM etc.
-        
+
+        public string PartId;
         private PartDefinition _createdFromDef;
         private IReadOnlyList<PartSocket> _sockets;
         

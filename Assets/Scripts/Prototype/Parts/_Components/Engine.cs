@@ -1,9 +1,9 @@
 ﻿using Unity.Entities;
 
-namespace Kosmos.Prototype.Staging.Components
+namespace Kosmos.Prototype.Parts.Components
 {
     public struct Engine : IComponentData
     {
-        
+        public float MaxThrust;
     }
 }
