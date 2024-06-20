@@ -8,7 +8,7 @@ namespace Kosmos.UI.Debug
     public partial class DebugTimeUiUpdateSystem : SystemBase
     {
         private const string DATE_FORMAT = "dd MMMM yyyy";
-        private const string TIME_FORMAT = "HH:mm:ss.ss";
+        private const string TIME_FORMAT = "HH:mm:ss.ff";
         
         protected override void OnCreate()
         {

@@ -14,10 +14,17 @@ namespace Prototype.FloatingOrigin.Components
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
                 
                 var floatingPosition = FloatingOriginMath.InitializeLocal(
-                    new double3(authoring.transform.position),
-                    authoring.transform.localScale.x);
+                    new double3(authoring.transform.position)
+                    );
                 
                 AddComponent(entity, floatingPosition);
+
+                var floatingScale = new FloatingScaleData()
+                {
+                    Value = authoring.transform.localScale.x
+                };
+                
+                AddComponent(entity, floatingScale);
             }
         }
     }

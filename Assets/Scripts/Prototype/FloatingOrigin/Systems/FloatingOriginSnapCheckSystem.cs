@@ -29,7 +29,7 @@ namespace Kosmos.FloatingOrigin
             
             var focusPosition = focusEntityTransform.Position;
 
-            if (math.length(focusPosition) > 1000f)
+            if (math.length(focusPosition) > 2048f)
             {
                 var floatingOriginData = SystemAPI.GetSingleton<FloatingOriginData>();
                 
