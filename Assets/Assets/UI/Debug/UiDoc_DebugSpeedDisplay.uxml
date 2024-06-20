@@ -1,6 +1,8 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:Label text="Speed: 0.0" name="text_speed" style="color: rgb(255, 255, 255); font-size: 8px; margin-top: 29px;" />
+    <engine:Label text="FPS: 0" name="text_fps" style="color: rgb(255, 255, 255); font-size: 8px; margin-top: 42px;" />
+    <engine:Label text="Speed: 0.0" name="text_speed" style="color: rgb(255, 255, 255); font-size: 8px; margin-top: -8px;" />
     <engine:Label text="Scale: 0.0" name="text_scale" style="color: rgb(255, 255, 255); font-size: 8px; margin-top: -8px;" />
     <engine:Button text="Affix To Proterra" name="btn_affix" style="align-items: flex-start; align-self: flex-start; align-content: auto; justify-content: flex-start; flex-direction: column; padding-right: 6px; padding-left: 6px; padding-bottom: 4px; padding-top: 4px; font-size: 12px;" />
     <engine:Button text="Unaffix" name="btn_unaffix" style="align-items: flex-start; align-self: flex-start; align-content: auto; justify-content: flex-start; flex-direction: column; padding-right: 6px; padding-left: 6px; padding-bottom: 4px; padding-top: 4px; font-size: 12px;" />
+    <engine:Button text="Spawn Fixed Sphere" name="btn_spawnsphere" style="align-items: flex-start; align-self: flex-start; align-content: auto; justify-content: flex-start; flex-direction: column; padding-right: 6px; padding-left: 6px; padding-bottom: 4px; padding-top: 4px; font-size: 12px;" />
 </engine:UXML>

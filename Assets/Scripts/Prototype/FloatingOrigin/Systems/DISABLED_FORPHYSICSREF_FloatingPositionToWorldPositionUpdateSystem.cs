@@ -43,7 +43,7 @@ namespace Kosmos.FloatingOrigin
                 state.EntityManager.SetComponentData(focusEntity, focusEntityTransform);
 
                 // Set all floating positions to current world positions
-                new WorldPositionToFloatingPositionUpdateJob()
+                new OLD_WorldPositionToFloatingPositionUpdateJob()
                 {
                     FloatingOrigin = floatingOrigin
                 }.ScheduleParallel();
@@ -53,7 +53,7 @@ namespace Kosmos.FloatingOrigin
                 floatingOrigin = FloatingOriginMath.Add(floatingOrigin, scaledFocusPosition);
 
                 // Set all world positions to floating positions relative to new origin
-                new FloatingPositionToWorldPositionUpdateJob()
+                new OLD_FloatingPositionToWorldPositionUpdateJob()
                 {
                     FloatingOrigin = floatingOrigin
                 }.ScheduleParallel();
@@ -63,7 +63,7 @@ namespace Kosmos.FloatingOrigin
 
             // Set all transform scales to floating scales relative to new origin
             // NOTE: This currently happens every frame because the scale can currently change very frame
-            new FloatingScaleToWorldScaleUpdateJob()
+            new OLD_FloatingScaleToWorldScaleUpdateJob()
             {
                 FloatingOrigin = floatingOrigin
             }.ScheduleParallel();
