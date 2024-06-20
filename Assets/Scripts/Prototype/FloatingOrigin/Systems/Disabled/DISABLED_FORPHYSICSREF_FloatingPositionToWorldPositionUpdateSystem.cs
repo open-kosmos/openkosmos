@@ -4,7 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace Kosmos.FloatingOrigin
+namespace Kosmos.FloatingOrigin.Disabled
 {
     /// <summary>
     /// System responsible for resetting the floating origin and updating all
