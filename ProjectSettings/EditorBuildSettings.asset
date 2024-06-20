@@ -35,6 +35,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prototypes/Prototype_FlightControl.unity
     guid: 8a019c0dedab4e34592079c3f52fa2d9
+  - enabled: 1
+    path: Assets/Scenes/Prototypes/Prototype_FloatingIRFSys/Entities.unity
+    guid: c7f52ac50fd0fd045a36715223b3d3a4
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: cd29ee19e57952c449027c48e503e702,
       type: 2}

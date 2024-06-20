@@ -473,6 +473,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 739548589}
   _uiDocument: {fileID: 1134764759}
+  _sphereMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  _sphereMaterial: {fileID: 2100000, guid: 1ed95208e64fcaa4c902dfdcd7c4b9bc, type: 2}
 --- !u!114 &1134764759
 MonoBehaviour:
   m_ObjectHideFlags: 0

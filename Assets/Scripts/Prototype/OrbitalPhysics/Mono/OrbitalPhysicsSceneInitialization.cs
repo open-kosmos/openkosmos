@@ -61,7 +61,12 @@ namespace Kosmos.Prototype.OrbitalPhysics
                 mat.color = color;
                 
                 // Add the body's geometry to the geometry entity
-                AddBodyGeometryComponents(entityManager, geometryEntity, _sphereMesh, mat, body);
+                OrbitalPhysicsPrototypeUtilities.AddBodyGeometryComponents(
+                    entityManager, 
+                    geometryEntity, 
+                    _sphereMesh, 
+                    mat, 
+                    body.BodyData.EquatorialRadiusM);
             }
             
             ResolveBodyUpdateOrder();
@@ -251,71 +256,6 @@ namespace Kosmos.Prototype.OrbitalPhysics
             });
             
             entityManager.AddComponentData(entity, new FloatingPositionData());
-        }
-        
-        private void AddBodyGeometryComponents(
-            EntityManager entityManager, 
-            Entity entity, 
-            Mesh mesh, 
-            Material material,
-            StarSystemFileBodyEntry body)
-        {
-            var renderMeshDescription = new RenderMeshDescription()
-            {
-                FilterSettings = RenderFilterSettings.Default,
-                LightProbeUsage = LightProbeUsage.Off
-            };
-            
-            var meshRefs = new UnityObjectRef<Mesh>[1];
-            meshRefs[0] = new UnityObjectRef<Mesh>()
-            {
-                Value = mesh
-            };
-            
-            var materialRefs = new UnityObjectRef<Material>[1];
-            materialRefs[0] = new UnityObjectRef<Material>()
-            {
-                Value = material
-            };
-
-            var materialIndices = new MaterialMeshIndex[]
-            {
-                new MaterialMeshIndex()
-                {
-                    MeshIndex = 0,
-                    MaterialIndex = 0,
-                    SubMeshIndex = 0
-                }
-            };
-
-            var meshSpan = new ReadOnlySpan<UnityObjectRef<Mesh>>(meshRefs);
-            var materialSpan = new ReadOnlySpan<UnityObjectRef<Material>>(materialRefs);
-            var materialMeshIndexSpan = new ReadOnlySpan<MaterialMeshIndex>(materialIndices);
-
-            var renderMeshArray = new RenderMeshArray(materialSpan, meshSpan, materialMeshIndexSpan);
-            
-            RenderMeshUtility.AddComponents(
-                entity, 
-                entityManager, 
-                renderMeshDescription,
-                renderMeshArray,
-                MaterialMeshInfo.FromRenderMeshArrayIndices(0, 0)
-            );
-            
-            // Floating scale
-            var floatingScale = new FloatingScaleData()
-            {
-                Value = body.BodyData.EquatorialRadiusM
-            };
-            
-            entityManager.AddComponentData(entity, floatingScale);
-            
-            entityManager.AddComponentData(entity, new LocalTransform()
-            {
-                Position = float3.zero,
-                Rotation = quaternion.identity,
-                Scale = (float)body.BodyData.EquatorialRadiusM
-            });
         }
     }
 }
