@@ -1,0 +1,63 @@
+{
+    "Parts": [
+        {
+            "PartDefGuid": "3c4b1669d08f41cb908068c2d04298e2",
+            "LocalPosition": {
+                "x": -6.14677619934082,
+                "y": 9.966805458068848,
+                "z": 0.0
+            },
+            "LocalRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "TweakableData": []
+        },
+        {
+            "PartDefGuid": "c0cf7a0aa4944a9e8d95262e325840b7",
+            "LocalPosition": {
+                "x": -6.14677619934082,
+                "y": -6.033194541931152,
+                "z": 0.0
+            },
+            "LocalRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "TweakableData": []
+        },
+        {
+            "PartDefGuid": "377cb2b534914eec9da282029bc5e77a",
+            "LocalPosition": {
+                "x": -6.14677619934082,
+                "y": -14.283194541931153,
+                "z": 0.0
+            },
+            "LocalRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "TweakableData": []
+        }
+    ],
+    "Connections": [
+        {
+            "ParentPartIndex": 0,
+            "ParentSocketIndex": 0,
+            "ChildPartIndex": 1,
+            "ChildSockedIndex": 0
+        },
+        {
+            "ParentPartIndex": 1,
+            "ParentSocketIndex": 1,
+            "ChildPartIndex": 2,
+            "ChildSockedIndex": 0
+        }
+    ]
+}

@@ -235,7 +235,7 @@ namespace Kosmos.Prototype.Parts.Serialization
             return root;
         }
 
-        private static MeshRenderer GetMeshReference(string modelPath, string meshName)
+        public static MeshRenderer GetMeshReference(string modelPath, string meshName)
         {
             string resourcePath = Path.ChangeExtension(modelPath, null);
             var meshResource = Resources.Load(resourcePath);

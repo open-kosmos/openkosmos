@@ -195,6 +195,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6504802180376996957, guid: e0e9f7c9d22d0a14a8fc794a9bac41ef,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 2931627750437062661}
+    - targetCorrespondingSourceObject: {fileID: 6504802180376996957, guid: e0e9f7c9d22d0a14a8fc794a9bac41ef,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 4016450126888309086}
   m_SourcePrefab: {fileID: -4161369568681901532, guid: e0e9f7c9d22d0a14a8fc794a9bac41ef,
     type: 3}
@@ -210,6 +214,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7414413146985376202}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2931627750437062661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4368766959567898007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 893738139346bc747addb9253e28826d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PartId: Adaptor_S_To_M
 --- !u!135 &4016450126888309086
 SphereCollider:
   m_ObjectHideFlags: 0

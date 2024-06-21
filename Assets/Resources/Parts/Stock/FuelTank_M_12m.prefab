@@ -195,11 +195,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4017673263602289687, guid: 401a34f3370ebbb47b4dfd6d605f8583,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8163846779693555460}
+      addedObject: {fileID: 3160975282442634866}
     - targetCorrespondingSourceObject: {fileID: 4017673263602289687, guid: 401a34f3370ebbb47b4dfd6d605f8583,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6951303311542765311}
+      addedObject: {fileID: 8163846779693555460}
   m_SourcePrefab: {fileID: -4161369568681901532, guid: 401a34f3370ebbb47b4dfd6d605f8583,
     type: 3}
 --- !u!1 &3973922546420567930 stripped
@@ -208,6 +208,20 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 65180198815466349}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3160975282442634866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3973922546420567930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202604dc13d94839a1f7df40acbc00ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PartId: FuelTank_M_12m
+  _maxFuel: 0
 --- !u!136 &8163846779693555460
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -231,22 +245,6 @@ CapsuleCollider:
   m_Height: 24.254072
   m_Direction: 1
   m_Center: {x: -0.0201478, y: 12.150769, z: 0.04513645}
---- !u!114 &6951303311542765311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3973922546420567930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fb9db2eb47240f69342bfc375559a24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Data:
-    Capacity: 200
-  Tweakables:
-    FillAmount: 1
 --- !u!4 &6392598269908966674 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6363730629094956671, guid: 401a34f3370ebbb47b4dfd6d605f8583,

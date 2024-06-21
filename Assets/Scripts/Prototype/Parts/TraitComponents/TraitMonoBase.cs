@@ -14,7 +14,7 @@ namespace Kosmos.Prototype.Parts.TraitComponents
         public abstract System.Type GetTraitType();
         public abstract string SerializeTrait(MonoBehaviour trait);
         public abstract void DeserializeGo(string trait, GameObject gameObj);
-        public abstract void DeserializeEcs(string trait, string tweakables, Entity entity, ref SystemState state); 
+        public abstract void DeserializeEcs(string trait, string tweakables, Entity entity, ref EntityManager state); 
     }
     
     public class TraitMonoBase : MonoBehaviour

@@ -1,0 +1,16 @@
+﻿{
+  "id": "e8f933a222464b1180fec0a453a65c03",
+  "version": "0.0.1",
+  "author": "Lots of people",
+  "name_id": "kosmic-engine-name",
+  "description_id": "kosmic-engine-desc",
+  "category_id": "engine",
+  "mesh": "engine_m",
+  "cost": 1000,
+  "engine": {
+    "min_thrust": 0,
+    "max_thrust": 1000,
+    "heat_generation": 200,
+    "fuel_type": "methalox"
+  }
+}

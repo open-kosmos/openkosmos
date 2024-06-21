@@ -119,6 +119,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6934840411875343726}
+    - targetCorrespondingSourceObject: {fileID: -512685919525072624, guid: 2f277338e9618a448aa59fc9106ba4c9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5245390316121494824}
   m_SourcePrefab: {fileID: -4161369568681901532, guid: 2f277338e9618a448aa59fc9106ba4c9,
     type: 3}
 --- !u!4 &6057035286926938428 stripped
@@ -154,3 +158,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.9995475, y: 1.9999999, z: 3.999549}
   m_Center: {x: 0.00009560585, y: 0.77094495, z: 0.00017809868}
+--- !u!114 &5245390316121494824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8099106681780396065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 893738139346bc747addb9253e28826d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PartId: Nosecone_S_1

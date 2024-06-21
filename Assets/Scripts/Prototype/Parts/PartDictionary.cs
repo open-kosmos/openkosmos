@@ -66,20 +66,28 @@ namespace Kosmos.Prototype.Parts
             return def;
         }
 
+        public static PartPrefabData GetPartPrefabData(PartDefinition partDef)
+        {
+            if (!_partPrefabDict.ContainsKey(partDef))
+            {
+                string partPath = partDef.Path;
+                var part = Resources.Load<TextAsset>(partPath);
+                Debug.Assert(part != null, $"Part {partDef.Name} couldn't be loaded");
+                var partPrefabData = JsonUtility.FromJson<PartPrefabData>(part.text);
+                _partPrefabDict[partDef] = partPrefabData;
+            }
+
+            if (_partPrefabDict.ContainsKey(partDef))
+            {
+                return _partPrefabDict[partDef];
+            }
+
+            return null;
+        }
+
         public static PartBase SpawnPart(PartDefinition def)
         {
-            if (!_partPrefabDict.ContainsKey(def))
-            {
-                string partPath = def.Path;
-                var part = Resources.Load<TextAsset>(partPath);
-                Debug.Assert(part != null, $"Part {def.Name} couldn't be loaded");
-                var partPrefabData = JsonUtility.FromJson<PartPrefabData>(part.text);
-                _partPrefabDict[def] = partPrefabData;
-            }
-            
-
-            PartPrefabData prefab = null;
-            _partPrefabDict.TryGetValue(def, out prefab);
+            PartPrefabData prefab = GetPartPrefabData(def);
 
             if (prefab != null)
             {

@@ -14,7 +14,8 @@ namespace Kosmos.Prototype.Parts
             public PartBase _childPart;
             public PartSocket _childSocket;
         }
-        
+        public IReadOnlyCollection<PartBase> AllParts => _allParts;
+
         private Dictionary<PartBase, List<PartLink>> _partLinks = new();
         private HashSet<PartBase> _allParts = new();
         private HashSet<PartSocket> _unconnectedSockets = new();
@@ -184,7 +185,7 @@ namespace Kosmos.Prototype.Parts
             return closestDistSq <= pixRangeSq;
         }
 
-        public void Serialise(string path)
+        public VehicleSpec CreateSpec()
         {
             VehicleSpec vehicleSpec = new();
             vehicleSpec.Parts = new();
@@ -223,8 +224,15 @@ namespace Kosmos.Prototype.Parts
                     vehicleSpec.Connections.Add(connectionSpec);
                 }
             }
+
+            return vehicleSpec;
+        }
+
+        public void Serialise(string path)
+        {
+            var spec = CreateSpec();
             
-            vehicleSpec.Serialise(path);
+            spec.Serialise(path);
         }
 
         public void Deserialise(string path)

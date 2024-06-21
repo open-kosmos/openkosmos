@@ -17,6 +17,9 @@
 /Assets/StreamingAssets/Vehicles/
 /Assets/StreamingAssets/Vehicles.meta
 
+# ECS cache
+/Assets/SceneDependencyCache/
+/Assets/SceneDependencyCache.meta
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data

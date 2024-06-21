@@ -196,6 +196,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5152499161090741649}
+    - targetCorrespondingSourceObject: {fileID: -876101586380436825, guid: 3dadc4632a35f2b47b2e41fc8d782bd8,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8511304866019270321}
   m_SourcePrefab: {fileID: -4161369568681901532, guid: 3dadc4632a35f2b47b2e41fc8d782bd8,
     type: 3}
 --- !u!4 &6440475261244132221 stripped
@@ -231,3 +235,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.9995475, y: 0.20000002, z: 3.999549}
   m_Center: {x: 0.00009560585, y: -0.12878403, z: 0.00017809868}
+--- !u!114 &8511304866019270321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8426005795817958675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 893738139346bc747addb9253e28826d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PartId: Separator_S_3

@@ -195,11 +195,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6595054337431117725, guid: 1e157c6512d98d2419d5454e82597f49,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5875812805464201265}
+      addedObject: {fileID: 7452076791421019702}
     - targetCorrespondingSourceObject: {fileID: 6595054337431117725, guid: 1e157c6512d98d2419d5454e82597f49,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 9196178465668402599}
+      addedObject: {fileID: 5875812805464201265}
   m_SourcePrefab: {fileID: -4161369568681901532, guid: 1e157c6512d98d2419d5454e82597f49,
     type: 3}
 --- !u!4 &6853156206721974848 stripped
@@ -214,6 +214,20 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3793437815097148563}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7452076791421019702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8008149327780076302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202604dc13d94839a1f7df40acbc00ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PartId: FuelTank_S_4m
+  _maxFuel: 0
 --- !u!136 &5875812805464201265
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -237,19 +251,3 @@ CapsuleCollider:
   m_Height: 8.039019
   m_Direction: 1
   m_Center: {x: -0.021472454, y: 4.0422673, z: 0.0033729076}
---- !u!114 &9196178465668402599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8008149327780076302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fb9db2eb47240f69342bfc375559a24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Data:
-    Capacity: 20
-  Tweakables:
-    FillAmount: 1

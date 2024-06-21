@@ -3,7 +3,9 @@ using Kosmos.Prototype.Parts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+using Camera = UnityEngine.Camera;
+using Scene = UnityEngine.SceneManagement.Scene;
+using Assets.Scripts.Prototype.VAB;
 
 namespace Kosmos.Prototype.Vab
 {
@@ -80,10 +82,10 @@ namespace Kosmos.Prototype.Vab
             Scene currentScene = SceneManager.GetActiveScene();
             await SceneManager.LoadSceneAsync(flightControlScenceName, LoadSceneMode.Additive);
 
-            SceneManager.MoveGameObjectToScene(_vehicleRoot.gameObject, SceneManager.GetSceneByName(flightControlScenceName));
+            await PartsToEcsManager.ConstructPlayableVehicle(_vehicleRoot.CreateSpec());
 
             await SceneManager.UnloadSceneAsync(currentScene);
-        }
+        }        
 
         private void OnPartPickerClicked(PartDefinition part)
         {

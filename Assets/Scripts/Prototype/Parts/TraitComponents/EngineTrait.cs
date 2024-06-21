@@ -23,10 +23,10 @@ namespace Kosmos.Prototype.Parts.TraitComponents
             component.Data = JsonUtility.FromJson<EngineTraitData>(trait);
         }
 
-        public override void DeserializeEcs(string trait, string tweakables, Entity entity, ref SystemState state)
+        public override void DeserializeEcs(string trait, string tweakables, Entity entity, ref EntityManager entityManager)
         {
             EngineTraitData traitData = JsonUtility.FromJson<EngineTraitData>(trait);
-            state.EntityManager.AddComponentData(entity, traitData);
+            entityManager.AddComponentData(entity, traitData);
         }
     }
     
