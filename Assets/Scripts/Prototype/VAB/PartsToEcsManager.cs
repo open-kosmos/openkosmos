@@ -4,7 +4,6 @@ using Kosmos.Prototype.Parts.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Unity.Collections;
 using Unity.Entities;
@@ -14,10 +13,8 @@ using Unity.Transforms;
 using UnityEngine.Rendering;
 using System.IO;
 using UnityEngine;
-using GLTFast.Schema;
 using Kosmos.Prototype.Parts.Serialization;
 using Kosmos.Prototype.Parts.TraitComponents;
-using Mono.Cecil;
 using Mesh = UnityEngine.Mesh;
 using Material = UnityEngine.Material;
 
@@ -25,11 +22,6 @@ namespace Assets.Scripts.Prototype.VAB
 {
     public static class PartsToEcsManager
     {
-
-        private static Dictionary<int, List<Entity>> _stages = new();
-
-        private static bool _controllComponentAdded = false;
-        private static Entity _playerControlledControlPod;
 
         public static async Task ConstructPlayableVehicle(VehicleSpec spec)
         {
@@ -49,10 +41,12 @@ namespace Assets.Scripts.Prototype.VAB
             entityManager.SetName(vehicleEntity, "Vehicle");
 #endif
 
+            List<Entity> parts = new();
             foreach (var partInstance in spec.Parts)
             {
                 //Create entity and parent to the vehicle
                 var partEntity = entityManager.CreateEntity();
+                parts.Add(partEntity);
                 //Load the part spec
                 var partDef = PartDictionary.GetPart(Guid.Parse(partInstance.PartDefGuid));
                 var partPrefab = PartDictionary.GetPartPrefabData(partDef);
@@ -80,13 +74,13 @@ namespace Assets.Scripts.Prototype.VAB
                 parent.Value = vehicleEntity;
                 entityManager.AddComponentData(partEntity, parent);
                 
-                // SetStage(part, entity);  TODO
                 AddTraits(partInstance, partPrefab, partEntity, entityManager);
                 
                 await CreateMeshForEntity(partPrefab, entityManager, hierarchy);
             }
 
-            // AddStageBuffer(parts, entityManager);
+            //Setup staging
+            AddStageBuffer(spec.StagingGroups, vehicleEntity, parts, entityManager);
         }
 
         private static void AddTraits(PartSpec partInstance, PartPrefabData partPrefab, Entity partEntity, EntityManager entityManager)
@@ -124,36 +118,19 @@ namespace Assets.Scripts.Prototype.VAB
             }
         }
 
-        private static void SetStage(PartBase part, Entity entity)
+        private static void AddStageBuffer(List<StagingGroup> stageGroups, Entity vehicleEntity, List<Entity> parts, EntityManager entityManager)
         {
-
-            if (part is StageablePart)
+            var stagesBuffer = entityManager.AddBuffer<Stage>(vehicleEntity);
+            foreach (var stageGroup in stageGroups)
             {
-                var stageIndex = (part as StageablePart).GetStageIndex();
-                if (!_stages.ContainsKey(stageIndex))
+                NativeArray<StagePart> stage = new NativeArray<StagePart>(stageGroup.Parts.Count(), Allocator.Persistent);
+                for (var index = 0; index < stageGroup.Parts.Count; index++)
                 {
-                    _stages.Add(stageIndex, new());
+                    var partIndex = stageGroup.Parts[index];
+                    stage[index] = new StagePart { Value = parts[partIndex] };
                 }
 
-                _stages[stageIndex].Add(entity);
-            }
-        }
-
-        private static void AddStageBuffer(IReadOnlyCollection<PartBase> parts, EntityManager entityManager)
-        {
-            if (_playerControlledControlPod != Entity.Null)
-            {
-                var stagesBuffer = entityManager.AddBuffer<Stage>(_playerControlledControlPod);
-                foreach (var stageParts in _stages.OrderBy(s => s.Key))
-                {
-                    NativeArray<StagePart> stage = new NativeArray<StagePart>(stageParts.Value.Count, Allocator.Persistent);
-                    for (int i = 0; i < stageParts.Value.Count; i++)
-                    {
-                        stage[i] = new StagePart { Value = stageParts.Value[i] };
-                    }
-
-                    stagesBuffer.Add(new Stage { Parts = stage });
-                }
+                stagesBuffer.Add(new Stage { Parts = stage });
             }
         }
 

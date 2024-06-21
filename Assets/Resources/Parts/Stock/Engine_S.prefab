@@ -166,11 +166,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3359265558987772267, guid: 98fefc2bd716eb442a007d52e6903df7,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1419887572641084289}
+      addedObject: {fileID: 8646646256973997549}
     - targetCorrespondingSourceObject: {fileID: 3359265558987772267, guid: 98fefc2bd716eb442a007d52e6903df7,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8646646256973997549}
+      addedObject: {fileID: 5702454199963329644}
   m_SourcePrefab: {fileID: -4161369568681901532, guid: 98fefc2bd716eb442a007d52e6903df7,
     type: 3}
 --- !u!4 &3832547264546153543 stripped
@@ -185,21 +185,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5534177671588944463}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1419887572641084289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7085247977616214820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf52dad4ba4c6b24490734c28ecc3eb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PartId: Engine_S
-  StageIndex: 0
-  _maxThrust: 0
 --- !u!65 &8646646256973997549
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -221,3 +206,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.179473, y: 6.670309, z: 4.1794744}
   m_Center: {x: 0.00039339066, y: 3.3478715, z: 0.0101213455}
+--- !u!114 &5702454199963329644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7085247977616214820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07cef5ab1e3b4fc3827f94c3b455ed01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data:
+    MaxPower: 200
+    TestVector: 0
