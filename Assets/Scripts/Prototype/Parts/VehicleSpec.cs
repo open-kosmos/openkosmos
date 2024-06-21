@@ -29,12 +29,18 @@ namespace Kosmos.Prototype.Parts
         public int ChildPartIndex;
         public int ChildSockedIndex;
     }
+
+    public class StagingGroup
+    {
+        public List<int> Parts;
+    }
     
     [System.Serializable]
     public class VehicleSpec
     {
         public List<PartSpec> Parts;
         public List<ConnectionSpec> Connections;
+        public List<StagingGroup> StagingGroups;
 
         public void Serialise(string path)
         {

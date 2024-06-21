@@ -185,7 +185,7 @@ namespace Kosmos.Prototype.Parts
             return closestDistSq <= pixRangeSq;
         }
 
-        public VehicleSpec CreateSpec()
+        public VehicleSpec CreateSpec(IReadOnlyList<PartBase> stagingOrder)
         {
             VehicleSpec vehicleSpec = new();
             vehicleSpec.Parts = new();
@@ -224,18 +224,28 @@ namespace Kosmos.Prototype.Parts
                     vehicleSpec.Connections.Add(connectionSpec);
                 }
             }
+            
+            //Serialise staging order
+            vehicleSpec.StagingGroups = new();
+            foreach (var part in stagingOrder)
+            {
+                //TODO - this is temp
+                StagingGroup group = new();
+                group.Parts = new List<int>() { partIndex[part] };
+                vehicleSpec.StagingGroups.Add(group);
+            }
 
             return vehicleSpec;
         }
 
-        public void Serialise(string path)
+        public void Serialise(string path, IReadOnlyList<PartBase> stagingOrder)
         {
-            var spec = CreateSpec();
+            var spec = CreateSpec(stagingOrder);
             
             spec.Serialise(path);
         }
 
-        public void Deserialise(string path)
+        public void Deserialise(string path, out List<PartBase> stagingList)
         {
             //Delete all children of our transform
             var children = new List<GameObject>();
@@ -282,6 +292,14 @@ namespace Kosmos.Prototype.Parts
                 {
                     LinkParts(parentPart, parentPart.GetSockets()[connectionSpec.ParentSocketIndex], childPart, childPart.GetSockets()[connectionSpec.ChildSockedIndex]);
                 }
+            }
+            
+            //Process staging
+            stagingList = new();
+            foreach (var stage in spec.StagingGroups)
+            {
+                //TODO - proper implementation
+                stagingList.Add(partIndexDict[stage.Parts[0]]);
             }
         }
         
