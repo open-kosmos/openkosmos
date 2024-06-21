@@ -80,9 +80,7 @@ namespace Kosmos.Prototype.Vab
         {
             string flightControlScenceName = "Prototype_FlightControl";
             Scene currentScene = SceneManager.GetActiveScene();
-            await SceneManager.LoadSceneAsync(flightControlScenceName, LoadSceneMode.Additive);
-
-            //SceneManager.MoveGameObjectToScene(_vehicleRoot.gameObject, SceneManager.GetSceneByName(flightControlScenceName));
+            await SceneManager.LoadSceneAsync(flightControlScenceName, LoadSceneMode.Additive);            
 
             await PartsToEcsManager.ConstructPlayableVehicle(_vehicleRoot);
 
