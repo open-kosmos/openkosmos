@@ -13,7 +13,8 @@ namespace Kosmos.Prototype.Parts
             public PartBase _childPart;
             public PartSocket _childSocket;
         }
-        
+        public IReadOnlyCollection<PartBase> AllParts => _allParts;
+
         private Dictionary<PartBase, List<PartLink>> _partLinks = new();
         private HashSet<PartBase> _allParts = new();
         private HashSet<PartSocket> _unconnectedSockets = new();

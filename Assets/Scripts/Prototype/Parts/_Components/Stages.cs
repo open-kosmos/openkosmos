@@ -1,7 +1,7 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
 
-namespace Kosmos.Prototype.Staging.Components
+namespace Kosmos.Prototype.Parts.Components
 {
     public struct Stage : IBufferElementData
     {

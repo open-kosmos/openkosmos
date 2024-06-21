@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 893738139346bc747addb9253e28826d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PartId: Separator_M_2
 --- !u!136 &1426226215037824324
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202604dc13d94839a1f7df40acbc00ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PartId: FuelTank_M_6m
   _maxFuel: 0
 --- !u!136 &1513827047446743657
 CapsuleCollider:

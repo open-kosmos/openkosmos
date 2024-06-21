@@ -1,4 +1,5 @@
-﻿using Kosmos.Prototype.Staging.Components;
+﻿using Kosmos.Prototype.Parts.Components;
+using Kosmos.Prototype.Staging.Components;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -29,7 +30,7 @@ namespace Kosmos.Prototype.Staging.Systems
                 ecb.RemoveComponent<ShouldStageTag>(entity);
                 
                 // Get the pod's stage index
-                var stageIndex = controlPod.StageIndex;
+                var stageIndex = controlPod.CurrentStageIndex;
 
                 if (stageIndex < 0 || stageIndex >= stagesBuffer.Length)
                 {
@@ -49,7 +50,7 @@ namespace Kosmos.Prototype.Staging.Systems
                 }
                 
                 // Increment the stage index
-                controlPod.StageIndex++;
+                controlPod.CurrentStageIndex++;
 
             })
             .Run();
