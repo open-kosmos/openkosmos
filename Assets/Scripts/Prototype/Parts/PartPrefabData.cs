@@ -62,6 +62,10 @@ namespace Kosmos.Prototype.Parts.Serialization
         public List<ModelData> Models;
         
 #if UNITY_EDITOR
+        //TODO!
+        //Should be an editor panel for creating, loading and saving parts,
+        //which makes it easy to create a part definition with a new GUID
+        
         [MenuItem("Parts/ExportPart")]
         public static void ExportPart()
         {

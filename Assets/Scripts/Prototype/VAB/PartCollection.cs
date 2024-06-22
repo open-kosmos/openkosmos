@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace Kosmos.Prototype.Parts
 {
+    //Used by the VAB to store the current set of parts, and the connections between them.
+    //TODO - should be a concept of the root part.
+    //There are plenty of potential bugs in this! No cycle detection, for example
+    
     public class PartCollection : MonoBehaviour
     {
         public struct PartLink
