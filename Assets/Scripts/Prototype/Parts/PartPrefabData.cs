@@ -169,14 +169,15 @@ namespace Kosmos.Prototype.Parts.Serialization
         {
             string defPath = EditorUtility.OpenFilePanel("Select part definition", "Assets\\Resources\\Parts\\Definitions", "json");
 
-            PartDefinition part = PartDefinition.Load(System.IO.File.ReadAllText(defPath));
+            PartDefinition partDef = PartDefinition.Load(System.IO.File.ReadAllText(defPath));
             
-            string path = System.IO.Path.Combine("Assets/Resources", part.Path + ".txt");
+            string path = System.IO.Path.Combine("Assets/Resources", partDef.Path + ".txt");
             
             string textPart = System.IO.File.ReadAllText(path);
             PartPrefabData data = JsonUtility.FromJson<PartPrefabData>(textPart);
             
-            data.CreateGoPart();
+            var part = data.CreateGoPart();
+            part.name = System.IO.Path.GetFileNameWithoutExtension(defPath);
         }
 #endif
         
