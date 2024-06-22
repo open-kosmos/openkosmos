@@ -19,6 +19,7 @@ namespace Kosmos.Prototype.Parts.TraitComponents
     
     public class TraitMonoBase : MonoBehaviour
     {
+        //Tweakables are handles separately since the data comes from the vehicle spec, not the part spec
         public virtual string SerializeTweakables()
         {
             return null;
