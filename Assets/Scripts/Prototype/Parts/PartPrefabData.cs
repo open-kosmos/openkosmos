@@ -14,6 +14,8 @@ namespace Kosmos.Prototype.Parts.Serialization
 {
     //Data structures that define the structure of a part in the game
     
+    //TODO! Collision shapes are currently not serialized
+    
     [System.Serializable]
     public class TransformData
     {

@@ -18,9 +18,10 @@ using Kosmos.Prototype.Parts.TraitComponents;
 using Mesh = UnityEngine.Mesh;
 using Material = UnityEngine.Material;
 
-namespace Assets.Scripts.Prototype.VAB
+namespace Assets.Scripts.Prototype.Parts
 {
-    public static class PartsToEcsManager
+    //This is the code that creates the ECS representation of a vehicle from its definition
+    public static class EcsVehicleSpawner
     {
 
         public static async Task ConstructPlayableVehicle(VehicleSpec spec)
@@ -88,6 +89,8 @@ namespace Assets.Scripts.Prototype.VAB
             foreach (var trait in partPrefab.Traits)
             {
                 var factory = TraitDictionary.GetFactoryForTrait(trait.Type);
+                
+                //TODO - Look up the tweakables for this part and pass them in here! 
                 factory.DeserializeEcs(trait.JsonString, null, partEntity, ref entityManager);
             }
         }

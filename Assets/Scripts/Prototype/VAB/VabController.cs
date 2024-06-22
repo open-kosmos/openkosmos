@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.IO;
+using Assets.Scripts.Prototype.Parts;
 using Kosmos.Prototype.Parts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Camera = UnityEngine.Camera;
 using Scene = UnityEngine.SceneManagement.Scene;
-using Assets.Scripts.Prototype.VAB;
 
 namespace Kosmos.Prototype.Vab
 {
@@ -84,7 +84,7 @@ namespace Kosmos.Prototype.Vab
             Scene currentScene = SceneManager.GetActiveScene();
             await SceneManager.LoadSceneAsync(flightControlScenceName, LoadSceneMode.Additive);
 
-            await PartsToEcsManager.ConstructPlayableVehicle(_vehicleRoot.CreateSpec(_stagingPanel.GetStageOrder()));
+            await EcsVehicleSpawner.ConstructPlayableVehicle(_vehicleRoot.CreateSpec(_stagingPanel.GetStageOrder()));
 
             await SceneManager.UnloadSceneAsync(currentScene);
         }        

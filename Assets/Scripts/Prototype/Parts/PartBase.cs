@@ -4,6 +4,7 @@ using UnityEngine;
 
 //Attached to the root of a part in the Vehicle Assembly Building. 
 //Purely a runtime thing - not serialized
+//Should be moved into the VAB code assembly for clarity
 namespace Kosmos.Prototype.Parts
 {
     public class PartBase : MonoBehaviour
