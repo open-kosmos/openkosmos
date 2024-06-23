@@ -1,11 +1,12 @@
+using System.Collections.Generic;
 using System.IO;
+using Assets.Scripts.Prototype.Parts;
 using Kosmos.Prototype.Parts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Camera = UnityEngine.Camera;
 using Scene = UnityEngine.SceneManagement.Scene;
-using Assets.Scripts.Prototype.VAB;
 
 namespace Kosmos.Prototype.Vab
 {
@@ -14,6 +15,7 @@ namespace Kosmos.Prototype.Vab
         [Header("UI")]
         [SerializeField] private PartPickerPanel _partPickerPanel;
         [SerializeField] private PartInfoPanel _partInfoPanel;
+        [SerializeField] private StagingPanel _stagingPanel;
         [SerializeField] private CameraController _camController;
         
         [Header("Gizmos")]
@@ -80,9 +82,9 @@ namespace Kosmos.Prototype.Vab
         {
             string flightControlScenceName = "Prototype_FlightControl";
             Scene currentScene = SceneManager.GetActiveScene();
-            await SceneManager.LoadSceneAsync(flightControlScenceName, LoadSceneMode.Additive);            
+            await SceneManager.LoadSceneAsync(flightControlScenceName, LoadSceneMode.Additive);
 
-            await PartsToEcsManager.ConstructPlayableVehicle(_vehicleRoot);
+            await EcsVehicleSpawner.ConstructPlayableVehicle(_vehicleRoot.CreateSpec(_stagingPanel.GetStageOrder()));
 
             await SceneManager.UnloadSceneAsync(currentScene);
         }        
@@ -90,6 +92,12 @@ namespace Kosmos.Prototype.Vab
         private void OnPartPickerClicked(PartDefinition part)
         {
             var newPart = _vehicleRoot.AddPart(part);
+            newPart.name = part.Name;
+            _stagingPanel.AddPart(newPart);
+            
+            //TEMP
+            newPart.gameObject.AddComponent<BoxCollider>();
+            
             _movingPart = newPart;
             _controlState = EControlState.MovingPart;
 
@@ -182,6 +190,7 @@ namespace Kosmos.Prototype.Vab
             if (_movingPart != null)
             {
                 _vehicleRoot.RemovePart(_movingPart);
+                _stagingPanel.RemovePart(_movingPart);
                 _controlState = EControlState.None;
             }
         }
@@ -245,7 +254,12 @@ namespace Kosmos.Prototype.Vab
             }
             
             string path = Path.Combine(GetSaveFolder(), $"{fileName}.veh");
-            _vehicleRoot.Serialise(path);
+            _vehicleRoot.Serialise(path, _stagingPanel.GetStageOrder());
+
+            foreach (var stage in _stagingPanel.GetStageOrder())
+            {
+                Debug.Log(stage.name);
+            }
         }
 
         private void OnLoadPressed(InputAction.CallbackContext context)
@@ -263,7 +277,8 @@ namespace Kosmos.Prototype.Vab
                 return;
             }
             Debug.Log($"Loading from {path}");
-            _vehicleRoot.Deserialise(path);
+            _vehicleRoot.Deserialise(path, out List<PartBase> stagingList);
+            _stagingPanel.SetStagingList(stagingList);
 
             _movingPart = null;
             _controlState = EControlState.None;

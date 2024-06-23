@@ -5,12 +5,8 @@
         "Parts",
         "Unity.InputSystem",
         "Unity.Scenes",
-        "Unity.Entities",
         "Unity.Collections",
-        "glTFast",
-        "Unity.Entities.Graphics",
-        "Unity.Transforms",
-        "Unity.Mathematics"
+        "glTFast"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

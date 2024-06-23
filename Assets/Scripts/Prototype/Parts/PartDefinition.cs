@@ -3,6 +3,9 @@ using UnityEngine.Windows;
 
 namespace Kosmos.Prototype.Parts
 {
+	//Defines the metadata for a part. The actual structure is stored separately
+	//(The separate structure is a throwback to when we were using actual Unity prefabs.
+	// This could now be combined with PartPrefabData)
 	[System.Serializable]
 	public class PartDefinition
 	{

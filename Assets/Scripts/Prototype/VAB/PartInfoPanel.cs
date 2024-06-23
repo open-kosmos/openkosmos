@@ -1,4 +1,6 @@
+using System.Reflection;
 using Kosmos.Prototype.Parts;
+using Kosmos.Prototype.Parts.TraitComponents;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -35,42 +37,31 @@ namespace Kosmos.Prototype.Vab
             {
                 _partNameLabel.text = part.GetDefinition().Name;
                 _partDescriptionLabel.text = part.GetDefinition().Description;
-                
-                foreach (var field in PartDictionary.GetPartTweakableFields(part))
+
+                var traits = part.GetComponents<TraitMonoBase>();
+                foreach (var trait in traits)
                 {
-                    if (field.FieldType == typeof(float))
+                    var tweakables = trait.GetTweakables();
+                    if (tweakables != null)
                     {
-                        Slider slider = new Slider(field.Name, 0.0f, 1.0f);
-                        slider.value = (float)field.GetValue(part);
-                        slider.RegisterValueChangedCallback((evt) =>
+                        foreach (FieldInfo field in TweakableDictionary.GetTweakablesForType(tweakables.GetType()))
                         {
-                            field.SetValue(part, evt.newValue);
-                        });
-                        
-                        _tweakablesFoldout.Add(slider);
-                    }
-                    else if(field.FieldType == typeof(int))
-                    {
-                        TextField textField = new TextField(field.Name);
-                        textField.value = field.GetValue(part).ToString();
-                        textField.RegisterValueChangedCallback((evt) =>
-                        {
-                            if (int.TryParse(evt.newValue, out int intValue))
+                            if (field.FieldType == typeof(float))
                             {
-                                field.SetValue(part, intValue);
+                                Slider slider = new Slider(field.Name, 0.0f, 1.0f);
+                                slider.value = (float)field.GetValue(tweakables);
+                                slider.RegisterValueChangedCallback((evt) =>
+                                {
+                                    field.SetValue(tweakables, evt.newValue);
+                                });
+                                
+                                _tweakablesFoldout.Add(slider);
                             }
                             else
                             {
-                                // Revert to the previous valid value if parsing fails
-                                textField.value = ((int)field.GetValue(part)).ToString();
-                            }
-                        });
-
-                        _tweakablesFoldout.Add(textField);
-                    }
-                    else
-                    {
-                        _tweakablesFoldout.Add(new Label(field.Name + " (unsupported type)"));
+                                _tweakablesFoldout.Add(new Label(field.Name + " (unsupported type)"));
+                            }  
+                        }
                     }
                 }
             }

@@ -2,13 +2,11 @@
     "name": "Parts",
     "rootNamespace": "",
     "references": [
-        "Unity.Collections",
         "Unity.Entities",
-        "Unity.Entities.Hybrid",
+        "Unity.Collections",
         "Unity.Mathematics",
-        "Unity.Scenes",
         "Unity.Transforms",
-        "Unity.Burst"
+        "Unity.Entities.Graphics"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

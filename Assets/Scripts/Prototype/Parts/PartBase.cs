@@ -1,14 +1,14 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Attached to the root of a part in the Vehicle Assembly Building. 
+//Purely a runtime thing - not serialized
+//Should be moved into the VAB code assembly for clarity
 namespace Kosmos.Prototype.Parts
 {
     public class PartBase : MonoBehaviour
     {
-        //TODO:
-        //COM etc.
-
-        public string PartId;
         private PartDefinition _createdFromDef;
         private IReadOnlyList<PartSocket> _sockets;
         
@@ -25,16 +25,6 @@ namespace Kosmos.Prototype.Parts
         public PartDefinition GetDefinition()
         {
             return _createdFromDef;
-        }
-        
-        public virtual float GetMass()
-        {
-            return 1.0f;
-        }
-        
-        public virtual int GetCost()
-        {
-            return 1;
         }
 
         public IReadOnlyList<PartSocket> GetSockets()
