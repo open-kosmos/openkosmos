@@ -12,7 +12,8 @@ namespace Kosmos.FloatingOrigin
     /// </summary>
     [UpdateAfter(typeof(PlayableCharacterMovementSystem))]
     [UpdateBefore(typeof(FloatingPositionToWorldPositionUpdateSystem))]
-    public partial class FloatingOriginSnapCheckSystem : SystemBase
+    [DisableAutoCreation] // DISABLED -- Let's see how far a continuous floating origin system gets us.
+    public partial class DISABLED_FloatingOriginSnapCheckSystem : SystemBase
     {
         protected override void OnCreate()
         {
@@ -22,20 +23,15 @@ namespace Kosmos.FloatingOrigin
 
         protected override void OnUpdate()
         {
-            var focusEntity = SystemAPI.GetSingletonEntity<FloatingFocusTag>();
+            var floatingOriginData = SystemAPI.GetSingleton<FloatingOriginData>();
+            var floatingFocusEntity = SystemAPI.GetSingletonEntity<FloatingFocusTag>();
+            var floatingFocusPosition = EntityManager.GetComponentData<FloatingPositionData>(floatingFocusEntity);
 
-            var focusEntityTransform =
-                EntityManager.GetComponentData<LocalTransform>(focusEntity);
+            var vectorFromOrigin = FloatingOriginMath.VectorFromFloatingOrigin(
+                floatingOriginData, floatingFocusPosition);
             
-            var focusPosition = focusEntityTransform.Position;
-
-            if (math.length(focusPosition) > 1000f)
-            {
-                var floatingOriginData = SystemAPI.GetSingleton<FloatingOriginData>();
-                
-                floatingOriginData.ShouldSnap = true;
-                SystemAPI.SetSingleton(floatingOriginData);
-            }
+            floatingOriginData.ShouldSnap = true;
+            SystemAPI.SetSingleton(floatingOriginData);
         }
     }
 }

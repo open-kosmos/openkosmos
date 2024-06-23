@@ -186,15 +186,15 @@ MonoBehaviour:
   _mainMenuUiDoc: {fileID: 22574438}
   _prototypeScenes:
   - ButtonId: btn_proto_planetary_lod
-    SceneAsset: {fileID: 102900000, guid: 71a264a32f4c7b540b27fe9aa32b9481, type: 3}
+    SceneName: Prototype_PlanetaryLODTech
   - ButtonId: btn_proto_vessel_assembly
-    SceneAsset: {fileID: 102900000, guid: b1e60c3154231c340b7c298f33f959bf, type: 3}
+    SceneName: Prototype_VesselAssembly
   - ButtonId: btn_proto_floating_frame
-    SceneAsset: {fileID: 102900000, guid: 598d3562927939649a2f80ce3a82ae55, type: 3}
+    SceneName: Prototype_FloatingIRFSys
   - ButtonId: btn_proto_physics_contexts
-    SceneAsset: {fileID: 102900000, guid: bbb0fb45e9b84af4aaf99df7c646b98a, type: 3}
+    SceneName: Prototype_PhysicsContexts
   - ButtonId: btn_proto_orbital_physics
-    SceneAsset: {fileID: 102900000, guid: 1dcc7d64c304dfe4aa6eb6910ecdd844, type: 3}
+    SceneName: Prototype_OrbitalPhysics
 --- !u!1 &361639437
 GameObject:
   m_ObjectHideFlags: 0
