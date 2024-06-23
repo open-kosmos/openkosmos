@@ -62,31 +62,20 @@ namespace Kosmos.Prototype.Parts.Serialization
         public List<ModelData> Models;
         
 #if UNITY_EDITOR
-        //TODO!
-        //Should be an editor panel for creating, loading and saving parts,
-        //which makes it easy to create a part definition with a new GUID
-        
-        [MenuItem("Parts/ExportPart")]
-        public static void ExportPart()
+        public static void ExportPart(PartDefinition partDef, GameObject rootObject)
         {
             TraitDictionary.Initialize();
             
-            string defPath = EditorUtility.OpenFilePanel("Select part definition", "Assets\\Resources\\Parts\\Definitions", "json");
-
-            PartDefinition part = PartDefinition.Load(System.IO.File.ReadAllText(defPath));
+            string path = System.IO.Path.Combine("Assets/Resources", partDef.Path + ".txt");
             
-            string path = System.IO.Path.Combine("Assets/Resources", part.Path + ".txt");
-            
-            var selected = Selection.activeObject;
-
-            if (selected is GameObject partRoot)
+            if (rootObject != null)
             {
                 PartPrefabData data = new();
                 data.Transforms = new();
 
                 Dictionary<Transform, int> transDict = new();
-                List<Transform> objectTransList = partRoot.GetComponentsInChildren<Transform>().ToList();
-                objectTransList.Remove(partRoot.transform);
+                List<Transform> objectTransList = rootObject.GetComponentsInChildren<Transform>().ToList();
+                objectTransList.Remove(rootObject.transform);
                 for (int i = 0; i < objectTransList.Count; i++)
                 {
                     transDict.Add(objectTransList[i], i);
@@ -101,14 +90,14 @@ namespace Kosmos.Prototype.Parts.Serialization
                         LocalRotation = origTrans.localRotation,
                         LocalScale = origTrans.localScale,
                         Name = origTrans.name,
-                        ParentTransform = GetTransformIndex(origTrans.parent, transDict, partRoot.transform)
+                        ParentTransform = GetTransformIndex(origTrans.parent, transDict, rootObject.transform)
                     };
 
                     data.Transforms.Add(partTrans);
                 }
 
                 //Build trait list
-                var traits = partRoot.GetComponents<TraitMonoBase>();
+                var traits = rootObject.GetComponents<TraitMonoBase>();
                 data.Traits = new();
                 foreach (var trait in traits)
                 {
@@ -124,24 +113,24 @@ namespace Kosmos.Prototype.Parts.Serialization
 
                 //Build socket list
                 data.Sockets = new();
-                var sockets = partRoot.GetComponentsInChildren<PartSocket>();
+                var sockets = rootObject.GetComponentsInChildren<PartSocket>();
                 foreach (var socket in sockets)
                 {
                     var socketData = new SocketData();
-                    socketData.TransformIndex = GetTransformIndex(socket.transform, transDict, partRoot.transform);
+                    socketData.TransformIndex = GetTransformIndex(socket.transform, transDict, rootObject.transform);
                     data.Sockets.Add(socketData);
                 }
                 
                 //Build renderer list
                 data.Models = new();
-                var renderers = partRoot.GetComponentsInChildren<UnityEngine.MeshRenderer>();
+                var renderers = rootObject.GetComponentsInChildren<UnityEngine.MeshRenderer>();
                 foreach (var rend in renderers)
                 {
                     RendererData rendererData = new();
                     var mesh = rend.GetComponent<MeshFilter>().sharedMesh;
                     
                     rendererData.MeshName = mesh.name;
-                    rendererData.TransformIndex = GetTransformIndex(rend.transform, transDict, partRoot.transform);
+                    rendererData.TransformIndex = GetTransformIndex(rend.transform, transDict, rootObject.transform);
 
                     string meshPath = System.IO.Path.GetRelativePath("Assets/Resources", AssetDatabase.GetAssetPath(mesh));
                     ModelData parentModel = null;
@@ -170,21 +159,6 @@ namespace Kosmos.Prototype.Parts.Serialization
             }
         }
         
-        [MenuItem("Parts/Import Part")]
-        public static void ImportPart()
-        {
-            string defPath = EditorUtility.OpenFilePanel("Select part definition", "Assets\\Resources\\Parts\\Definitions", "json");
-
-            PartDefinition partDef = PartDefinition.Load(System.IO.File.ReadAllText(defPath));
-            
-            string path = System.IO.Path.Combine("Assets/Resources", partDef.Path + ".txt");
-            
-            string textPart = System.IO.File.ReadAllText(path);
-            PartPrefabData data = JsonUtility.FromJson<PartPrefabData>(textPart);
-            
-            var part = data.CreateGoPart();
-            part.name = System.IO.Path.GetFileNameWithoutExtension(defPath);
-        }
 #endif
         
         public GameObject CreateGoPart()

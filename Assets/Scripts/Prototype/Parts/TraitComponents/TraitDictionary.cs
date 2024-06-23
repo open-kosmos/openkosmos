@@ -39,6 +39,12 @@ namespace Kosmos.Prototype.Parts.TraitComponents
 
         public static TraitFactory GetFactoryForTrait(string traitType)
         {
+#if UNITY_EDITOR
+            if (_factoryDict == null)
+            {
+                Initialize();
+            }
+#endif
             return _factoryDict[traitType];
         }
     }
