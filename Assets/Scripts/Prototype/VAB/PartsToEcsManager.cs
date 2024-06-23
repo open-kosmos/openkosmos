@@ -17,6 +17,7 @@ using UnityEngine;
 using GLTFast.Schema;
 using Mesh = UnityEngine.Mesh;
 using Material = UnityEngine.Material;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace Assets.Scripts.Prototype.VAB
 {
@@ -27,23 +28,94 @@ namespace Assets.Scripts.Prototype.VAB
 
         private static bool _controllComponentAdded = false;
         private static Entity _playerControlledControlPod;
+        private static GameObject _vehicleRoot;
 
         public static async Task ConstructPlayableVehicle(PartCollection vehicleRoot)
         {
+
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            _vehicleRoot = vehicleRoot.gameObject;
             var parts = vehicleRoot.AllParts;
 
-
+            List<(PartBase, Entity)> partEntities = new();
+            
             foreach (var part in parts)
             {
                 var entity = entityManager.CreateEntity();
+                partEntities.Add(new(part, entity));
+                entityManager.SetName(entity, part.PartId);                
                 SetStage(part, entity);
                 AddComponentsToEntity(part, entity, entityManager);
                 var modelPath = Path.Combine(Application.streamingAssetsPath, "Parts", $"{part.PartId}.glb");
                 await CreateMeshForEntity(entity, entityManager, modelPath, part);
             }
 
+            SetParent(partEntities, entityManager);
             AddStageBuffer(parts, entityManager);
+        }
+
+        private static void SetParent(List<(PartBase, Entity)> partEntities, EntityManager entityManager)
+        {
+            //TODO: This parent/child heirarchy is very simplified. Everything is a child of the command pod
+            //It doesn't take into account the sockets and it probably should. 
+            //Otherwise when a part is destroyed, it's children parts will just be floating there.
+
+            var lowestPoint = GetLowestPoint(_vehicleRoot);
+            var parent = partEntities.FirstOrDefault(pe => pe.Item2 == _playerControlledControlPod);
+            var parentOffSet = parent.Item1.transform.position;
+            foreach (var pe in partEntities )
+            {
+                var part = pe.Item1;
+                var entity = pe.Item2;
+                if (entity != _playerControlledControlPod)
+                {
+                    entityManager.AddComponentData(entity, new Parent() { Value = _playerControlledControlPod });
+
+                    entityManager.AddComponentData(entity, new LocalTransform()
+                    {
+                        Position = part.transform.position - parentOffSet,
+                        Scale = 1,
+                    });
+                }
+                else
+                {
+
+                    entityManager.AddComponentData(entity, new LocalTransform()
+                    {
+                        Position = part.transform.position,
+                        Scale = 1,
+                    });
+                }
+            }
+
+            var currentPosition = parent.Item1.transform.position;
+
+            entityManager.SetComponentData(_playerControlledControlPod, new LocalTransform()
+            {
+                Position = new Vector3(0, currentPosition.y - lowestPoint.y, 0),
+                Scale = 1
+            }); //Set on ground
+        }
+
+        private static Vector3 GetLowestPoint(GameObject gameObject)
+        {
+            var renderer = gameObject.GetComponent<Renderer>();
+            var lowestPoint = new Vector3(0, float.MaxValue, 0);
+            if (renderer != null)
+            {
+                lowestPoint = renderer.bounds.min;
+            }
+
+            for (int i = 0; i < gameObject.transform.childCount; i++)
+            {
+                var childLowestPoint = GetLowestPoint(gameObject.transform.GetChild(i).gameObject);
+                if (childLowestPoint.y < lowestPoint.y)
+                {
+                    lowestPoint = childLowestPoint;
+                }
+            }
+
+            return lowestPoint;
         }
 
         private static void SetStage(PartBase part, Entity entity)
@@ -158,12 +230,6 @@ namespace Assets.Scripts.Prototype.VAB
                 renderMeshDescription,
                 renderMeshArray,
                 MaterialMeshInfo.FromRenderMeshArrayIndices(0, 0));
-
-            entityManager.AddComponentData(entity, new LocalTransform()
-            {
-                Position = part.transform.position,
-                Scale = 1,
-            });
         }
     }
 }

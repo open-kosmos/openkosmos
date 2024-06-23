@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Prototype.FloatingOrigin.Components
 {
-    [UpdateBefore(typeof(FloatingOriginSnapCheckSystem))]
     public class SineMoverAuthoring : MonoBehaviour
     {
         [SerializeField] private float _speed = 10f;
