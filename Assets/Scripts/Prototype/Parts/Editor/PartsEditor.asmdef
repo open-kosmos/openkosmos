@@ -1,14 +1,12 @@
 {
-    "name": "Parts",
+    "name": "PartsEditor",
     "rootNamespace": "",
     "references": [
-        "Unity.Entities",
-        "Unity.Collections",
-        "Unity.Mathematics",
-        "Unity.Transforms",
-        "Unity.Entities.Graphics"
+        "Parts"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

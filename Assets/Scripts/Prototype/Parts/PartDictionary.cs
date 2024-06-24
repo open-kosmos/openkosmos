@@ -2,15 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Kosmos.Prototype.Parts.Serialization;
 using UnityEngine;
 
 namespace Kosmos.Prototype.Parts
 {
-    public class PartTypeReflectionEntry
-    {
-        public List<FieldInfo> TweakableFields;
-    }
-    
+    //A class that provides access to all parts supported by the game
     public static class PartDictionary
     {
         private static bool _isInitialised = false;
@@ -22,11 +19,8 @@ namespace Kosmos.Prototype.Parts
         private static Dictionary<System.Guid, PartDefinition> _partDefDict;
         
         //PartDef->Loaded part
-        private static Dictionary<PartDefinition, PartBase> _partPrefabDict;
-        
-        //PartBase type -> reflection info
-        private static Dictionary<System.Type, PartTypeReflectionEntry> _partTypeReflectionDict;
-        
+        private static Dictionary<PartDefinition, PartPrefabData> _partPrefabDict;
+
         public static void Initialise()
         {
             if (_isInitialised)
@@ -35,11 +29,10 @@ namespace Kosmos.Prototype.Parts
             }
 
             _partPrefabDict = new();
-            _partTypeReflectionDict = new();
             _partDefDict = new();
 
             _allPartDefs = new();
-            var allPartDefJson = Resources.LoadAll<TextAsset>("Parts").ToList();
+            var allPartDefJson = Resources.LoadAll<TextAsset>("Parts/Definitions").ToList();
             foreach (var defText in allPartDefJson)
             {
                 var def = JsonUtility.FromJson<PartDefinition>(defText.text);
@@ -77,44 +70,36 @@ namespace Kosmos.Prototype.Parts
         {
             if (!_partPrefabDict.ContainsKey(def))
             {
-                var part = Resources.Load<PartBase>(def.Path);
+                string partPath = def.Path;
+                var part = Resources.Load<TextAsset>(partPath);
                 Debug.Assert(part != null, $"Part {def.Name} couldn't be loaded");
-                _partPrefabDict[def] = part;
+                var partPrefabData = JsonUtility.FromJson<PartPrefabData>(part.text);
+                _partPrefabDict[def] = partPrefabData;
             }
+            
 
-            PartBase prefab = null;
+            PartPrefabData prefab = null;
             _partPrefabDict.TryGetValue(def, out prefab);
 
             if (prefab != null)
             {
-                PartBase newPart = GameObject.Instantiate(prefab);
-                newPart.SetCreatedFromDefinition(def);
-                return newPart;
+                var part = prefab.CreateGoPart();
+                var partBase = part.AddComponent<PartBase>();
+                partBase.SetCreatedFromDefinition(def);
+                return partBase;
             }
 
             return null;
         }
 
-        public static IReadOnlyList<FieldInfo> GetPartTweakableFields(PartBase part)
+        public static PartPrefabData GetPartPrefabData(PartDefinition partDef)
         {
-            var type = part.GetType();
-            if (!_partTypeReflectionDict.ContainsKey(type))
-            {
-                PartTypeReflectionEntry entry = new();
-                entry.TweakableFields = new();
-                
-                var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                foreach (var field in fields)
-                {
-                    if (field.GetCustomAttribute<TweakableAttribute>() != null)
-                    {
-                        entry.TweakableFields.Add(field);
-                    }
-                }
-                _partTypeReflectionDict.Add(type, entry);
-            }
+            string partPath = partDef.Path;
+            var part = Resources.Load<TextAsset>(partPath);
+            Debug.Assert(part != null, $"Part {partDef.Name} couldn't be loaded");
+            var partPrefabData = JsonUtility.FromJson<PartPrefabData>(part.text);
 
-            return _partTypeReflectionDict[type].TweakableFields;
+            return partPrefabData;
         }
     }
 }

@@ -1,0 +1,5 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:VisualElement name="VisualElement" style="flex-grow: 1; right: 0; bottom: 246px; position: absolute; background-color: rgba(63, 63, 63, 0.65); height: 202px; width: 20%;">
+        <engine:ListView reorderable="true" reorder-mode="Animated" />
+    </engine:VisualElement>
+</engine:UXML>

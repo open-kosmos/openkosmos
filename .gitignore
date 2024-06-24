@@ -13,6 +13,11 @@
 # Imagery
 /Assets/StreamingAssets/Imagery/
 
+# Editor vehicle saves
+/Assets/StreamingAssets/Vehicles/
+/Assets/StreamingAssets/Vehicles.meta
+
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
